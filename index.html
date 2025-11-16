@@ -2,684 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>E.I. :: Wayfinding for Your Awareness</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Meta description -->
-  <meta name="description" content="A lightweight awareness experience that helps you notice where you are, choose how to move, and continue your day with simple, structured clarity.">
-
-  <!-- Theme color for browsers -->
-  <meta name="theme-color" content="#050d0c">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="E.I. :: Wayfinding for Your Awareness">
-  <meta property="og:description" content="A digital terminal for inner navigation. You start with how you arrive, choose a verb for movement, and travel through a simple, structured sequence that lightens your mental load and brings you to a clearer signal. No accounts. No tracking. Just awareness at your pace.">
-  <meta property="og:url" content="https://YOUR-EI-DOMAIN.com">
-  <meta property="og:image" content="https://YOUR-EI-DOMAIN.com/og-image.jpg">
-
-  <!-- Twitter / X -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="E.I. :: Wayfinding for Your Awareness">
-  <meta name="twitter:description" content="A digital terminal for inner navigation. You start with how you arrive, choose a verb for movement, and travel through a simple, structured sequence that lightens your mental load and brings you to a clearer signal. No accounts. No tracking. Just awareness at your pace.">
-  <meta name="twitter:image" content="https://YOUR-EI-DOMAIN.com/og-image.jpg">
-
-  <!-- Built in the spirit of PlayHTML.fun :: view source, learn, remix -->
-  <style>
-    /* ROOT TOKENS -------------------------------------------------------------- */
-
-    :root {
-      --bg: #050d0c;
-      --bg-soft: #071311;
-      --fg: #f5f7f3;
-      --muted: #9ba6a5;
-      --accent: #5be0b3;
-      --accent-soft: rgba(91, 224, 179, 0.14);
-      --border-subtle: rgba(148, 163, 165, 0.4);
-      --card-bg: rgba(6, 20, 18, 0.95);
-      --card-bg-soft: rgba(6, 20, 18, 0.85);
-
-      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-                  "Inter", "Segoe UI", sans-serif;
-
-      --radius-sm: 6px;
-      --radius-md: 10px;
-
-      --shadow-soft: 0 14px 40px rgba(0, 0, 0, 0.42);
-
-      --max-width: 960px;
-      --gutter: 1.5rem;
-    }
-
-    /* VISUALLY HIDDEN ----------------------------------------------------------
-      For meaningful text that should be available to screen readers but not shown visually.
-    ---------------------------------------------------------------------------*/
-
-    .visually-hidden {
-      position: absolute !important;
-      height: 1px; width: 1px;
-      overflow: hidden;
-      clip: rect(1px, 1px, 1px, 1px);
-      white-space: nowrap;
-    }
-
-    /* GLOBAL ------------------------------------------------------------------- */
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: var(--font-sans);
-      background: radial-gradient(circle at top, #091c19 0, var(--bg) 52%);
-      color: var(--fg);
-      line-height: 1.6;
-    }
-
-    /* LAYOUT ------------------------------------------------------------------- */
-
-    body > header,
-    main,
-    footer {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding-inline: var(--gutter);
-    }
-
-    main {
-      padding-block: 1.5rem 3.5rem;
-    }
-
-    /* HEADER / NAV ------------------------------------------------------------- */
-
-    header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1.5rem;
-      padding-block: 1.75rem 0.75rem;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    #ei-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      border: 1px solid var(--accent);
-      position: relative;
-    }
-
-    #ei-mark::before {
-      content: "";
-      position: absolute;
-      inset: 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(91, 224, 179, 0.5);
-      border-top-color: transparent;
-    }
-
-    #ei-mark::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 18%;
-      width: 1px;
-      height: 60%;
-      background: var(--accent);
-      transform-origin: center bottom;
-      transform: translateX(-50%) rotate(18deg);
-      opacity: 0.88;
-    }
-
-    header h1 {
-      font-size: 1.35rem;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      margin: 0 0 0.15rem;
-    }
-
-    header p {
-      margin: 0;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    header nav {
-      margin-left: auto;
-    }
-
-    header nav ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    header nav a {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      text-decoration: none;
-      color: var(--muted);
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid transparent;
-    }
-
-    header nav a:hover,
-    header nav a:focus-visible {
-      border-color: var(--border-subtle);
-      color: var(--fg);
-    }
-
-    /* HERO / LANDING ----------------------------------------------------------- */
-
-    #hero {
-      max-width: 620px;
-      margin: 3.5rem auto 2.5rem;
-      padding: 0 1.2rem;
-      text-align: center;
-    }
-
-    #hero h1 {
-      font-size: 1.6rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-    }
-
-    #hero p {
-      margin-top: 0.6rem;
-      font-size: 1rem;
-      color: var(--fg);
-    }
-
-    #needle-drop {
-      margin-top: 1.4rem;
-      border-radius: 999px;
-      border: 1px solid var(--accent);
-      background: transparent;
-      color: var(--accent);
-      padding: 0.6rem 1.1rem;
-      font-size: 0.8rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-
-    #needle-drop:hover,
-    #needle-drop:focus-visible {
-      background: var(--accent-soft);
-    }
-
-    /* SECTIONS ----------------------------------------------------------------- */
-
-    section {
-      padding-block: 2.5rem;
-      border-bottom: 1px solid rgba(148, 163, 165, 0.22);
-    }
-
-    section:last-of-type {
-      border-bottom: none;
-    }
-
-    section > h2 {
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      margin: 0 0 0.75rem;
-    }
-
-    section > p {
-      margin-block: 0.35rem;
-      max-width: 55ch;
-    }
-
-    /* FORMS / INPUTS ----------------------------------------------------------- */
-
-    label {
-      display: inline-block;
-      margin-bottom: 0.25rem;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--muted);
-    }
-
-    input[type="text"],
-    textarea {
-      width: 100%;
-      max-width: 420px;
-      padding: 0.55rem 0.7rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-subtle);
-      background: rgba(3, 10, 9, 0.9);
-      color: var(--fg);
-      font: inherit;
-      outline: none;
-    }
-
-    input[type="text"]:focus-visible,
-    textarea:focus-visible {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(91, 224, 179, 0.4);
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 110px;
-    }
-
-    button {
-      font: inherit;
-      cursor: pointer;
-    }
-
-    /* Primary buttons */
-
-    button[type="submit"],
-    button#save-note,
-    button#save-landing,
-    button#board-now,
-    button#export-journey {
-      margin-top: 0.6rem;
-      padding: 0.45rem 0.95rem;
-      border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      background: rgba(7, 24, 21, 0.9);
-      color: var(--fg);
-      font-size: 0.78rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    button:hover,
-    button:focus-visible {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    /* VERB GRID ---------------------------------------------------------------- */
-
-    .verb-grid {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      gap: 0.8rem;
-      margin-top: 1.2rem;
-    }
-
-    .verb-card {
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-subtle);
-      background: var(--card-bg);
-      padding: 0.7rem 0.5rem 0.75rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.55rem;
-      color: var(--muted);
-      min-width: 0;
-    }
-
-    .verb-card:hover,
-    .verb-card:focus-visible {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .verb-card.selected-verb {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-soft);
-    }
-
-    .verb-icon {
-      width: 32px;
-      height: 32px;
-      display: block;
-    }
-
-    .verb-label {
-      font-size: 0.68rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-    }
-
-    /* SECURITY ----------------------------------------------------------------- */
-
-    #security-items {
-      margin-top: 1rem;
-    }
-
-    .security-placeholder {
-      padding: 1rem;
-      border: 1px dashed var(--border-subtle);
-      border-radius: var(--radius-md);
-      font-size: 0.95rem;
-      opacity: 0.9;
-      background: rgba(5, 16, 15, 0.9);
-    }
-
-    /* BAGGAGE CLAIM ----------------------------------------------------------- */
-
-    #baggage-list {
-      list-style: none;
-      margin: 1rem 0;
-      padding: 0;
-      max-width: 640px;
-    }
-
-    #baggage-list li {
-      padding: 0.7rem 0.8rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-subtle);
-      background: var(--card-bg-soft);
-      margin-bottom: 0.55rem;
-    }
-
-    #baggage-list li strong {
-      font-size: 0.85rem;
-    }
-
-    .baggage-options {
-      margin-top: 0.45rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .baggage-options button {
-      padding: 0.18rem 0.6rem;
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      border-radius: 999px;
-    }
-
-    /* VINYL LOUNGE ------------------------------------------------------------ */
-
-    #vinyl-lounge {
-      position: relative;
-    }
-
-    #shared-notes {
-      margin-top: 1rem;
-      padding: 1rem;
-      border-radius: var(--radius-md);
-      border: 1px dashed var(--border-subtle);
-      background: rgba(5, 16, 15, 0.85);
-      font-size: 0.9rem;
-    }
-
-    .vinyl-placeholder {
-      margin-top: 0.75rem;
-      font-size: 0.9rem;
-      opacity: 0.9;
-    }
-
-    .vinyl-sleeve {
-      margin-top: 1.5rem;
-      padding: 1rem 1.2rem;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(148, 163, 165, 0.4);
-      background: rgba(4, 14, 12, 0.95);
-    }
-
-    .vinyl-sleeve h3 {
-      margin-top: 0;
-      font-size: 0.9rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    .vinyl-sleeve p {
-      margin: 0.25rem 0;
-      font-size: 0.88rem;
-    }
-
-    .vinyl-flipboard {
-      margin-top: 1.2rem;
-      padding: 0.9rem 1rem;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(148, 163, 165, 0.4);
-      background: rgba(4, 14, 13, 0.95);
-    }
-
-    .vinyl-flipboard button {
-      margin-top: 0;
-      margin-bottom: 0.5rem;
-    }
-
-    #lounge-note {
-      margin: 0;
-      font-size: 0.9rem;
-    }
-
-    /* MANIFESTO / GROUND CREW ------------------------------------------------- */
-
-    #manifesto p {
-      max-width: 60ch;
-    }
-
-    #ground-crew {
-      margin-top: 1.6rem;
-      padding: 1rem;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(148, 163, 165, 0.35);
-      background: rgba(4, 14, 12, 0.95);
-    }
-
-    #ground-crew h3 {
-      margin-top: 0;
-      font-size: 0.92rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    #ground-crew ol {
-      margin: 0.6rem 0 0;
-      padding-left: 1.2rem;
-      font-size: 0.9rem;
-    }
-
-    /* ABOUT ------------------------------------------------------------------- */
-
-    #about-placard,
-    #about-full {
-      margin-top: 1.5rem;
-    }
-
-    #about-placard {
-      padding: 1.2rem 1rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-subtle);
-      background: var(--card-bg-soft);
-      box-shadow: var(--shadow-soft);
-    }
-
-    #about-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      margin-bottom: 0.75rem;
-    }
-
-    #about-placard p {
-      margin-block: 0.35rem;
-    }
-
-    /* FOOTER ------------------------------------------------------------------ */
-
-    footer {
-      border-top: 1px solid var(--border-subtle);
-      padding-block: 1.4rem 2.2rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    footer a:hover,
-    footer a:focus-visible {
-      text-decoration: underline;
-    }
-
-    /* TERMINAL NOTES (ambient chatter) ---------------------------------------- */
-
-    .terminal-note {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      max-width: 280px;
-      padding: 1rem 1.25rem;
-      background: rgba(5, 29, 23, 0.95);
-      border: 1px solid var(--accent);
-      border-radius: 8px;
-      font-size: 0.9rem;
-      color: var(--fg);
-      animation: noteSlide 0.4s ease;
-      z-index: 1000;
-    }
-
-    @keyframes noteSlide {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* FIRST-TIME FLIGHT MICROGUIDE ------------------------------------------- */
-
-    .flight-guide {
-      margin-top: 1.2rem;
-      padding: 0.9rem 1rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-subtle);
-      background: rgba(4, 14, 12, 0.96);
-    }
-
-    .flight-guide h3 {
-      margin: 0 0 0.4rem;
-      font-size: 0.9rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .flight-guide ol {
-      margin: 0.2rem 0 0;
-      padding-left: 1.1rem;
-      font-size: 0.88rem;
-    }
-
-    .flight-guide li {
-      margin-bottom: 0.25rem;
-    }
-
-    /* RESPONSIVE -------------------------------------------------------------- */
-
-    @media (max-width: 800px) {
-      header {
-        align-items: flex-start;
-      }
-
-      header nav {
-        width: 100%;
-        margin-left: 0;
-        margin-top: 0.75rem;
-      }
-
-      header nav ul {
-        justify-content: flex-start;
-      }
-
-      .verb-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 520px) {
-      body > header,
-      main,
-      footer {
-        padding-inline: 1.1rem;
-      }
-
-      .verb-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      #needle-drop {
-        width: 100%;
-        text-align: center;
-      }
-    }
-  </style>
+  <title>Echolocative Intelligence International :: Terminal E.I.</title>
+  <link rel="stylesheet" href="ei.css">
 </head>
+
 <body>
 
+  <!-- ============================================ -->
   <!-- HEADER / GLOBAL NAV -->
+  <!-- ============================================ -->
+  
   <header id="top">
-    <!-- Symbolic mark with teaching line -->
-    <div id="ei-mark" aria-label="E.I. International mark">
-      <span class="visually-hidden">
-        An abstract navigational mark showing a quiet signal radiating outward, reminding you that awareness begins with noticing what you feel.
-      </span>
-    </div>
-
+    <!-- EI Mark (orb logo) -->
+    <div id="ei-mark" aria-label="E.I. International mark"></div>
+    
     <div>
       <h1>Echolocative Intelligence International</h1>
       <p>Wayfinding :: The route to your genius :: Terminal E.I.</p>
     </div>
-
+    
     <nav aria-label="Main navigation">
       <ul>
         <li><a href="#check-in">Check-In</a></li>
         <li><a href="#gate-deck">Gate</a></li>
-        <li><a href="#baggage-claim">Baggage Claim</a></li>
-        <li><a href="#vinyl-lounge">Vinyl Lounge</a></li>
+        <li><a href="#baggage-claim">Baggage</a></li>
         <li><a href="#manifesto">Manifesto</a></li>
         <li><a href="#about">About</a></li>
       </ul>
     </nav>
+    
+    <!-- Needle Drop button -->
+    <button id="needle-drop" type="button">Drop the needle on Side A</button>
   </header>
 
-  <main>
+  <!-- ============================================ -->
+  <!-- PROGRESS INDICATOR -->
+  <!-- ============================================ -->
+  
+  <div id="journey-progress" aria-label="Journey progress">
+    <div class="progress-stage" data-stage="arrival" title="Arrival"></div>
+    <div class="progress-stage" data-stage="check-in" title="Check-In"></div>
+    <div class="progress-stage" data-stage="gate" title="Gate"></div>
+    <div class="progress-stage" data-stage="boarding" title="Boarding"></div>
+    <div class="progress-stage" data-stage="in-flight" title="In-Flight"></div>
+    <div class="progress-stage" data-stage="landing" title="Landing"></div>
+    <div class="progress-stage" data-stage="baggage" title="Baggage"></div>
+  </div>
 
-    <!-- HERO / ORIENTATION -->
-    <section id="hero" aria-label="Terminal Orientation">
-      <h1>Welcome to Terminal E.I.</h1>
-      <p>
-        A small, lightweight experience for navigating your awareness.
-        You begin with one word, move through a simple sequence, and land with a clearer signal.
-      </p>
-      <p>
-        When you are ready to start your flight, drop the needle.
-      </p>
-      <button id="needle-drop" type="button">
-        Drop the needle on Side A
-      </button>
-    </section>
+  <!-- ============================================ -->
+  <!-- MAIN CONTENT -->
+  <!-- ============================================ -->
+  
+  <main>
 
     <!-- 00. CURBSIDE ARRIVAL -->
     <section id="curbside" aria-labelledby="heading-curbside">
@@ -687,81 +62,30 @@
       <p>Welcome to Echolocative Intelligence International :: a terminal designed for wayfinding on your journey to your genius.</p>
       <p>This space is built like a calm terminal :: clear lines, simple steps, and room to breathe.</p>
       <p>We are here with each other.</p>
+      <p>Your journey begins with the note that is you.</p>
     </section>
 
     <!-- 01. CHECK-IN :: BOARDING PING -->
     <section id="check-in" aria-labelledby="heading-checkin">
       <h2 id="heading-checkin">Check-In :: Boarding PING</h2>
       <p>Enter one word for how you are arriving right now.</p>
-
+      
       <form id="ping-form">
-        <label for="boarding-ping">
-          Boarding PING
-          <span class="visually-hidden">
-            Boarding PING :: the first word you arrive with, holding more direction than it seems at first glance.
-          </span>
-        </label>
-        <input id="boarding-ping" name="boarding-ping" type="text" autocomplete="off">
+        <label for="boarding-ping">Boarding PING</label>
+        <input id="boarding-ping" name="boarding-ping" type="text" autocomplete="off" placeholder="e.g. scattered">
         <button type="submit">Save PING</button>
       </form>
-
+      
       <p id="ping-confirm" aria-live="polite"></p>
-
-      <!-- First-Time Flight Microguide -->
-      <div class="flight-guide" aria-label="First-time flight guide">
-        <h3>First-Time Flight</h3>
-        <ol>
-          <li>Check-In :: Enter one word for how you arrive.</li>
-          <li>Security :: Name what you prefer to travel without.</li>
-          <li>Gate :: Choose the verb that feels most alive.</li>
-          <li>In-Flight :: Read the prompt, write your Cabin Note.</li>
-          <li>Landing :: Enter one word for where you are now.</li>
-          <li>Baggage Claim :: Sort what matters :: Keep • Store • Discard • Share.</li>
-        </ol>
-      </div>
     </section>
 
-    <!-- 02. SECURITY :: THOUGHT SCREENING -->
-    <section id="security" aria-labelledby="heading-security">
-      <h2 id="heading-security">Security :: Thought Screening Area</h2>
-      <p>Here you can pause and softly choose what feels too heavy to carry forward today.</p>
-
-      <span class="visually-hidden">
-        Security :: a calm screening area showing that you can set down anything that feels heavy before you continue.
-      </span>
-
-      <div id="security-items">
-        <div class="security-placeholder">
-          What would you prefer to travel without today?  
-          Name it silently.  
-          When you are ready, continue to your Gate.
-        </div>
-      </div>
-    </section>
-
-    <!-- 03. CONCOURSE :: DEPARTURES -->
-    <section id="departures" aria-labelledby="heading-departures">
-      <h2 id="heading-departures">Concourse :: Departures</h2>
-      <p>These verbs are departure options for your inner journey.</p>
-      <ul>
-        <li>SENSE</li>
-        <li>CATCH</li>
-        <li>NAME</li>
-        <li>MOVE</li>
-        <li>TUNE</li>
-        <li>OPEN</li>
-        <li>SHIFT</li>
-      </ul>
-      <p>Notice which one draws your attention.</p>
-    </section>
-
-    <!-- 04. GATE :: ALIGNED ACTION -->
+    <!-- 02. GATE :: VERB SELECTION -->
     <section id="gate-deck" aria-labelledby="heading-gatedeck">
-      <h2 id="heading-gatedeck">Gate :: Aligned Action (right place, right time, always)</h2>
-      <p>Choose the verb that feels most alive for you right now. This verb is your seat.</p>
-
+      <h2 id="heading-gatedeck">Gate :: Choose Your Seat (Verb)</h2>
+      <p>Pick the verb that feels most alive for you right now.</p>
+      
       <div class="verb-grid" aria-label="Verb selection">
-
+        
         <!-- SENSE -->
         <button class="verb-card" data-verb="sense" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
@@ -769,26 +93,18 @@
             <circle cx="20" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="1 1.5" />
             <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="0.4 2.2" />
           </svg>
-          <span class="visually-hidden">
-            Sense :: a simple expanding circle showing how awareness grows when you let things be exactly as they are.
-          </span>
           <span class="verb-label">SENSE</span>
         </button>
-
+        
         <!-- CATCH -->
         <button class="verb-card" data-verb="catch" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
             <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="1.4" />
-            <path d="M12 16 Q20 10 24 16 Q26 19 22 22 Q18 25 18 29"
-                  fill="none" stroke="currentColor" stroke-width="1.6"
-                  stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 16 Q20 10 24 16 Q26 19 22 22 Q18 25 18 29" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span class="visually-hidden">
-            Catch :: a curved line representing the moment something returning to your attention becomes clear enough to work with.
-          </span>
           <span class="verb-label">CATCH</span>
         </button>
-
+        
         <!-- NAME -->
         <button class="verb-card" data-verb="name" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
@@ -797,42 +113,28 @@
             <line x1="14" y1="20" x2="26" y2="20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
             <line x1="14" y1="26" x2="26" y2="26" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
           </svg>
-          <span class="visually-hidden">
-            Name :: three steady lines showing how putting words to an experience makes it easier to understand and navigate.
-          </span>
           <span class="verb-label">NAME</span>
         </button>
-
+        
         <!-- MOVE -->
         <button class="verb-card" data-verb="move" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
-            <path d="M10 28 L26 12"
-                  fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-            <path d="M21 12 L26 12 L26 17"
-                  fill="none" stroke="currentColor" stroke-width="1.8"
-                  stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M10 28 L26 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            <path d="M21 12 L26 12 L26 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span class="visually-hidden">
-            Move :: a short direction arrow showing how a small shift in your body or mind can create meaningful change.
-          </span>
           <span class="verb-label">MOVE</span>
         </button>
-
+        
         <!-- TUNE -->
         <button class="verb-card" data-verb="tune" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
             <circle cx="8" cy="20" r="2" fill="currentColor" />
             <circle cx="32" cy="20" r="2" fill="currentColor" />
-            <path d="M8 20 C14 10, 26 30, 32 20"
-                  fill="none" stroke="currentColor" stroke-width="1.6"
-                  stroke-linecap="round" />
+            <path d="M8 20 C14 10, 26 30, 32 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
           </svg>
-          <span class="visually-hidden">
-            Tune :: two points connected by a gentle arc showing how minor adjustments help your inner state find balance.
-          </span>
           <span class="verb-label">TUNE</span>
         </button>
-
+        
         <!-- OPEN -->
         <button class="verb-card" data-verb="open" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
@@ -841,12 +143,9 @@
             <path d="M10 10 L10 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2 2" />
             <path d="M30 10 L30 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2 2" />
           </svg>
-          <span class="visually-hidden">
-            Open :: two lines forming widening space to show how giving yourself room can change how a moment feels.
-          </span>
           <span class="verb-label">OPEN</span>
         </button>
-
+        
         <!-- SHIFT -->
         <button class="verb-card" data-verb="shift" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
@@ -854,112 +153,93 @@
             <circle cx="24" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="1.4" />
             <circle cx="20" cy="20" r="2.2" fill="currentColor" />
           </svg>
-          <span class="visually-hidden">
-            Shift :: overlapping circles showing the transition between what was and what is forming next.
-          </span>
           <span class="verb-label">SHIFT</span>
         </button>
+        
       </div>
     </section>
 
-    <!-- 05. BOARDING -->
+    <!-- 03. BOARDING -->
     <section id="boarding" aria-labelledby="heading-boarding">
       <h2 id="heading-boarding">Boarding :: Flight EI-YOU</h2>
       <p>When you are ready, bring your Boarding PING and your verb together.</p>
-      <button id="board-now" type="button">Board now</button>
+      <button id="board-now" type="button">Board Now</button>
     </section>
 
-    <!-- 06. IN-FLIGHT -->
+    <!-- 04. IN-FLIGHT -->
     <section id="in-flight" aria-labelledby="heading-inflight">
-      <h2 id="heading-inflight">In-Flight Cabin :: Cruising altitude</h2>
+      <h2 id="heading-inflight">In-Flight Cabin :: Cruising Altitude</h2>
+      
       <div id="in-flight-prompt">
         <p>Your in-flight prompt will appear here after you board.</p>
       </div>
-
+      
+      <!-- Breath Guide -->
+      <div id="breath-guide" aria-label="Optional breath pacer">
+        <div class="breath-orb"></div>
+        <p class="breath-instruction">Breathe...</p>
+      </div>
+      
       <h3>Cabin Note</h3>
       <p>Capture anything that feels clear, helpful, or important in this moment.</p>
-      <span class="visually-hidden">
-        Seat Pocket :: a quiet place to store a thought you want to return to later.
-      </span>
-      <textarea id="cabin-note" rows="4"></textarea>
+      <textarea id="cabin-note" rows="4" maxlength="280" placeholder="What are you noticing?"></textarea>
       <button id="save-note" type="button">Slide Note Into Seat Pocket</button>
     </section>
 
-    <!-- 07. LANDING -->
+    <!-- 05. LANDING -->
     <section id="landing" aria-labelledby="heading-landing">
-      <h2 id="heading-landing">Landing :: Name the shift</h2>
+      <h2 id="heading-landing">Landing :: Name the Shift</h2>
       <p>Enter one word for where you are now.</p>
-      <label for="landing-ping">
-        Landing PING
-        <span class="visually-hidden">
-          Landing PING :: the word you leave with, showing the shift created by moving through this experience.
-        </span>
-      </label>
-      <input id="landing-ping" type="text" autocomplete="off">
+      
+      <label for="landing-ping">Landing PING</label>
+      <input id="landing-ping" type="text" autocomplete="off" maxlength="16" placeholder="e.g. clearer">
       <button id="save-landing" type="button">Save Landing PING</button>
     </section>
 
-    <!-- 08. BAGGAGE CLAIM -->
+    <!-- 06. BAGGAGE CLAIM -->
     <section id="baggage-claim" aria-labelledby="heading-baggage">
-      <h2 id="heading-baggage">Baggage Claim :: What traveled with you</h2>
+      <h2 id="heading-baggage">Baggage Claim :: What Traveled With You</h2>
       <p>Tag each item :: Keep • Store • Discard • Share</p>
-      <span class="visually-hidden">
-        Baggage Claim :: a simple list showing what traveled with you and how you want to relate to it moving forward.
-      </span>
-
+      
       <ul id="baggage-list" aria-label="Journey items">
         <!-- Items will be injected here by JS -->
       </ul>
-
-      <button id="export-journey" type="button">
-        Export Your Journey
-      </button>
     </section>
 
-    <!-- 09. VINYL LOUNGE -->
+    <!-- 07. VINYL LOUNGE -->
     <section id="vinyl-lounge" aria-labelledby="heading-vinyl">
-      <h2 id="heading-vinyl">Vinyl Lounge :: Third Space listening room</h2>
+      <h2 id="heading-vinyl">Vinyl Lounge :: Third Space Listening Room</h2>
       <p>This is a calm room for shared notes and quiet resonance.</p>
-      <span class="visually-hidden">
-        Vinyl Lounge :: a calm room of shared notes showing how other travelers have passed through and what they left for the next person.
-      </span>
+      
       <div id="shared-notes">
-        <p>Shared notes will appear here as travelers choose to contribute to the collective field.</p>
-        <p class="vinyl-placeholder">
-          In the meantime, this room holds space for what wants to emerge, at your pace.
-        </p>
-      </div>
-
-      <!-- Vinyl Sleeve :: humor liner notes -->
-      <div class="vinyl-sleeve" aria-label="Vinyl sleeve liner notes">
-        <h3>Vinyl Sleeve :: Lounge Notes</h3>
-        <p>Your awareness is early. Your thoughts are running to catch up.</p>
-        <p>Your echo returns faster when you are hydrated.</p>
-        <p>Small clarity today. Big clarity tomorrow. Same flight path.</p>
-      </div>
-
-      <!-- Flipboard-style shuffler -->
-      <div class="vinyl-flipboard" aria-label="Lounge note flipboard">
-        <button id="lounge-flip" type="button">Shuffle Lounge Note</button>
-        <p id="lounge-note">Even your confusion has frequent-flyer status.</p>
+        <p>Shared cabin notes from travelers appear here when they choose to contribute to the collective field.</p>
+        <p>As you continue your practice, this space will fill with wisdom from the community.</p>
       </div>
     </section>
 
-    <!-- 10. MANIFESTO -->
+    <!-- 08. MANIFESTO -->
     <section id="manifesto" aria-labelledby="heading-manifesto">
       <h2 id="heading-manifesto">Manifesto :: Echolocative Intelligence</h2>
+      
       <p>Echolocative Intelligence treats your awareness as a sensing instrument :: Ping :: Echo :: Direction.</p>
+      
       <p>You act or attend :: that is your Ping. The world responds :: that is your Echo. You choose your Direction based on what you notice.</p>
-
-      <!-- Ground Crew Handbook anchor -->
-      <section id="ground-crew" aria-labelledby="heading-groundcrew">
-        <h3 id="heading-groundcrew">Ground Crew Handbook</h3>
+      
+      <p>This is the same basic principle that guides many living systems :: bats reading airspace :: humans reading emotional space :: teams reading cultural space.</p>
+      
+      <p>E.I. treats everyday experience as data for navigation :: not for self-judgment.</p>
+      
+      <p>You are not trying to solve yourself. You are learning how to move with more accuracy, ease, and coherence.</p>
+      
+      <!-- Ground Crew Handbook -->
+      <div id="ground-crew">
+        <h3>Ground Crew Handbook</h3>
         <p>These principles keep Terminal E.I. simple and clear:</p>
         <ol>
           <li>The Terminal serves clarity.</li>
           <li>Keep the experience light.</li>
           <li>Build local-first.</li>
-          <li>Use “::” as direction.</li>
+          <li>Use "::" as direction.</li>
           <li>Verbs are functional and distinct.</li>
           <li>HTML first, CSS for shape, JS only when needed.</li>
           <li>Maintain a grounded, plain tone.</li>
@@ -971,416 +251,68 @@
           <li>Build for curiosity and learnability.</li>
           <li>Preserve the purpose :: support awareness.</li>
         </ol>
-
-        <h4>Alt-Text in Terminal E.I. :: Ground Crew Guide</h4>
-        <p>Alt-text in this terminal is a teaching layer.</p>
-        <p>It serves three purposes:</p>
-        <ol>
-          <li>Describe the element clearly.</li>
-          <li>Offer one simple insight about awareness or navigation.</li>
-          <li>Stay readable to someone visiting for the first time.</li>
-        </ol>
-        <p>When you write alt-text here:</p>
-        <ol>
-          <li>Stay plain :: use everyday language, no jargon.</li>
-          <li>Name the object :: say what it is.</li>
-          <li>Share one truth :: what this element helps the traveler notice or do.</li>
-          <li>Keep it self-contained :: each line should make sense on its own.</li>
-          <li>Align with Ping :: Echo :: Direction when possible.</li>
-          <li>Use <code>.visually-hidden</code> for teaching lines near the element.</li>
-        </ol>
-        <p>If you follow these guidelines, the alt-text will act like a quiet guide for anyone using a screen reader and a hidden decoder ring for anyone who inspects the code.</p>
-      </section>
+      </div>
     </section>
 
-    <!-- 11. ABOUT SECTION -->
+    <!-- 09. ABOUT -->
     <section id="about" aria-labelledby="heading-about">
-      <h2 id="heading-about">About the Creator :: Purpose of E.I. International</h2>
-
-      <!-- Placard Edition -->
-      <section id="about-placard" aria-labelledby="heading-aboutplacard">
-        <h3 id="heading-aboutplacard">Gate Placard :: About the Creator</h3>
-
-        <!-- Symbolic mark or small glyph -->
-        <div id="about-mark" aria-hidden="true">
-          <span class="visually-hidden">
-            A small symbol representing the creator of this terminal and the care behind its design.
-          </span>
-        </div>
-
+      <h2 id="heading-about">About the Creator</h2>
+      
+      <div id="about-placard">
+        <div id="about-mark" aria-hidden="true"></div>
+        
         <p><strong>Name</strong><br>
-          Kamau Zuberi Akabueze<br>
-          People call me KzA.</p>
-
+        Kamau Zuberi Akabueze<br>
+        People call me KzA.</p>
+        
         <p><strong>Work</strong><br>
-          I guide people in finding clarity, direction, and confidence in their creative lives.  
-          I have supported creative individuals and teams for more than 18 years.</p>
-
+        I guide people in finding clarity, direction, and confidence in their creative lives.
+        I have supported creative individuals and teams for more than 18 years.</p>
+        
         <p><strong>Purpose of E.I. International</strong><br>
-          I built this terminal as a place where anyone can pause, check in with themselves,  
-          and move forward with a clearer sense of direction.</p>
-
+        I built this terminal as a place where anyone can pause, check in with themselves,
+        and move forward with a clearer sense of direction.</p>
+        
         <p><strong>How E.I. Works</strong><br>
-          You arrived here with a vibe.<br>
-          That vibe creates a choice.<br>
-          You choose a verb.<br>
-          You notice what changes.<br>
-          You sort what matters.<br>
-          You leave with a clearer signal.</p>
-
+        You arrived here with a vibe.<br>
+        That vibe creates a choice.<br>
+        You choose a verb.<br>
+        You notice what changes.<br>
+        You sort what matters.<br>
+        You leave with a clearer signal.</p>
+        
         <p><strong>Why I Built This</strong><br>
-          People move fast.  
-          This terminal gives you enough space to hear yourself again.</p>
-
+        People move fast. This terminal gives you enough space to hear yourself again.</p>
+        
         <p><strong>Connection to The Alien Scool for Creative Thinking (tÅs)</strong><br>
-          tÅs is the larger learning environment I created.  
-          It supports people who want to think more creatively,  
-          understand their potential,  
-          and bring meaningful ideas into the world.</p>
-
+        tÅs is the larger learning environment I created.
+        It supports people who want to think more creatively,
+        understand their potential,
+        and bring meaningful ideas into the world.</p>
+        
         <p><strong>Direction</strong><br>
-          Continue at your own pace.  
-          You already know where you are heading.</p>
-      </section>
-
-      <!-- Long-form About -->
-      <section id="about-full" aria-labelledby="heading-aboutfull">
-        <h3 id="heading-aboutfull">About the Creator :: Long Form</h3>
-        <p>My name is Kamau Zuberi Akabueze. People call me KzA. I live and work at the intersection of creativity, clarity, and human potential.</p>
-        <p>For more than 18 years, I have guided creative individuals and teams in finding direction, strengthening intuition, and unlocking the work only they can bring into the world.</p>
-        <p>E.I. International is a simple, structured way to practice awareness as navigation. You begin with a word, choose a verb, notice what changes, and sort what matters.</p>
-        <p>The Alien Scool for Creative Thinking (tÅs) is the broader ecosystem that supports people who want to deepen this practice, learn how creative thinking works, and design experiences that respect human attention.</p>
-        <p>You do not need to know anything about me or tÅs to use this terminal. It stands on its own. If this environment resonates with you, tÅs is available as a next step.</p>
-      </section>
+        Continue at your own pace. You already know where you are heading.</p>
+      </div>
     </section>
 
   </main>
 
-  <footer aria-label="Terminal Footer">
-    <p>If this flight moved you, there is a room in San Francisco that listens back.  
-      1000 Ways to Sit is an acoustic continuation of this journey.</p>
-    <p>Built with care :: <a href="https://playhtml.fun" target="_blank" rel="noreferrer">PlayHTML.fun</a></p>
-    <p>Field Research :: THE ÅLïEN SCõÖL for Creative Thïnking</p>
+  <!-- ============================================ -->
+  <!-- FOOTER -->
+  <!-- ============================================ -->
+  
+  <footer>
+    <p>If this flight moved you, there is a room in San Francisco where bronze sings at 8Hz.</p>
+    <p><strong>1000 Ways to Sit</strong> :: The acoustic continuation of this journey.<br>
+    Heron Arts, 7 Heron Street, San Francisco</p>
     <p><a href="#top">Return to top</a></p>
   </footer>
 
-  <script>
-    "use strict";
+  <!-- ============================================ -->
+  <!-- JAVASCRIPT -->
+  <!-- ============================================ -->
+  
+  <script src="ei.js"></script>
 
-    /**
-     * Echolocative Intelligence International :: Core Script
-     * Local-first :: minimal :: view-source friendly
-     */
-
-    /* UTILITIES --------------------------------------------------------------- */
-
-    function eiSave(key, value) {
-      try {
-        localStorage.setItem(key, JSON.stringify(value));
-      } catch (e) {}
-    }
-
-    function eiLoad(key, fallback = null) {
-      try {
-        const raw = localStorage.getItem(key);
-        return raw ? JSON.parse(raw) : fallback;
-      } catch (e) {
-        return fallback;
-      }
-    }
-
-    // Record session start time if not already set
-    if (!eiLoad("ei_session_start", "")) {
-      eiSave("ei_session_start", new Date().toISOString());
-    }
-
-    /* TERMINAL NOTES ---------------------------------------------------------- */
-
-    // Core Terminal Note set (your curated selects)
-    const terminalNotes = [
-      "You already arrived with everything you need.",
-      "You are your own lighthouse. Your echo is the beam.",
-      "Your awareness travels faster than your questions.",
-      "Every traveler arrives as a frequency.",
-      "The most important part of navigation is recognizing where you already are.",
-      "Small clarity becomes big clarity when repeated.",
-      "Choose the verb that feels alive.",
-      "Land gently.",
-      "Everything teaches.",
-      "Every traveler brings a signal worth hearing.",
-      "Every PING carries its own direction.",
-      "Most clarity happens between steps.",
-      "Your echo is telling you everything you need to know.",
-      "You set the conditions, even when the moment sets the scene.",
-      "Thought is raw matterïal. Shape it gently.",
-      "Resonance starts where your signal becomes honest."
-    ];
-
-    // Humor Edition v2.1 for Vinyl Lounge flipboard
-    const humorNotes = [
-      "Your awareness is early. Your thoughts are running to catch up.",
-      "Your echo returns faster when you are hydrated.",
-      "Small clarity today. Big clarity tomorrow. Same flight path.",
-      "Even your confusion has frequent-flyer status.",
-      "Your next insight is stretching before takeoff.",
-      "Everyone in here is learning something… even the floor.",
-      "Your PING did not hesitate. That is a good sign.",
-      "You are probably closer to clarity than your mind thinks.",
-      "Half your breakthroughs happen when you are not aiming at them.",
-      "This terminal has seen wilder transformations than this one."
-    ];
-
-    // One-time Terminal Note on first arrival
-    function showTerminalNoteOnce() {
-      const seen = eiLoad("ei_seen_terminal_note", false);
-      if (seen) return;
-
-      eiSave("ei_seen_terminal_note", true);
-
-      const noteText = terminalNotes[Math.floor(Math.random() * terminalNotes.length)];
-      const zone = document.createElement("div");
-      zone.className = "terminal-note";
-      zone.textContent = noteText;
-      document.body.appendChild(zone);
-
-      setTimeout(() => {
-        zone.style.opacity = "0";
-        zone.style.transition = "opacity 0.4s ease";
-        setTimeout(() => zone.remove(), 400);
-      }, 7000);
-    }
-
-    window.addEventListener("load", () => {
-      setTimeout(showTerminalNoteOnce, 3500);
-    });
-
-    /* 1. BOARDING PING -------------------------------------------------------- */
-
-    const pingForm = document.getElementById("ping-form");
-    const boardingPingInput = document.getElementById("boarding-ping");
-    const pingConfirm = document.getElementById("ping-confirm");
-
-    pingForm?.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const ping = boardingPingInput.value.trim();
-      if (!ping) return;
-
-      eiSave("ei_boarding_ping", ping);
-      pingConfirm.textContent = `Boarding PING :: “${ping}” saved.`;
-      boardingPingInput.value = "";
-
-      setTimeout(() => {
-        pingConfirm.textContent = "";
-      }, 2600);
-    });
-
-    /* 2. VERB SELECTION ------------------------------------------------------- */
-
-    const verbButtons = document.querySelectorAll(".verb-card");
-
-    verbButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const verb = btn.dataset.verb;
-        if (!verb) return;
-
-        eiSave("ei_selected_verb", verb);
-
-        verbButtons.forEach((b) => b.classList.remove("selected-verb"));
-        btn.classList.add("selected-verb");
-      });
-    });
-
-    /* 3. IN-FLIGHT PROMPTS ---------------------------------------------------- */
-
-    const boardBtn = document.getElementById("board-now");
-    const inFlightPrompt = document.getElementById("in-flight-prompt");
-
-    const verbPrompts = {
-      sense:
-        "Let your awareness rest on breath, sound, or sensation. Notice without explaining. What is present when you no longer try to solve it?",
-      catch:
-        "Something keeps returning. A thought, an image, a feeling. Let yourself actually see it this time.",
-      name:
-        "There is a pattern here. It might be old. It might be simple. Say what it actually is, in plain words.",
-      move:
-        "Where in your body or day wants to shift? What small adjustment would create more space? Make that move.",
-      tune:
-        "You feel slightly off-frequency. A small adjustment can change that. What minor change brings you closer to resonance?",
-      open:
-        "You have been holding something with extra tension. Where do you feel that? Let that space expand just a little.",
-      shift:
-        "You are between two states :: the previous one is fading and the next one is forming. Let yourself rest in that in-between for a moment."
-    };
-
-    boardBtn?.addEventListener("click", () => {
-      const ping = eiLoad("ei_boarding_ping", "");
-      const verb = eiLoad("ei_selected_verb", "");
-
-      const greeting = ping || verb
-        ? `You boarded with :: ${ping || "no word given"} :: and you travel with :: ${verb || "no verb selected"}.`
-        : "You are in the cabin now. You can still choose a verb and add a PING any time.";
-
-      const prompt =
-        verbPrompts[verb] ||
-        "Take this moment to notice what is present in your awareness. You can adjust your route at any time.";
-
-      if (inFlightPrompt) {
-        inFlightPrompt.innerHTML = `
-          <p>${greeting}</p>
-          <p style="margin-top:1.5rem;">${prompt}</p>
-        `;
-        window.location.hash = "#in-flight";
-      }
-    });
-
-    /* 4. CABIN NOTE ----------------------------------------------------------- */
-
-    const cabinNoteInput = document.getElementById("cabin-note");
-    const saveNoteBtn = document.getElementById("save-note");
-
-    saveNoteBtn?.addEventListener("click", () => {
-      const note = cabinNoteInput.value.trim();
-      if (!note) return;
-
-      eiSave("ei_cabin_note", note);
-      cabinNoteInput.value = "";
-
-      const original = saveNoteBtn.textContent;
-      saveNoteBtn.textContent = "Note saved :: placed in your seat pocket.";
-      setTimeout(() => {
-        saveNoteBtn.textContent = original;
-      }, 2200);
-    });
-
-    /* 5. LANDING PING --------------------------------------------------------- */
-
-    const landingInput = document.getElementById("landing-ping");
-    const saveLandingBtn = document.getElementById("save-landing");
-
-    saveLandingBtn?.addEventListener("click", () => {
-      const landing = landingInput.value.trim();
-      if (!landing) return;
-
-      eiSave("ei_landing_ping", landing);
-      landingInput.value = "";
-
-      const original = saveLandingBtn.textContent;
-      saveLandingBtn.textContent = "Landing PING saved :: arrival noted.";
-      setTimeout(() => {
-        saveLandingBtn.textContent = original;
-      }, 2200);
-    });
-
-    /* 6. BAGGAGE CLAIM -------------------------------------------------------- */
-
-    const baggageList = document.getElementById("baggage-list");
-
-    function populateBaggage() {
-      if (!baggageList) return;
-
-      const items = [
-        { label: "Boarding PING", value: eiLoad("ei_boarding_ping", "") },
-        { label: "Verb", value: eiLoad("ei_selected_verb", "") },
-        { label: "Cabin Note", value: eiLoad("ei_cabin_note", "") },
-        { label: "Landing PING", value: eiLoad("ei_landing_ping", "") }
-      ];
-
-      baggageList.innerHTML = "";
-
-      items.forEach((item) => {
-        if (!item.value) return;
-
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <strong>${item.label} ::</strong> ${item.value}
-          <div class="baggage-options">
-            <button type="button" data-act="keep">Keep</button>
-            <button type="button" data-act="store">Store</button>
-            <button type="button" data-act="discard">Discard</button>
-            <button type="button" data-act="share">Share</button>
-          </div>
-        `;
-        baggageList.appendChild(li);
-      });
-    }
-
-    populateBaggage();
-
-    baggageList?.addEventListener("click", (e) => {
-      const target = e.target;
-      if (!(target instanceof HTMLElement)) return;
-      const action = target.dataset.act;
-      if (!action) return;
-
-      const item = target.closest("li");
-      if (!item) return;
-
-      item.style.opacity = "0.6";
-      target.textContent = action.toUpperCase();
-
-      const labelEl = item.querySelector("strong");
-      if (!labelEl) return;
-
-      const itemLabel = labelEl.textContent.replace(" ::", "");
-      const decisions = eiLoad("ei_baggage_decisions", {}) || {};
-      decisions[itemLabel] = action;
-      eiSave("ei_baggage_decisions", decisions);
-    });
-
-    /* 7. EXPORT JOURNEY ------------------------------------------------------- */
-
-    function exportJourney() {
-      const start = eiLoad("ei_session_start", "");
-      const end = new Date().toISOString();
-      const duration = start ? (new Date(end) - new Date(start)) / 1000 : null;
-
-      const journey = {
-        boarding_ping: eiLoad("ei_boarding_ping", ""),
-        verb: eiLoad("ei_selected_verb", ""),
-        cabin_note: eiLoad("ei_cabin_note", ""),
-        landing_ping: eiLoad("ei_landing_ping", ""),
-        baggage_decisions: eiLoad("ei_baggage_decisions", {}) || {},
-        session: {
-          start,
-          end,
-          duration_seconds: duration
-        }
-      };
-
-      const dataStr = JSON.stringify(journey, null, 2);
-      const blob = new Blob([dataStr], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `ei-journey-${journey.landing_ping || "in-flight"}.json`;
-      a.click();
-    }
-
-    const exportBtn = document.getElementById("export-journey");
-    exportBtn?.addEventListener("click", exportJourney);
-
-    /* 8. VINYL LOUNGE FLIPBOARD ---------------------------------------------- */
-
-    const loungeFlipBtn = document.getElementById("lounge-flip");
-    const loungeNoteEl = document.getElementById("lounge-note");
-
-    loungeFlipBtn?.addEventListener("click", () => {
-      if (!loungeNoteEl) return;
-      const next = humorNotes[Math.floor(Math.random() * humorNotes.length)];
-      loungeNoteEl.textContent = next;
-    });
-
-    /* 9. NEEDLE DROP BUTTON --------------------------------------------------- */
-
-    const needleDrop = document.getElementById("needle-drop");
-    needleDrop?.addEventListener("click", () => {
-      window.location.hash = "#check-in";
-      needleDrop.textContent = "Side A :: playing";
-      setTimeout(() => {
-        needleDrop.style.display = "none";
-      }, 2000);
-    });
-  </script>
 </body>
 </html>
