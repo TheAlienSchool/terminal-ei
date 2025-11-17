@@ -388,9 +388,67 @@ verbButtons.forEach((btn) => {
   });
 });
 
+// BREATH GUIDE with Timer
+let breathInterval = null;
+
+function startBreathGuide() {
+  const breathGuide = document.getElementById('breath-guide');
+  const breathOrb = breathGuide?.querySelector('.breath-orb');
+  const breathInstruction = breathGuide?.querySelector('.breath-instruction');
+  const breathTimer = breathGuide?.querySelector('.breath-timer');
+
+  if (!breathGuide || !breathOrb || !breathInstruction || !breathTimer) return;
+
+  breathGuide.style.display = 'block';
+
+  // Breath cycle: 4 seconds in, 4 seconds hold, 4 seconds out, 2 seconds pause = 14 seconds total
+  const breathCycle = [
+    { duration: 4, instruction: 'Breathe in through your nose...', phase: 'inhale' },
+    { duration: 4, instruction: 'Hold gently...', phase: 'hold' },
+    { duration: 4, instruction: 'Breathe out slowly...', phase: 'exhale' },
+    { duration: 2, instruction: 'Rest in the pause...', phase: 'pause' }
+  ];
+
+  let cycleIndex = 0;
+  let secondsRemaining = breathCycle[0].duration;
+
+  function updateBreath() {
+    const currentPhase = breathCycle[cycleIndex];
+    breathInstruction.textContent = currentPhase.instruction;
+    breathTimer.textContent = `${secondsRemaining}`;
+    breathOrb.setAttribute('data-phase', currentPhase.phase);
+
+    secondsRemaining--;
+
+    if (secondsRemaining < 0) {
+      cycleIndex = (cycleIndex + 1) % breathCycle.length;
+      secondsRemaining = breathCycle[cycleIndex].duration - 1;
+    }
+  }
+
+  // Start immediately
+  updateBreath();
+
+  // Clear any existing interval
+  if (breathInterval) clearInterval(breathInterval);
+
+  // Update every second
+  breathInterval = setInterval(updateBreath, 1000);
+}
+
 // 4. BOARDING (Board Now button)
 const boardBtn = document.getElementById('board-now');
 const inFlightPrompt = document.getElementById('in-flight-prompt');
+
+const verbWhispers = {
+  sense: "attune to subtle frequencies",
+  see: "witness inner landscapes",
+  hear: "listen to silence between tones",
+  move: "let vibration guide motion",
+  tune: "calibrate to resonance",
+  open: "expand into spaciousness",
+  shift: "allow transformation"
+};
 
 const verbPrompts = {
   sense: "Let your awareness rest in the Sound Infused Air. Notice the frequencies moving through the space and through your body. What is present when you stop trying to understand and simply sense?",
@@ -405,23 +463,33 @@ const verbPrompts = {
 boardBtn?.addEventListener('click', async () => {
   const ping = eiLoad('ei_boarding_ping', '');
   const verb = eiLoad('ei_selected_verb', '');
-  
+
   journeyState.hasBoarded = true;
 
-  const greeting = ping || verb
-    ? `You entered with :: ${ping || 'no vibration named'} :: and you explore through :: ${verb || 'no verbration chosen'}.`
-    : 'You are in the sanctuary now. You can still choose a verbration and name your arrival vibration any time.';
+  const verbCapitalized = verb ? verb.charAt(0).toUpperCase() + verb.slice(1) : '';
+  const whisper = verbWhispers[verb] || '';
+
+  const greeting = ping && verb
+    ? `You entered the sanctuary ${ping} :: and you are exploring the sanctuary ${verbCapitalized} to ${whisper}.`
+    : ping && !verb
+    ? `You entered the sanctuary ${ping}. You can choose a verbration to guide your exploration.`
+    : !ping && verb
+    ? `You are exploring the sanctuary ${verbCapitalized} to ${whisper}. You can name your arrival vibration any time.`
+    : 'You are in the sanctuary now. You can choose a verbration and name your arrival vibration any time.';
 
   const prompt = verbPrompts[verb] ||
     'Take this moment to notice what is present in the Sound Infused Air around you. You can adjust your exploration at any time.';
-  
+
   if (inFlightPrompt) {
     inFlightPrompt.innerHTML = `
       <p>${greeting}</p>
       <p style="margin-top:1.5rem;">${prompt}</p>
     `;
   }
-  
+
+  // Start breath guide
+  startBreathGuide();
+
   await advanceJourney('#in-flight', 4);
 });
 
@@ -559,6 +627,41 @@ document.getElementById('enter-sitting-room')?.addEventListener('click', enterSi
 async function enterSittingRoom() {
   const collectiveNotes = eiLoad('ei_collective_notes', []);
 
+  // Ambient sanctuary wisdom - these float among user contributions
+  const ambientWisdom = [
+    "Your arrival vibration carries more information than it seems.",
+    "Every guest enters with their own frequency.",
+    "The Gamelatron responds to collective presence.",
+    "Sound Infused Air reveals what silence contains.",
+    "Small shifts in resonance :: large shifts in awareness.",
+    "Every sitting position is a portal.",
+    "Sense your vibration :: choose your verbration.",
+    "The spaces between tones hold wisdom.",
+    "You are inside the instrument.",
+    "Bronze sings at frequencies that invite your presence.",
+    "The sanctuary welcomes whatever vibration you bring.",
+    "Listening and being listened to happen simultaneously.",
+    "Every surface becomes a resonating body.",
+    "We are concentric :: rippling outward from presence.",
+    "Take the time to comprehend your senses.",
+    "Echo-locative intelligence is activated by your arrival.",
+    "The silence between sounds holds its own intelligence.",
+    "You are instrument, artist, and art simultaneously.",
+    "Navigate by echo :: sense the spaces between tones.",
+    "We are glad that you arrived as you.",
+    "Your note becomes part of the field.",
+    "Where bronze sings, you listen. Where silence opens, you enter.",
+    "Sound Infused Air is intelligent and responsive.",
+    "The cognitive companion completes the somatic practice.",
+    "Reflection integrates what embodiment initiates.",
+    "You are learning to move through the invisible architecture of awareness."
+  ];
+
+  // Mix user contributions with ambient wisdom
+  const userNotes = collectiveNotes.map(n => ({ text: n.text, type: 'user' }));
+  const wisdom = ambientWisdom.slice(0, 8).map(w => ({ text: w, type: 'ambient' }));
+  const allNotes = [...userNotes, ...wisdom].sort(() => Math.random() - 0.5);
+
   // Create overlay
   const overlay = document.createElement('div');
   overlay.id = 'sitting-room-overlay';
@@ -566,10 +669,15 @@ async function enterSittingRoom() {
     <div class="sitting-room-container">
       <h2>The Sitting Room</h2>
       <p class="sitting-subtitle">Collective Resonance from the Sanctuary</p>
+      <p class="sitting-description">Wisdom from guests and the sanctuary field, floating together in vibrational presence.</p>
 
       <div class="collective-notes-display">
-        ${collectiveNotes.length > 0
-          ? collectiveNotes.map(n => `<div class="shared-note">"${n.text}"</div>`).join('')
+        ${allNotes.length > 0
+          ? allNotes.map(n => `
+            <div class="shared-note ${n.type === 'ambient' ? 'ambient-note' : 'user-note'}">
+              ${n.text}
+            </div>
+          `).join('')
           : '<p class="no-notes">The room awaits the first shared resonance...</p>'
         }
       </div>

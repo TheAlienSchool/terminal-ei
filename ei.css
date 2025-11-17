@@ -581,34 +581,60 @@ button:focus-visible {
    ============================================ */
 
 #breath-guide {
-  margin: 2rem auto;
+  margin: 2.5rem auto 3rem;
   text-align: center;
-  max-width: 200px;
+  max-width: 280px;
+  padding: 2rem 1.5rem;
+  background: rgba(6, 20, 18, 0.5);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
 }
 
 .breath-orb {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 1rem;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(212, 197, 160, 0.4), transparent);
   border: 2px solid rgba(212, 197, 160, 0.6);
-  animation: breathCycle 14s ease-in-out infinite;
+  transition: all 1s ease-in-out;
 }
 
-@keyframes breathCycle {
-  0% { transform: scale(1); opacity: 0.6; }
-  28.5% { transform: scale(1.4); opacity: 1; } /* Inhale 4s */
-  42.8% { transform: scale(1.4); opacity: 1; } /* Hold 2s */
-  71.4% { transform: scale(1); opacity: 0.6; } /* Exhale 6s */
-  85.7% { transform: scale(1); opacity: 0.6; } /* Hold 2s */
-  100% { transform: scale(1); opacity: 0.6; }
+.breath-orb[data-phase="inhale"] {
+  transform: scale(1.4);
+  opacity: 1;
+  border-color: rgba(212, 197, 160, 0.9);
+}
+
+.breath-orb[data-phase="hold"] {
+  transform: scale(1.4);
+  opacity: 0.9;
+}
+
+.breath-orb[data-phase="exhale"] {
+  transform: scale(0.9);
+  opacity: 0.5;
+  border-color: rgba(212, 197, 160, 0.3);
+}
+
+.breath-orb[data-phase="pause"] {
+  transform: scale(1);
+  opacity: 0.6;
 }
 
 .breath-instruction {
-  font-size: 0.85rem;
-  color: var(--muted);
+  font-size: 0.9rem;
+  color: var(--accent);
   font-style: italic;
+  margin: 0.5rem 0;
+}
+
+.breath-timer {
+  font-size: 2rem;
+  color: var(--accent);
+  font-weight: 300;
+  margin: 1rem 0 0;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ============================================
@@ -960,7 +986,16 @@ footer a:focus-visible {
   text-align: center;
   color: var(--muted);
   font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.sitting-description {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-style: italic;
   margin-bottom: 2.5rem;
+  opacity: 0.8;
 }
 
 .collective-notes-display {
@@ -976,7 +1011,19 @@ footer a:focus-visible {
   font-size: 0.95rem;
   line-height: 1.8;
   color: var(--fg);
+}
+
+.user-note {
   font-style: italic;
+  border-left-color: rgba(212, 197, 160, 0.8);
+  background: rgba(6, 20, 18, 0.7);
+}
+
+.ambient-note {
+  font-style: normal;
+  border-left-color: rgba(212, 197, 160, 0.4);
+  background: rgba(6, 20, 18, 0.4);
+  color: rgba(245, 247, 243, 0.85);
 }
 
 .no-notes {
