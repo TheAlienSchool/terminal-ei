@@ -331,14 +331,14 @@ async function enterReflectionMode() {
 // EVENT HANDLERS
 // ============================================
 
-// 1. NEEDLE DROP
+// 1. PRESENCE ACTIVATION
 const needleDrop = document.getElementById('needle-drop');
 needleDrop?.addEventListener('click', async () => {
   journeyState.hasDroppedNeedle = true;
-  needleDrop.textContent = 'Side A :: playing';
-  needleDrop.style.opacity = '0.5';
+  needleDrop.textContent = 'You Are Here';
+  needleDrop.style.opacity = '0.7';
   needleDrop.style.pointerEvents = 'none';
-  
+
   await advanceJourney('#check-in', 1);
 });
 
