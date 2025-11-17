@@ -80,7 +80,6 @@
     <!-- 00. ARRIVAL -->
     <section id="curbside" aria-labelledby="heading-curbside">
       <h2 id="heading-curbside">Welcome to 1000 Ways to Sit</h2>
-      <p class="subtitle">Terminal E.I. :: The Echo-locative threshold of your Sonic Sanctuary visit</p>
       <p>You are arriving at a space where Indonesian Gamelan frequencies sing, and every surface becomes a throne for your contemplative visit. This digital companion catalogs the experiential journey of guests exploring the Sound Infused Air in this Gamelatron Sonic Sanctuary.</p>
       <p>Sound Infused Air intelligently rippling through 1000 Ways to Sit at Heron Arts.</p>
       <p>Before you visit, after you depart, and as you integrate: this is your space to sense the vibrations moving with you.</p>
@@ -228,13 +227,18 @@
 
     <!-- 06. SANCTUARY ARTIFACTS -->
     <section id="baggage-claim" aria-labelledby="heading-baggage">
-      <h2 id="heading-baggage">Sanctuary Artifacts :: You Are The Art Here</h2>
-      <p class="art-statement">Access What Traveled With You</p>
-      <p>Tag each sonic artifact :: Keep • Reflect • Release • Share</p>
+      <h2 id="heading-baggage">Your Journey :: You Are The Art Here</h2>
+      <p class="art-statement">What traveled with you through the sanctuary</p>
 
-      <ul id="baggage-list" aria-label="Sanctuary artifacts">
-        <!-- Items will be injected here by JS -->
-      </ul>
+      <div id="journey-summary" aria-label="Journey summary">
+        <!-- Journey summary will be injected here by JS -->
+      </div>
+
+      <div id="journey-actions">
+        <button id="reflection-btn" type="button">Reflect on This Journey</button>
+        <button id="share-note-btn" type="button">Share My Sonic Note</button>
+        <button id="export-btn" type="button">Export Journey Data</button>
+      </div>
     </section>
 
     <!-- 07. THE SITTING ROOM -->
@@ -242,10 +246,7 @@
       <h2 id="heading-sitting">The Sitting Room :: Collective Resonance</h2>
       <p>This is a quiet space for shared reflections from the sanctuary. When guests choose to share their Sonic Notes, they contribute to the audible flow of 1000 Ways to Sit.</p>
 
-      <div id="shared-notes" class="radiating-notes">
-        <p class="sitting-intro">Sonic Notes radiate here, creating a field of collective presence.</p>
-        <p>As guests share their experiences, this space fills with the resonance of many ways to sit, sense, and return.</p>
-      </div>
+      <button id="enter-sitting-room" type="button">Enter The Sitting Room</button>
     </section>
 
     <!-- 08. MANIFESTO -->

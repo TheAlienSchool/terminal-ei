@@ -118,7 +118,7 @@ body {
   font-family: var(--font-sans);
   background: radial-gradient(circle at top, #091c19 0, var(--bg) 52%);
   color: var(--fg);
-  line-height: 1.6;
+  line-height: 1.8;
   position: relative;
   min-height: 100vh;
 }
@@ -332,7 +332,7 @@ header nav a:focus-visible {
    ============================================ */
 
 section {
-  padding-block: 2.5rem;
+  padding-block: 4rem;
   border-bottom: 1px solid rgba(148, 163, 165, 0.22);
   position: relative;
 }
@@ -345,21 +345,24 @@ section > h2 {
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  margin: 0 0 0.75rem;
+  margin: 0 0 2rem;
   font-weight: 600;
+  color: var(--accent);
 }
 
 section > p {
-  margin-block: 0.35rem;
-  max-width: 55ch;
+  margin-block: 1.2rem;
+  max-width: 68ch;
+  line-height: 1.9;
 }
 
 section > h3 {
   font-size: 0.92rem;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  margin: 1.5rem 0 0.5rem;
+  margin: 2.5rem 0 1.5rem;
   font-weight: 600;
+  color: var(--accent);
 }
 
 /* Section Divider */
@@ -612,49 +615,52 @@ button:focus-visible {
    BAGGAGE CLAIM
    ============================================ */
 
-#baggage-list {
-  list-style: none;
-  margin: 1rem 0;
-  padding: 0;
+#journey-summary {
+  margin: 2rem 0 3rem;
   max-width: 640px;
 }
 
-#baggage-list li {
-  padding: 0.7rem 0.8rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-subtle);
-  background: var(--card-bg-soft);
-  margin-bottom: 0.55rem;
-  transition: all 0.3s ease;
+.journey-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 1.2rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 2rem;
 }
 
-#baggage-list li strong {
+.journey-item:first-child {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.journey-label {
   font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  min-width: 140px;
 }
 
-.baggage-options {
-  margin-top: 0.45rem;
+.journey-value {
+  font-size: 1rem;
+  color: var(--accent);
+  font-weight: 500;
+  text-align: right;
+  flex: 1;
+}
+
+#journey-actions {
+  margin-top: 2.5rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 1rem;
 }
 
-.baggage-options button {
-  padding: 0.18rem 0.6rem;
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
+#journey-actions button {
+  padding: 0.7rem 1.5rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  border-radius: 999px;
-  border: 1px solid var(--border-subtle);
-  background: transparent;
-  color: var(--muted);
-  transition: all 0.2s ease;
-}
-
-.baggage-options button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: rgba(212, 197, 160, 0.08);
+  letter-spacing: 0.1em;
 }
 
 /* ============================================
@@ -730,7 +736,9 @@ button:focus-visible {
    ============================================ */
 
 #manifesto p {
-  max-width: 60ch;
+  max-width: 70ch;
+  margin-block: 1.3rem;
+  line-height: 1.95;
 }
 
 #ground-crew {
@@ -781,7 +789,8 @@ button:focus-visible {
 }
 
 #about-placard p {
-  margin-block: 0.35rem;
+  margin-block: 1.2rem;
+  line-height: 1.9;
 }
 
 #about-placard strong {
@@ -795,13 +804,14 @@ button:focus-visible {
 
 footer {
   border-top: 1px solid var(--border-subtle);
-  padding-block: 1.4rem 2.2rem;
+  padding-block: 2.5rem 3rem;
   font-size: 0.85rem;
   color: var(--muted);
 }
 
 footer p {
-  margin: 0.5rem 0;
+  margin: 1rem 0;
+  line-height: 1.8;
 }
 
 footer a {
@@ -893,6 +903,96 @@ footer a:focus-visible {
   margin: 0;
   font-weight: 300;
   letter-spacing: 0.05em;
+}
+
+/* ============================================
+   SITTING ROOM OVERLAY
+   ============================================ */
+
+#sitting-room-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 10, 8, 0.96);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  backdrop-filter: blur(8px);
+}
+
+#sitting-room-overlay.visible {
+  opacity: 1;
+}
+
+.sitting-room-container {
+  max-width: 700px;
+  max-height: 80vh;
+  padding: 3rem 2.5rem;
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-soft);
+  overflow-y: auto;
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sitting-room-container h2 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+
+.sitting-subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 2.5rem;
+}
+
+.collective-notes-display {
+  margin: 2rem 0 3rem;
+}
+
+.shared-note {
+  padding: 1.5rem 1.2rem;
+  margin-bottom: 1.2rem;
+  background: rgba(6, 20, 18, 0.6);
+  border-left: 2px solid var(--accent);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--fg);
+  font-style: italic;
+}
+
+.no-notes {
+  text-align: center;
+  color: var(--muted);
+  font-style: italic;
+  padding: 3rem 2rem;
+}
+
+#close-sitting-room {
+  display: block;
+  margin: 0 auto;
+  padding: 0.8rem 2rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 /* ============================================

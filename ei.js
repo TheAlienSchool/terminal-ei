@@ -471,78 +471,39 @@ saveLandingBtn?.addEventListener('click', async () => {
 });
 
 // 7. BAGGAGE CLAIM
-const baggageList = document.getElementById('baggage-list');
+const journeySummary = document.getElementById('journey-summary');
 
 function populateBaggage() {
-  if (!baggageList) return;
-  
-  const items = [
-    { label: 'Arrival Vibration', value: eiLoad('ei_boarding_ping', '') },
-    { label: 'Verbration', value: eiLoad('ei_selected_verb', '') },
-    { label: 'Sonic Note', value: eiLoad('ei_cabin_note', '') },
-    { label: 'Departure Resonance', value: eiLoad('ei_landing_ping', '') }
-  ];
-  
-  baggageList.innerHTML = '';
-  
-  items.forEach((item) => {
-    if (!item.value) return;
-    
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <strong>${item.label} ::</strong> ${item.value}
-      <div class="baggage-options">
-        <button type="button" data-act="keep" data-item="${item.label}">Keep</button>
-        <button type="button" data-act="reflect" data-item="${item.label}">Reflect</button>
-        <button type="button" data-act="release" data-item="${item.label}">Release</button>
-        <button type="button" data-act="share" data-item="${item.label}">Share</button>
-      </div>
-    `;
-    baggageList.appendChild(li);
-  });
-}
+  if (!journeySummary) return;
 
-// Baggage decision handling
-baggageList?.addEventListener('click', (e) => {
-  const target = e.target;
-  if (!(target instanceof HTMLElement)) return;
-  
-  const action = target.dataset.act;
-  const itemLabel = target.dataset.item;
-  if (!action || !itemLabel) return;
-  
-  const item = target.closest('li');
-  if (!item) return;
-  
-  // Visual feedback
-  item.style.opacity = '0.6';
-  target.textContent = action.toUpperCase();
-  
-  // Store decision
-  const decisions = eiLoad('ei_baggage_decisions', {});
-  decisions[itemLabel] = action;
-  eiSave('ei_baggage_decisions', decisions);
-  
-  // If sharing sonic note, add to collective
-  if (action === 'share' && itemLabel === 'Sonic Note') {
-    const note = eiLoad('ei_cabin_note', '');
-    if (note) {
-      addToCollectivePool(note);
-      item.style.borderColor = 'var(--accent)';
-    }
-  }
-  
-  // Check if all items have been sorted
-  checkJourneyComplete();
-});
+  const arrival = eiLoad('ei_boarding_ping', '');
+  const verb = eiLoad('ei_selected_verb', '');
+  const note = eiLoad('ei_cabin_note', '');
+  const departure = eiLoad('ei_landing_ping', '');
 
-function checkJourneyComplete() {
-  const decisions = eiLoad('ei_baggage_decisions', {});
-  const decisionCount = Object.keys(decisions).length;
-  
-  // If at least 3 items have been sorted, mark journey complete
-  if (decisionCount >= 3 && !journeyState.hasSortedBaggage) {
+  journeySummary.innerHTML = `
+    <div class="journey-item">
+      <span class="journey-label">Arrival Vibration</span>
+      <span class="journey-value">${arrival || '—'}</span>
+    </div>
+    <div class="journey-item">
+      <span class="journey-label">Chosen Verbration</span>
+      <span class="journey-value">${verb ? verb.toUpperCase() : '—'}</span>
+    </div>
+    <div class="journey-item">
+      <span class="journey-label">Sonic Note</span>
+      <span class="journey-value">"${note || '—'}"</span>
+    </div>
+    <div class="journey-item">
+      <span class="journey-label">Departure Resonance</span>
+      <span class="journey-value">${departure || '—'}</span>
+    </div>
+  `;
+
+  // Mark journey as sorted and save to history
+  if (!journeyState.hasSortedBaggage && arrival && verb && note && departure) {
     journeyState.hasSortedBaggage = true;
+    updateProgressIndicator(6);
     saveJourneyToHistory();
     showCompletionOptions();
   }
@@ -559,33 +520,85 @@ function showCompletionOptions() {
     sittingRoom.style.display = 'block';
     sittingRoom.classList.add('arriving');
   }
-  
+
   if (manifesto) {
     manifesto.style.display = 'block';
   }
-  
+
   if (about) {
     about.style.display = 'block';
   }
-  
+
   if (footer) {
     footer.style.display = 'block';
   }
-  
-  // Add completion buttons
-  const baggageSection = document.querySelector('#baggage-claim');
-  if (baggageSection && !document.querySelector('#reflection-btn')) {
-    const completionDiv = document.createElement('div');
-    completionDiv.style.marginTop = '2rem';
-    completionDiv.innerHTML = `
-      <button id="reflection-btn" type="button" style="margin-right: 1rem;">Reflect on This Journey</button>
-      <button id="export-btn" type="button">Export Your Journey</button>
-    `;
-    baggageSection.appendChild(completionDiv);
-    
-    document.getElementById('reflection-btn')?.addEventListener('click', enterReflectionMode);
-    document.getElementById('export-btn')?.addEventListener('click', exportJourney);
+}
+
+// Wire up journey action buttons
+document.getElementById('reflection-btn')?.addEventListener('click', enterReflectionMode);
+document.getElementById('export-btn')?.addEventListener('click', exportJourney);
+document.getElementById('share-note-btn')?.addEventListener('click', () => {
+  const note = eiLoad('ei_cabin_note', '');
+  if (note) {
+    addToCollectivePool(note);
+    const btn = document.getElementById('share-note-btn');
+    if (btn) {
+      const original = btn.textContent;
+      btn.textContent = 'Shared to The Sitting Room ✓';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.disabled = false;
+      }, 3000);
+    }
   }
+});
+document.getElementById('enter-sitting-room')?.addEventListener('click', enterSittingRoom);
+
+// 8. THE SITTING ROOM (Overlay Environment)
+async function enterSittingRoom() {
+  const collectiveNotes = eiLoad('ei_collective_notes', []);
+
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'sitting-room-overlay';
+  overlay.innerHTML = `
+    <div class="sitting-room-container">
+      <h2>The Sitting Room</h2>
+      <p class="sitting-subtitle">Collective Resonance from the Sanctuary</p>
+
+      <div class="collective-notes-display">
+        ${collectiveNotes.length > 0
+          ? collectiveNotes.map(n => `<div class="shared-note">"${n.text}"</div>`).join('')
+          : '<p class="no-notes">The room awaits the first shared resonance...</p>'
+        }
+      </div>
+
+      <button id="close-sitting-room" type="button">Return to Journey</button>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  // Animate in
+  await wait(100);
+  overlay.classList.add('visible');
+
+  // Close button
+  document.getElementById('close-sitting-room')?.addEventListener('click', async () => {
+    overlay.classList.remove('visible');
+    await wait(400);
+    overlay.remove();
+  });
+
+  // Click outside to close
+  overlay.addEventListener('click', async (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove('visible');
+      await wait(400);
+      overlay.remove();
+    }
+  });
 }
 
 // ============================================
