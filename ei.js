@@ -1,16 +1,16 @@
 /**
- * Terminal E.I. Complete JavaScript
- * Echolocative Intelligence International
- * 
+ * 1000 Ways to Arrive :: Complete JavaScript
+ * An Echo-locative Insights Survey in a Sonic Sanctuary
+ *
  * Features:
  * - Progressive disclosure (sections appear as you complete them)
- * - HÅRMONIOUS70 atmospheric responsiveness
- * - Collective cabin notes pool
- * - Returning traveler recognition
+ * - Sonic atmosphere responsiveness
+ * - Collective Sonic Notes pool
+ * - Returning guest recognition
  * - Journey export and history
  * - Reflection mode
  * - Time-of-day awareness
- * - Verb-specific atmospheres
+ * - Verbration-specific atmospheres
  */
 
 "use strict";
@@ -31,12 +31,12 @@ const journeyState = {
 
 const progressStages = [
   'arrival',
-  'check-in',
-  'gate',
-  'boarding',
-  'in-flight',
-  'landing',
-  'baggage'
+  'sensing',
+  'verbration',
+  'explore',
+  'sanctuary',
+  'departure',
+  'artifacts'
 ];
 
 let currentStageIndex = 0;
@@ -92,15 +92,15 @@ function setTimeOfDayAtmosphere() {
 function checkReturningTraveler() {
   const journeyHistory = eiLoad('ei_journey_history', []);
   const isReturning = journeyHistory.length > 0;
-  
+
   if (isReturning) {
     const lastJourney = journeyHistory[journeyHistory.length - 1];
     const welcomeHeading = document.querySelector('#curbside h2');
     const firstPara = document.querySelector('#curbside p:first-of-type');
-    
+
     if (welcomeHeading && firstPara) {
-      welcomeHeading.textContent = 'Welcome back';
-      firstPara.textContent = `Last time: ${lastJourney.boarding_ping || '—'} → ${lastJourney.landing_ping || '—'}. How do you arrive today?`;
+      welcomeHeading.textContent = 'Welcome back to 1000 Ways to Sit';
+      firstPara.textContent = `Last visit: ${lastJourney.boarding_ping || '—'} → ${lastJourney.landing_ping || '—'}. What vibration arrives with you today?`;
     }
   }
 }
@@ -202,19 +202,21 @@ function addToCollectivePool(noteText) {
 
 function getTerminalNote() {
   const staticNotes = [
-    "If you want to know where the mind is, check the log-in.",
-    "Your first word carries more information than it seems.",
-    "Every arrival has a reason, even if you do not see it yet.",
-    "Attention rearranges everything it focuses on.",
-    "Small clarity :: big movement.",
-    "Every traveler leaves a groove.",
-    "Check your signal :: then choose your route.",
-    "You can always board again with a new PING."
+    "Your arrival vibration carries more information than it seems.",
+    "Every guest enters with their own frequency.",
+    "The Gamelatron responds to collective presence.",
+    "Sound Infused Air reveals what silence contains.",
+    "Small shifts in resonance :: large shifts in awareness.",
+    "Every sitting position is a portal.",
+    "Sense your vibration :: choose your verbration.",
+    "You can always return with a new arrival state.",
+    "The spaces between tones hold wisdom.",
+    "You are inside the instrument."
   ];
-  
+
   const collectiveNotes = eiLoad('ei_collective_notes', []);
   const allNotes = [...staticNotes, ...collectiveNotes.map(n => n.text)];
-  
+
   return allNotes[Math.floor(Math.random() * allNotes.length)];
 }
 
@@ -285,10 +287,10 @@ async function enterReflectionMode() {
   
   const stages = [
     { label: 'You arrived with...', content: journey.boarding },
-    { label: 'You chose to...', content: journey.verb.toUpperCase() },
-    { label: 'You discovered...', content: `"${journey.note}"` },
-    { label: 'You landed at...', content: journey.landing },
-    { label: `${journey.boarding} → ${journey.landing}`, content: 'This is your arc.<br>This is your frequency.' }
+    { label: 'Your verbration was...', content: journey.verb.toUpperCase() },
+    { label: 'You sensed...', content: `"${journey.note}"` },
+    { label: 'You departed with...', content: journey.landing },
+    { label: `${journey.boarding} → ${journey.landing}`, content: 'This is your resonance.<br>This is your frequency.' }
   ];
   
   for (let i = 0; i < stages.length; i++) {
@@ -332,10 +334,10 @@ pingForm?.addEventListener('submit', async (e) => {
   
   eiSave('ei_boarding_ping', ping);
   journeyState.hasBoardingPing = true;
-  
-  pingConfirm.textContent = `Boarding PING :: "${ping}" saved.`;
+
+  pingConfirm.textContent = `Arrival Vibration :: "${ping}" sensed and saved.`;
   boardingPingInput.value = '';
-  
+
   setTimeout(() => {
     pingConfirm.textContent = '';
   }, 2600);
@@ -371,13 +373,13 @@ const boardBtn = document.getElementById('board-now');
 const inFlightPrompt = document.getElementById('in-flight-prompt');
 
 const verbPrompts = {
-  sense: "Let your awareness rest on breath, sound, or sensation. Notice without explaining. What is present when you no longer try to solve it?",
-  catch: "Something keeps returning. A thought, an image, a feeling. Let yourself actually see it this time.",
-  name: "There is a pattern here. It might be old. It might be simple. Say what it actually is, in plain words.",
-  move: "Where in your body or day wants to shift? What small adjustment would create more space? Make that move.",
-  tune: "You feel slightly off-frequency. A small adjustment can change that. What minor change brings you closer to resonance?",
-  open: "You have been holding something with extra tension. Where do you feel that? Let that space expand just a little.",
-  shift: "You are between two states :: the previous one is fading and the next one is forming. Let yourself rest in that in-between for a moment."
+  sense: "Let your awareness rest in the Sound Infused Air. Notice the frequencies moving through the space and through your body. What is present when you stop trying to understand and simply sense?",
+  see: "Close your eyes and witness the inner landscapes that emerge. What colors, shapes, or visions arise as the Gamelatron frequencies ripple through you? Let yourself see without judgment.",
+  hear: "Listen for the spaces between the bronze tones. The silence between sounds holds its own intelligence. What do you hear in the pauses, the echoes, the resonance fading?",
+  move: "Let the vibrations guide your body's micro-movements. Where does the sound want to move you? What subtle shifts in position change your relationship with the frequencies?",
+  tune: "You are an instrument being tuned by Sound Infused Air. What small internal adjustment brings you into resonance with the Gamelatron's frequency? Notice when you align.",
+  open: "The sonic field invites expansion. Where in your body, mind, or awareness can you create more space? Let the sound open what has been held closed.",
+  shift: "You are between frequencies :: the arrival state is dissolving and something new is forming. Rest in this liminal sonic space. Let the transformation happen without forcing."
 };
 
 boardBtn?.addEventListener('click', async () => {
@@ -385,13 +387,13 @@ boardBtn?.addEventListener('click', async () => {
   const verb = eiLoad('ei_selected_verb', '');
   
   journeyState.hasBoarded = true;
-  
+
   const greeting = ping || verb
-    ? `You boarded with :: ${ping || 'no word given'} :: and you travel with :: ${verb || 'no verb selected'}.`
-    : 'You are in the cabin now. You can still choose a verb and add a PING any time.';
-  
-  const prompt = verbPrompts[verb] || 
-    'Take this moment to notice what is present in your awareness. You can adjust your route at any time.';
+    ? `You entered with :: ${ping || 'no vibration named'} :: and you explore through :: ${verb || 'no verbration chosen'}.`
+    : 'You are in the sanctuary now. You can still choose a verbration and name your arrival vibration any time.';
+
+  const prompt = verbPrompts[verb] ||
+    'Take this moment to notice what is present in the Sound Infused Air around you. You can adjust your exploration at any time.';
   
   if (inFlightPrompt) {
     inFlightPrompt.innerHTML = `
@@ -416,8 +418,8 @@ saveNoteBtn?.addEventListener('click', async () => {
   
   cabinNoteInput.value = '';
   const original = saveNoteBtn.textContent;
-  saveNoteBtn.textContent = 'Note saved :: placed in your seat pocket.';
-  
+  saveNoteBtn.textContent = 'Sonic Note saved :: resonance captured.';
+
   setTimeout(() => {
     saveNoteBtn.textContent = original;
   }, 2200);
@@ -438,8 +440,8 @@ saveLandingBtn?.addEventListener('click', async () => {
   
   landingInput.value = '';
   const original = saveLandingBtn.textContent;
-  saveLandingBtn.textContent = 'Landing PING saved :: arrival noted.';
-  
+  saveLandingBtn.textContent = 'Departure Resonance saved :: frequency noted.';
+
   setTimeout(() => {
     saveLandingBtn.textContent = original;
   }, 2200);
@@ -455,10 +457,10 @@ function populateBaggage() {
   if (!baggageList) return;
   
   const items = [
-    { label: 'Boarding PING', value: eiLoad('ei_boarding_ping', '') },
-    { label: 'Verb', value: eiLoad('ei_selected_verb', '') },
-    { label: 'Cabin Note', value: eiLoad('ei_cabin_note', '') },
-    { label: 'Landing PING', value: eiLoad('ei_landing_ping', '') }
+    { label: 'Arrival Vibration', value: eiLoad('ei_boarding_ping', '') },
+    { label: 'Verbration', value: eiLoad('ei_selected_verb', '') },
+    { label: 'Sonic Note', value: eiLoad('ei_cabin_note', '') },
+    { label: 'Departure Resonance', value: eiLoad('ei_landing_ping', '') }
   ];
   
   baggageList.innerHTML = '';
@@ -471,8 +473,8 @@ function populateBaggage() {
       <strong>${item.label} ::</strong> ${item.value}
       <div class="baggage-options">
         <button type="button" data-act="keep" data-item="${item.label}">Keep</button>
-        <button type="button" data-act="store" data-item="${item.label}">Store</button>
-        <button type="button" data-act="discard" data-item="${item.label}">Discard</button>
+        <button type="button" data-act="reflect" data-item="${item.label}">Reflect</button>
+        <button type="button" data-act="release" data-item="${item.label}">Release</button>
         <button type="button" data-act="share" data-item="${item.label}">Share</button>
       </div>
     `;
@@ -501,8 +503,8 @@ baggageList?.addEventListener('click', (e) => {
   decisions[itemLabel] = action;
   eiSave('ei_baggage_decisions', decisions);
   
-  // If sharing cabin note, add to collective
-  if (action === 'share' && itemLabel === 'Cabin Note') {
+  // If sharing sonic note, add to collective
+  if (action === 'share' && itemLabel === 'Sonic Note') {
     const note = eiLoad('ei_cabin_note', '');
     if (note) {
       addToCollectivePool(note);
@@ -527,15 +529,15 @@ function checkJourneyComplete() {
 }
 
 function showCompletionOptions() {
-  // Show Vinyl Lounge and Manifesto
-  const vinylLounge = document.querySelector('#vinyl-lounge');
+  // Show Sitting Room and Manifesto
+  const sittingRoom = document.querySelector('#sitting-room');
   const manifesto = document.querySelector('#manifesto');
   const about = document.querySelector('#about');
   const footer = document.querySelector('footer');
-  
-  if (vinylLounge) {
-    vinylLounge.style.display = 'block';
-    vinylLounge.classList.add('arriving');
+
+  if (sittingRoom) {
+    sittingRoom.style.display = 'block';
+    sittingRoom.classList.add('arriving');
   }
   
   if (manifesto) {

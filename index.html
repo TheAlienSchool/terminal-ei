@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Echolocative Intelligence International :: Terminal E.I.</title>
+  <title>1000 Ways to Arrive :: An Echo-locative Insights Survey</title>
   <link rel="stylesheet" href="ei.css">
 </head>
 
@@ -18,15 +18,15 @@
     <div id="ei-mark" aria-label="E.I. International mark"></div>
     
     <div>
-      <h1>Echolocative Intelligence International</h1>
-      <p>Wayfinding :: The route to your genius :: Terminal E.I.</p>
+      <h1>1000 Ways to Arrive</h1>
+      <p>An Echo-locative Insights Survey :: In a San Francisco Sonic Sanctuary</p>
     </div>
     
     <nav aria-label="Main navigation">
       <ul>
-        <li><a href="#check-in">Check-In</a></li>
-        <li><a href="#gate-deck">Gate</a></li>
-        <li><a href="#baggage-claim">Baggage</a></li>
+        <li><a href="#check-in">Arrival</a></li>
+        <li><a href="#gate-deck">Verbration</a></li>
+        <li><a href="#sitting-room">Sitting Room</a></li>
         <li><a href="#manifesto">Manifesto</a></li>
         <li><a href="#about">About</a></li>
       </ul>
@@ -42,12 +42,12 @@
   
   <div id="journey-progress" aria-label="Journey progress">
     <div class="progress-stage" data-stage="arrival" title="Arrival"></div>
-    <div class="progress-stage" data-stage="check-in" title="Check-In"></div>
-    <div class="progress-stage" data-stage="gate" title="Gate"></div>
-    <div class="progress-stage" data-stage="boarding" title="Boarding"></div>
-    <div class="progress-stage" data-stage="in-flight" title="In-Flight"></div>
-    <div class="progress-stage" data-stage="landing" title="Landing"></div>
-    <div class="progress-stage" data-stage="baggage" title="Baggage"></div>
+    <div class="progress-stage" data-stage="sensing" title="Sensing"></div>
+    <div class="progress-stage" data-stage="verbration" title="Verbration"></div>
+    <div class="progress-stage" data-stage="explore" title="Explore"></div>
+    <div class="progress-stage" data-stage="sanctuary" title="Sanctuary"></div>
+    <div class="progress-stage" data-stage="departure" title="Departure"></div>
+    <div class="progress-stage" data-stage="artifacts" title="Artifacts"></div>
   </div>
 
   <!-- ============================================ -->
@@ -56,33 +56,35 @@
   
   <main>
 
-    <!-- 00. CURBSIDE ARRIVAL -->
+    <!-- 00. ARRIVAL -->
     <section id="curbside" aria-labelledby="heading-curbside">
-      <h2 id="heading-curbside">Curbside Arrival</h2>
-      <p>Welcome to Echolocative Intelligence International :: a terminal designed for wayfinding on your journey to your genius.</p>
-      <p>This space is built like a calm terminal :: clear lines, simple steps, and room to breathe.</p>
-      <p>We are here with each other.</p>
-      <p>Your journey begins with the note that is you.</p>
+      <h2 id="heading-curbside">Welcome to 1000 Ways to Sit</h2>
+      <p class="subtitle">Terminal E.I. :: The Echo-locative threshold of your Sonic Sanctuary visit</p>
+      <p>You are arriving at a space where Indonesian Gamelan frequencies sing, and every surface becomes a throne for your contemplative visit. This digital companion catalogs the experiential journey of guests exploring the Sound Infused Air in this Gamelatron Sonic Sanctuary.</p>
+      <p>Sound Infused Air intelligently rippling through 1000 Ways to Sit at Heron Arts.</p>
+      <p>Before you visit, after you depart, and as you integrate: this is your space to sense the vibrations moving with you.</p>
     </section>
 
-    <!-- 01. CHECK-IN :: BOARDING PING -->
+    <!-- 01. ARRIVAL STATE -->
     <section id="check-in" aria-labelledby="heading-checkin">
-      <h2 id="heading-checkin">Check-In :: Boarding PING</h2>
-      <p>Enter one word for how you are arriving right now.</p>
-      
+      <h2 id="heading-checkin">Arrival State :: What vibrations do you arrive with?</h2>
+      <p>As you steep into this Sonic Sanctuary, can you sense into your current state. Is there a word which represents the vibration present with you here at 1000 Ways to Sit?</p>
+      <p class="gentle-note">(If you have no vibe, feel free to say "No")</p>
+
       <form id="ping-form">
-        <label for="boarding-ping">Boarding PING</label>
-        <input id="boarding-ping" name="boarding-ping" type="text" autocomplete="off" placeholder="e.g. scattered">
-        <button type="submit">Save PING</button>
+        <label for="boarding-ping">Arrival Vibration</label>
+        <input id="boarding-ping" name="boarding-ping" type="text" autocomplete="off" placeholder="e.g. scattered, open, curious">
+        <button type="submit">Name My Vibration</button>
       </form>
-      
+
       <p id="ping-confirm" aria-live="polite"></p>
     </section>
 
-    <!-- 02. GATE :: VERB SELECTION -->
+    <!-- 02. VERBRATION :: INVITATION SELECTION -->
     <section id="gate-deck" aria-labelledby="heading-gatedeck">
-      <h2 id="heading-gatedeck">Gate :: Choose Your Seat (Verb)</h2>
-      <p>Pick the verb that feels most alive for you right now.</p>
+      <h2 id="heading-gatedeck">You Are Here to Verb :: To Be Inside of Your Experience</h2>
+      <p>Choose Your Invitation :: Sense Your Portal</p>
+      <p class="invitation-text">Let your opportunity awareness guide you. I Am Most Prepared To...</p>
       
       <div class="verb-grid" aria-label="Verb selection">
         
@@ -94,26 +96,29 @@
             <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="0.4 2.2" />
           </svg>
           <span class="verb-label">SENSE</span>
+          <span class="verb-whisper">Attune to subtle frequencies</span>
         </button>
         
-        <!-- CATCH -->
-        <button class="verb-card" data-verb="catch" type="button">
+        <!-- SEE -->
+        <button class="verb-card" data-verb="see" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
-            <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="1.4" />
-            <path d="M12 16 Q20 10 24 16 Q26 19 22 22 Q18 25 18 29" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            <ellipse cx="20" cy="20" rx="14" ry="9" fill="none" stroke="currentColor" stroke-width="1.6" />
+            <circle cx="20" cy="20" r="4" fill="currentColor" />
+            <circle cx="20" cy="20" r="2" fill="none" stroke="#F5F1E8" stroke-width="1" />
           </svg>
-          <span class="verb-label">CATCH</span>
+          <span class="verb-label">SEE</span>
+          <span class="verb-whisper">Witness inner landscapes</span>
         </button>
         
-        <!-- NAME -->
-        <button class="verb-card" data-verb="name" type="button">
+        <!-- HEAR -->
+        <button class="verb-card" data-verb="hear" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
-            <path d="M10 12 L10 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-            <path d="M30 12 L30 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-            <line x1="14" y1="20" x2="26" y2="20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-            <line x1="14" y1="26" x2="26" y2="26" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+            <path d="M8 20 Q8 20, 14 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M18 16 Q18 12, 22 12 Q26 12, 26 16 L26 24 Q26 28, 22 28 Q18 28, 18 24 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M14 14 Q14 10, 22 10 Q30 10, 30 14 L30 26 Q30 32, 22 32 Q14 32, 14 26" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
           </svg>
-          <span class="verb-label">NAME</span>
+          <span class="verb-label">HEAR</span>
+          <span class="verb-whisper">Listen to silence between tones</span>
         </button>
         
         <!-- MOVE -->
@@ -123,6 +128,7 @@
             <path d="M21 12 L26 12 L26 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
           <span class="verb-label">MOVE</span>
+          <span class="verb-whisper">Let vibration guide motion</span>
         </button>
         
         <!-- TUNE -->
@@ -133,6 +139,7 @@
             <path d="M8 20 C14 10, 26 30, 32 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
           </svg>
           <span class="verb-label">TUNE</span>
+          <span class="verb-whisper">Calibrate to resonance</span>
         </button>
         
         <!-- OPEN -->
@@ -144,6 +151,7 @@
             <path d="M30 10 L30 30" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="2 2" />
           </svg>
           <span class="verb-label">OPEN</span>
+          <span class="verb-whisper">Expand into spaciousness</span>
         </button>
         
         <!-- SHIFT -->
@@ -154,144 +162,170 @@
             <circle cx="20" cy="20" r="2.2" fill="currentColor" />
           </svg>
           <span class="verb-label">SHIFT</span>
+          <span class="verb-whisper">Allow transformation</span>
         </button>
         
       </div>
     </section>
 
-    <!-- 03. BOARDING -->
+    <!-- 03. EXPLORE -->
     <section id="boarding" aria-labelledby="heading-boarding">
-      <h2 id="heading-boarding">Boarding :: Flight EI-YOU</h2>
-      <p>When you are ready, bring your Boarding PING and your verb together.</p>
-      <button id="board-now" type="button">Board Now</button>
+      <h2 id="heading-boarding">Explore :: Enter Your Sanctuary State</h2>
+      <p>Bring your Arrival Vibration and your Present Verbration together. When you're ready, let them guide you deeper into presence.</p>
+      <button id="board-now" type="button">Begin Exploration</button>
     </section>
 
-    <!-- 04. IN-FLIGHT -->
+    <!-- 04. SANCTUARY STATE -->
     <section id="in-flight" aria-labelledby="heading-inflight">
-      <h2 id="heading-inflight">In-Flight Cabin :: Cruising Altitude</h2>
-      
+      <h2 id="heading-inflight">Share Your Sanctuary State :: Enter With Presence</h2>
+
       <div id="in-flight-prompt">
-        <p>Your in-flight prompt will appear here after you board.</p>
+        <p>Your sonic invitation will appear here after you begin exploration.</p>
       </div>
-      
+
       <!-- Breath Guide -->
       <div id="breath-guide" aria-label="Optional breath pacer">
         <div class="breath-orb"></div>
-        <p class="breath-instruction">Breathe...</p>
+        <p class="breath-instruction">Breathe with the frequencies...</p>
       </div>
-      
-      <h3>Cabin Note</h3>
-      <p>Capture anything that feels clear, helpful, or important in this moment.</p>
-      <textarea id="cabin-note" rows="4" maxlength="280" placeholder="What are you noticing?"></textarea>
-      <button id="save-note" type="button">Slide Note Into Seat Pocket</button>
+
+      <h3>Sonic Note Pad :: Thoughts Moving With Me</h3>
+      <p>Capture the sensations, insights, or vibrations moving through you. What are you noticing as sound moves through your awareness?</p>
+      <textarea id="cabin-note" rows="4" maxlength="280" placeholder="What frequencies are you sensing?"></textarea>
+      <button id="save-note" type="button">Save Sonic Note</button>
     </section>
 
-    <!-- 05. LANDING -->
+    <!-- 05. DEPARTURE -->
     <section id="landing" aria-labelledby="heading-landing">
-      <h2 id="heading-landing">Landing :: Name the Shift</h2>
-      <p>Enter one word for where you are now.</p>
-      
-      <label for="landing-ping">Landing PING</label>
-      <input id="landing-ping" type="text" autocomplete="off" maxlength="16" placeholder="e.g. clearer">
-      <button id="save-landing" type="button">Save Landing PING</button>
+      <h2 id="heading-landing">Departure State :: What Leaves With Me?</h2>
+      <p>As you prepare to leave (or reflect on having left) the Sonic Sanctuary, what resonance are you carrying forward? Name the sensation you're taking back into your day.</p>
+
+      <label for="landing-ping">Departure Resonance</label>
+      <input id="landing-ping" type="text" autocomplete="off" maxlength="16" placeholder="e.g. clearer, grounded, vibrating">
+      <button id="save-landing" type="button">Name My Resonance</button>
     </section>
 
-    <!-- 06. BAGGAGE CLAIM -->
+    <!-- 06. SANCTUARY ARTIFACTS -->
     <section id="baggage-claim" aria-labelledby="heading-baggage">
-      <h2 id="heading-baggage">Baggage Claim :: What Traveled With You</h2>
-      <p>Tag each item :: Keep • Store • Discard • Share</p>
-      
-      <ul id="baggage-list" aria-label="Journey items">
+      <h2 id="heading-baggage">Sanctuary Artifacts :: You Are The Art Here</h2>
+      <p class="art-statement">Access What Traveled With You</p>
+      <p>Tag each sonic artifact :: Keep • Reflect • Release • Share</p>
+
+      <ul id="baggage-list" aria-label="Sanctuary artifacts">
         <!-- Items will be injected here by JS -->
       </ul>
     </section>
 
-    <!-- 07. VINYL LOUNGE -->
-    <section id="vinyl-lounge" aria-labelledby="heading-vinyl">
-      <h2 id="heading-vinyl">Vinyl Lounge :: Third Space Listening Room</h2>
-      <p>This is a calm room for shared notes and quiet resonance.</p>
-      
-      <div id="shared-notes">
-        <p>Shared cabin notes from travelers appear here when they choose to contribute to the collective field.</p>
-        <p>As you continue your practice, this space will fill with wisdom from the community.</p>
+    <!-- 07. THE SITTING ROOM -->
+    <section id="sitting-room" aria-labelledby="heading-sitting">
+      <h2 id="heading-sitting">The Sitting Room :: Collective Resonance</h2>
+      <p>This is a quiet space for shared reflections from the sanctuary. When guests choose to share their Sonic Notes, they contribute to the audible flow of 1000 Ways to Sit.</p>
+
+      <div id="shared-notes" class="radiating-notes">
+        <p class="sitting-intro">Sonic Notes radiate here, creating a field of collective presence.</p>
+        <p>As guests share their experiences, this space fills with the resonance of many ways to sit, sense, and return.</p>
       </div>
     </section>
 
     <!-- 08. MANIFESTO -->
     <section id="manifesto" aria-labelledby="heading-manifesto">
-      <h2 id="heading-manifesto">Manifesto :: Echolocative Intelligence</h2>
-      
-      <p>Echolocative Intelligence treats your awareness as a sensing instrument :: Ping :: Echo :: Direction.</p>
-      
-      <p>You act or attend :: that is your Ping. The world responds :: that is your Echo. You choose your Direction based on what you notice.</p>
-      
-      <p>This is the same basic principle that guides many living systems :: bats reading airspace :: humans reading emotional space :: teams reading cultural space.</p>
-      
-      <p>E.I. treats everyday experience as data for navigation :: not for self-judgment.</p>
-      
-      <p>You are not trying to solve yourself. You are learning how to move with more accuracy, ease, and coherence.</p>
-      
-      <!-- Ground Crew Handbook -->
-      <div id="ground-crew">
-        <h3>Ground Crew Handbook</h3>
-        <p>These principles keep Terminal E.I. simple and clear:</p>
-        <ol>
-          <li>The Terminal serves clarity.</li>
-          <li>Keep the experience light.</li>
-          <li>Build local-first.</li>
-          <li>Use "::" as direction.</li>
-          <li>Verbs are functional and distinct.</li>
-          <li>HTML first, CSS for shape, JS only when needed.</li>
-          <li>Maintain a grounded, plain tone.</li>
-          <li>Keep the journey sequential.</li>
-          <li>Keep ambient notes subtle.</li>
-          <li>Avoid features that demand attention.</li>
-          <li>Avoid bloat and heavy dependencies.</li>
-          <li>Protect the calm atmosphere.</li>
-          <li>Build for curiosity and learnability.</li>
-          <li>Preserve the purpose :: support awareness.</li>
-        </ol>
-      </div>
+      <h2 id="heading-manifesto">Manifesto :: Echo-locative Intelligence in Sound Infused Air</h2>
+
+      <p>Echo-locative Intelligence treats your awareness as a sensing instrument moving through Sound Infused Air.</p>
+
+      <p><strong>Ping :: Echo :: Direction</strong></p>
+
+      <p>You arrive with a vibration :: that is your Ping.</p>
+
+      <p>The Gamelatron responds with frequencies :: that is your Echo.</p>
+
+      <p>You sense what shifts within you :: that is your Direction.</p>
+
+      <p>This is the same principle that guides living systems navigating invisible fields :: bats reading airspace through sound :: whales communicating across ocean depths :: humans reading emotional resonance in a room.</p>
+
+      <p>In 1000 Ways to Sit, the Gamelatron creates an intelligent sonic field. Indonesian Gamelan frequencies ripple through the space at 8Hz, the same frequency as deep meditative states. Every surface becomes a resonating body. Every position offers a different relationship with the sound.</p>
+
+      <p><strong>You are not listening to the Gamelatron. You are inside the instrument.</strong></p>
+
+      <h3>The Practice of Sonic Wayfinding</h3>
+
+      <p>E.I. in sonic space is active, not passive. You arrive. You sense. You verb. You notice what changes.</p>
+
+      <p>This digital companion supports your journey through three portals:</p>
+
+      <p><strong>Before :: Arrival Vibration</strong><br>
+      Sensing into what you bring to the sanctuary</p>
+
+      <p><strong>During :: Present Verbration</strong><br>
+      Choosing how you'll inhabit your experience (Sense, See, Hear, Move, Tune, Open, Shift)</p>
+
+      <p><strong>After :: Departure Resonance</strong><br>
+      Naming what leaves with you back into the world</p>
+
+      <h3>You Are The Art Here</h3>
+
+      <p>The Gamelatron is not performing for you. You are not an audience. You are the living medium through which Sound Infused Air becomes experience, becomes insight, becomes transformation.</p>
+
+      <p>Your sensations are data. Your reflections contribute to the collective field. When you share your Sonic Notes in The Sitting Room, you become part of the audible flow that guides future guests.</p>
+
+      <h3>Ground Principles for Sonic Sanctuary</h3>
+
+      <ol>
+        <li>Sound Infused Air is intelligent and responsive</li>
+        <li>Every sitting position is a unique portal</li>
+        <li>Your arrival state shapes your experience</li>
+        <li>Verbrations (action-states) are gateways to presence</li>
+        <li>The cognitive companion completes the somatic practice</li>
+        <li>Reflection integrates what embodiment initiates</li>
+        <li>The collective resonance amplifies individual insight</li>
+        <li>You are instrument, artist, and art simultaneously</li>
+      </ol>
+
+      <h3>This Is Not Self-Improvement</h3>
+
+      <p>You are not here to fix yourself. You are here to sense yourself as part of a larger vibrational field. The Gamelatron does not judge your state. The sanctuary welcomes whatever vibration you arrive with.</p>
+
+      <p>Scattered. Calm. Anxious. Open. Clear. Resistant. All frequencies are welcome here.</p>
+
+      <p>You are learning to navigate by echo. To sense the spaces between tones. To notice what resonates and what dissolves. To move with more accuracy through the invisible architecture of your own awareness.</p>
     </section>
 
     <!-- 09. ABOUT -->
     <section id="about" aria-labelledby="heading-about">
-      <h2 id="heading-about">About the Creator</h2>
-      
+      <h2 id="heading-about">About This Experience</h2>
+
       <div id="about-placard">
         <div id="about-mark" aria-hidden="true"></div>
-        
-        <p><strong>Name</strong><br>
+
+        <p><strong>Created By</strong><br>
         Kamau Zuberi Akabueze<br>
         People call me KzA.</p>
-        
-        <p><strong>Work</strong><br>
-        I guide people in finding clarity, direction, and confidence in their creative lives.
-        I have supported creative individuals and teams for more than 18 years.</p>
-        
-        <p><strong>Purpose of E.I. International</strong><br>
-        I built this terminal as a place where anyone can pause, check in with themselves,
-        and move forward with a clearer sense of direction.</p>
-        
-        <p><strong>How E.I. Works</strong><br>
-        You arrived here with a vibe.<br>
-        That vibe creates a choice.<br>
-        You choose a verb.<br>
-        You notice what changes.<br>
-        You sort what matters.<br>
-        You leave with a clearer signal.</p>
-        
-        <p><strong>Why I Built This</strong><br>
-        People move fast. This terminal gives you enough space to hear yourself again.</p>
-        
-        <p><strong>Connection to The Alien Scool for Creative Thinking (tÅs)</strong><br>
-        tÅs is the larger learning environment I created.
-        It supports people who want to think more creatively,
-        understand their potential,
-        and bring meaningful ideas into the world.</p>
-        
-        <p><strong>Direction</strong><br>
-        Continue at your own pace. You already know where you are heading.</p>
+
+        <p><strong>What This Is</strong><br>
+        This digital companion is a cognitive sidecar to the embodied experience of 1000 Ways to Sit :: A Gamelatron Sonic Sanctuary at Heron Arts in San Francisco (September 21 – December 4, 2025).</p>
+
+        <p><strong>Echo-locative Intelligence (E.I.)</strong><br>
+        E.I. is a practice of sensing, noticing, and navigating by echo. In the physical sanctuary, you move through Sound Infused Air. In this digital space, you reflect on the vibrations moving through you.</p>
+
+        <p><strong>How This Works</strong><br>
+        You arrive with a vibration.<br>
+        That vibration invites a verbration (action-state).<br>
+        You explore your sanctuary state.<br>
+        You notice what shifts.<br>
+        You name the resonance you carry forward.<br>
+        You contribute to the collective field.</p>
+
+        <p><strong>Why This Exists</strong><br>
+        The physical sanctuary offers embodied, somatic experience through sound. This digital companion offers the cognitive, reflective space to integrate what the body knows. Together, they complete each other—Yang and Yin.</p>
+
+        <p><strong>1000 Ways to Sit</strong><br>
+        In the sanctuary, every surface becomes a throne for contemplation. Every position offers a different relationship with sound. Every visit is unique, shaped by who shows up and how they choose to sit, listen, and be.</p>
+
+        <p><strong>Connection to The Alien School for Creative Thinking (tÅs)</strong><br>
+        tÅs is the larger learning environment I created. It supports people who want to think more creatively, understand their potential, and bring meaningful ideas into the world. 1000 Ways to Sit and this E.I. survey are expressions of that work.</p>
+
+        <p><strong>Your Participation Matters</strong><br>
+        When you share your Sonic Notes, you contribute to the living archive of how humans experience Sound Infused Air. Your insights become part of the collective intelligence guiding this work forward.</p>
       </div>
     </section>
 
@@ -302,10 +336,21 @@
   <!-- ============================================ -->
   
   <footer>
-    <p>If this flight moved you, there is a room in San Francisco where bronze sings at 8Hz.</p>
-    <p><strong>1000 Ways to Sit</strong> :: The acoustic continuation of this journey.<br>
+    <h3>A note of gratitude ::</h3>
+
+    <p>Thank you for participating in this experiential companion to the living sonic sanctuary. We learn through your sensations and the Gamelatron Sonic Sanctuary prospers from your insights. Thank you for offering us a sacred window into your inner world.</p>
+
+    <p><strong>Your sensations are valid, welcome, and honored here.</strong></p>
+
+    <hr>
+
+    <p><strong>1000 Ways to Sit :: A Gamelatron Sonic Sanctuary</strong><br>
+    September 21 – December 4, 2025<br>
     Heron Arts, 7 Heron Street, San Francisco</p>
-    <p><a href="#top">Return to top</a></p>
+
+    <p class="footer-question">Where go next is by your design. Where do you want to see the next Gamelatron Sonic Sanctuary?</p>
+
+    <p><a href="#top">Return to arrival</a></p>
   </footer>
 
   <!-- ============================================ -->
