@@ -550,6 +550,29 @@ button:focus-visible {
   letter-spacing: 0.18em;
 }
 
+/* Verb whisper micro-copy */
+.verb-whisper {
+  font-size: 0.62rem;
+  font-style: italic;
+  color: var(--muted);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  line-height: 1.3;
+}
+
+.verb-card:hover .verb-whisper,
+.verb-card:focus-visible .verb-whisper,
+.verb-card.selected-verb .verb-whisper {
+  opacity: 1;
+  max-height: 3rem;
+  margin-top: 0.2rem;
+}
+
 /* ============================================
    BREATH GUIDE (In-Flight)
    ============================================ */
@@ -635,19 +658,71 @@ button:focus-visible {
 }
 
 /* ============================================
-   VINYL LOUNGE
+   THE SITTING ROOM :: RADIATING DESIGN
    ============================================ */
 
-#vinyl-lounge {
+#sitting-room {
   position: relative;
 }
 
-#shared-notes {
+.radiating-notes {
   margin-top: 1rem;
-  padding: 1rem;
+  padding: 2rem 1rem;
   border-radius: var(--radius-md);
   border: 1px dashed var(--border-subtle);
-  background: rgba(5, 16, 15, 0.85);
+  background:
+    radial-gradient(circle at center, rgba(212, 197, 160, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at center, transparent 30%, rgba(212, 197, 160, 0.02) 31%, transparent 32%),
+    radial-gradient(circle at center, transparent 45%, rgba(212, 197, 160, 0.015) 46%, transparent 47%),
+    radial-gradient(circle at center, transparent 60%, rgba(212, 197, 160, 0.01) 61%, transparent 62%),
+    rgba(5, 16, 15, 0.85);
+  position: relative;
+  text-align: center;
+}
+
+/* Concentric ripple animation for Sitting Room */
+.radiating-notes::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  max-height: 400px;
+  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(circle, transparent 25%, rgba(212, 197, 160, 0.08) 26%, transparent 27%),
+    radial-gradient(circle, transparent 40%, rgba(212, 197, 160, 0.05) 41%, transparent 42%),
+    radial-gradient(circle, transparent 55%, rgba(212, 197, 160, 0.03) 56%, transparent 57%);
+  pointer-events: none;
+  opacity: 0.6;
+  animation: sonicRipple 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes sonicRipple {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.7;
+  }
+}
+
+.sitting-intro {
+  position: relative;
+  z-index: 1;
+  font-style: italic;
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.radiating-notes > p {
+  position: relative;
+  z-index: 1;
 }
 
 /* ============================================

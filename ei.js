@@ -211,7 +211,27 @@ function getTerminalNote() {
     "Sense your vibration :: choose your verbration.",
     "You can always return with a new arrival state.",
     "The spaces between tones hold wisdom.",
-    "You are inside the instrument."
+    "You are inside the instrument.",
+    "Bronze sings at frequencies that invite your presence.",
+    "The sanctuary welcomes whatever vibration you bring.",
+    "Listening and being listened to happen simultaneously.",
+    "Every surface becomes a resonating body.",
+    "Your departure resonance shapes what comes next.",
+    "Scattered. Calm. Anxious. Open. All frequencies belong here.",
+    "We are concentric :: rippling outward from presence.",
+    "Take the time to comprehend your senses.",
+    "Echo-locative intelligence is activated by your arrival.",
+    "The silence between sounds holds its own intelligence.",
+    "You are instrument, artist, and art simultaneously.",
+    "Empirically connective frequencies encourage your resonance.",
+    "Navigate by echo :: sense the spaces between tones.",
+    "We are glad that you arrived as you.",
+    "Your note becomes part of the field.",
+    "Where bronze sings, you listen. Where silence opens, you enter.",
+    "Sound Infused Air is intelligent and responsive.",
+    "The cognitive companion completes the somatic practice.",
+    "Reflection integrates what embodiment initiates.",
+    "You are learning to move through the invisible architecture of awareness."
   ];
 
   const collectiveNotes = eiLoad('ei_collective_notes', []);
