@@ -895,24 +895,18 @@ footer a:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeIn 0.6s ease;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+#reflection-mode.visible {
+  opacity: 1;
 }
 
 .reflection-frame {
   text-align: center;
   max-width: 600px;
   padding: 3rem 2rem;
-  animation: reflectionPulse 1s ease-in-out;
-}
-
-@keyframes reflectionPulse {
-  0% { opacity: 0; transform: scale(0.95); }
-  100% { opacity: 1; transform: scale(1); }
 }
 
 .reflection-stage {
@@ -921,6 +915,14 @@ footer a:focus-visible {
   margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reflection-stage.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .reflection-ping {
@@ -929,6 +931,118 @@ footer a:focus-visible {
   margin: 0;
   font-weight: 300;
   letter-spacing: 0.05em;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reflection-ping.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ============================================
+   VERBRATION LINK (clickable definition)
+   ============================================ */
+
+.verbration-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.verbration-link:hover,
+.verbration-link:focus {
+  color: var(--fg);
+  text-decoration-style: solid;
+}
+
+/* ============================================
+   VERBRATION MODAL
+   ============================================ */
+
+#verbration-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 10, 8, 0.96);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  backdrop-filter: blur(8px);
+}
+
+#verbration-modal.visible {
+  opacity: 1;
+}
+
+.modal-container {
+  max-width: 600px;
+  max-height: 80vh;
+  padding: 2.5rem 2rem;
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-soft);
+  overflow-y: auto;
+}
+
+.modal-container h2 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin: 0 0 0.5rem;
+  text-align: center;
+}
+
+.modal-subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+.modal-content {
+  margin: 1.5rem 0 2rem;
+}
+
+.modal-content p {
+  margin-block: 1.2rem;
+  line-height: 1.9;
+}
+
+.modal-content ul {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+  list-style: none;
+}
+
+.modal-content ul li {
+  margin-bottom: 0.8rem;
+  line-height: 1.8;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.modal-content ul li::before {
+  content: "::";
+  position: absolute;
+  left: -0.5rem;
+  color: var(--accent);
+}
+
+#close-verbration-modal {
+  display: block;
+  margin: 0 auto;
+  padding: 0.7rem 2rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 /* ============================================

@@ -300,30 +300,54 @@ async function enterReflectionMode() {
     note: eiLoad('ei_cabin_note', '—'),
     landing: eiLoad('ei_landing_ping', '—')
   };
-  
+
   const reflection = document.createElement('div');
   reflection.id = 'reflection-mode';
+  reflection.innerHTML = `
+    <div class="reflection-frame">
+      <p class="reflection-stage"></p>
+      <h2 class="reflection-ping"></h2>
+    </div>
+  `;
   document.body.appendChild(reflection);
-  
+
+  const stageEl = reflection.querySelector('.reflection-stage');
+  const pingEl = reflection.querySelector('.reflection-ping');
+
   const stages = [
-    { label: 'You arrived with...', content: journey.boarding },
-    { label: 'Your verbration was...', content: journey.verb.toUpperCase() },
-    { label: 'You sensed...', content: `"${journey.note}"` },
-    { label: 'You departed with...', content: journey.landing },
-    { label: `${journey.boarding} → ${journey.landing}`, content: 'This is your resonance.<br>This is your frequency.' }
+    { label: 'You arrived with...', content: journey.boarding, delay: 800 },
+    { label: 'Your verbration was...', content: journey.verb.toUpperCase(), delay: 600 },
+    { label: 'You sensed...', content: `"${journey.note}"`, delay: 900 },
+    { label: 'You departed with...', content: journey.landing, delay: 800 },
+    { label: `${journey.boarding} → ${journey.landing}`, content: 'This is your resonance.<br>This is your frequency.', delay: 1200 }
   ];
-  
+
+  // Fade in container
+  await wait(100);
+  reflection.classList.add('visible');
+
   for (let i = 0; i < stages.length; i++) {
-    reflection.innerHTML = `
-      <div class="reflection-frame">
-        <p class="reflection-stage">${stages[i].label}</p>
-        <h2 class="reflection-ping">${stages[i].content}</h2>
-      </div>
-    `;
-    await wait(4000);
+    // Fade out previous
+    stageEl.classList.remove('visible');
+    pingEl.classList.remove('visible');
+    await wait(400);
+
+    // Update content
+    stageEl.textContent = stages[i].label;
+    pingEl.innerHTML = stages[i].content;
+
+    // Staggered fade in
+    await wait(200);
+    stageEl.classList.add('visible');
+    await wait(stages[i].delay);
+    pingEl.classList.add('visible');
+    await wait(3000);
   }
-  
+
+  // Final hold and fade out
   await wait(2000);
+  reflection.classList.remove('visible');
+  await wait(600);
   reflection.remove();
 }
 
@@ -401,12 +425,12 @@ function startBreathGuide() {
 
   breathGuide.style.display = 'block';
 
-  // Breath cycle: 4 seconds in, 4 seconds hold, 4 seconds out, 2 seconds pause = 14 seconds total
+  // Box Breath: 4 seconds in, 4 seconds hold, 4 seconds out, 4 seconds hold = 16 seconds total
   const breathCycle = [
     { duration: 4, instruction: 'Breathe in through your nose...', phase: 'inhale' },
     { duration: 4, instruction: 'Hold gently...', phase: 'hold' },
     { duration: 4, instruction: 'Breathe out slowly...', phase: 'exhale' },
-    { duration: 2, instruction: 'Rest in the pause...', phase: 'pause' }
+    { duration: 4, instruction: 'Hold in the emptiness...', phase: 'pause' }
   ];
 
   let cycleIndex = 0;
@@ -470,11 +494,11 @@ boardBtn?.addEventListener('click', async () => {
   const whisper = verbWhispers[verb] || '';
 
   const greeting = ping && verb
-    ? `You entered the sanctuary ${ping} :: and you are exploring the sanctuary ${verbCapitalized} to ${whisper}.`
+    ? `You entered the sanctuary ${ping} :: and you are exploring the sanctuary to ${verbCapitalized} and to ${whisper}.`
     : ping && !verb
     ? `You entered the sanctuary ${ping}. You can choose a verbration to guide your exploration.`
     : !ping && verb
-    ? `You are exploring the sanctuary ${verbCapitalized} to ${whisper}. You can name your arrival vibration any time.`
+    ? `You are exploring the sanctuary to ${verbCapitalized} and to ${whisper}. You can name your arrival vibration any time.`
     : 'You are in the sanctuary now. You can choose a verbration and name your arrival vibration any time.';
 
   const prompt = verbPrompts[verb] ||
@@ -688,9 +712,21 @@ async function enterSittingRoom() {
 
   document.body.appendChild(overlay);
 
-  // Animate in
+  // Animate in with staggered note reveals
   await wait(100);
   overlay.classList.add('visible');
+
+  // Stagger the note reveals for cinematic effect
+  const notes = overlay.querySelectorAll('.shared-note');
+  notes.forEach((note, index) => {
+    note.style.opacity = '0';
+    note.style.transform = 'translateY(20px)';
+    setTimeout(() => {
+      note.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+      note.style.opacity = '1';
+      note.style.transform = 'translateY(0)';
+    }, 200 + (index * 80));
+  });
 
   // Close button
   document.getElementById('close-sitting-room')?.addEventListener('click', async () => {
@@ -708,6 +744,67 @@ async function enterSittingRoom() {
     }
   });
 }
+
+// 9. VERBRATION MODAL
+function openVerbrationModal() {
+  const modal = document.createElement('div');
+  modal.id = 'verbration-modal';
+  modal.innerHTML = `
+    <div class="modal-container">
+      <h2>Verbration</h2>
+      <p class="modal-subtitle">Action-State :: A Gateway to Presence</p>
+
+      <div class="modal-content">
+        <p><strong>Verbration</strong> is a portmanteau of <em>verb</em> and <em>vibration</em>.</p>
+
+        <p>In this sanctuary, you don't just <em>observe</em> sound—you <em>participate</em> with it. A verbration is the action-state you choose to guide your exploration.</p>
+
+        <p>Each verbration offers a different portal into the Sound Infused Air:</p>
+
+        <ul>
+          <li><strong>SENSE</strong> :: Attune to subtle frequencies</li>
+          <li><strong>SEE</strong> :: Witness inner landscapes</li>
+          <li><strong>HEAR</strong> :: Listen to silence between tones</li>
+          <li><strong>MOVE</strong> :: Let vibration guide motion</li>
+          <li><strong>TUNE</strong> :: Calibrate to resonance</li>
+          <li><strong>OPEN</strong> :: Expand into spaciousness</li>
+          <li><strong>SHIFT</strong> :: Allow transformation</li>
+        </ul>
+
+        <p>Your verbration shapes how you inhabit the sanctuary. It is both intention and invitation.</p>
+      </div>
+
+      <button id="close-verbration-modal" type="button">Close</button>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  setTimeout(() => modal.classList.add('visible'), 50);
+
+  document.getElementById('close-verbration-modal')?.addEventListener('click', async () => {
+    modal.classList.remove('visible');
+    await wait(400);
+    modal.remove();
+  });
+
+  modal.addEventListener('click', async (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('visible');
+      await wait(400);
+      modal.remove();
+    }
+  });
+}
+
+// Wire up verbration link
+document.querySelector('.verbration-link')?.addEventListener('click', openVerbrationModal);
+document.querySelector('.verbration-link')?.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    openVerbrationModal();
+  }
+});
 
 // ============================================
 // INITIALIZATION
