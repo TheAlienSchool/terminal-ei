@@ -315,10 +315,10 @@ async function enterReflectionMode() {
   const pingEl = reflection.querySelector('.reflection-ping');
 
   const stages = [
-    { label: 'You arrived with...', content: journey.boarding, delay: 800 },
+    { label: 'You arrived...', content: journey.boarding, delay: 800 },
     { label: 'Your verbration was...', content: journey.verb.toUpperCase(), delay: 600 },
     { label: 'You sensed...', content: `"${journey.note}"`, delay: 900 },
-    { label: 'You departed with...', content: journey.landing, delay: 800 },
+    { label: 'You departed...', content: journey.landing, delay: 800 },
     { label: `${journey.boarding} → ${journey.landing}`, content: 'This is your resonance.<br>This is your frequency.', delay: 1200 }
   ];
 
@@ -647,11 +647,11 @@ document.getElementById('share-note-btn')?.addEventListener('click', () => {
 });
 document.getElementById('enter-sitting-room')?.addEventListener('click', enterSittingRoom);
 
-// 8. THE SITTING ROOM (Overlay Environment)
+// 8. THE SITTING ROOM (Cinematic Fullscreen Experience)
 async function enterSittingRoom() {
   const collectiveNotes = eiLoad('ei_collective_notes', []);
 
-  // Ambient sanctuary wisdom - these float among user contributions
+  // Ambient sanctuary wisdom
   const ambientWisdom = [
     "Your arrival vibration carries more information than it seems.",
     "Every guest enters with their own frequency.",
@@ -681,68 +681,81 @@ async function enterSittingRoom() {
     "You are learning to move through the invisible architecture of awareness."
   ];
 
-  // Mix user contributions with ambient wisdom
+  // Prepare notes for cinematic display
   const userNotes = collectiveNotes.map(n => ({ text: n.text, type: 'user' }));
-  const wisdom = ambientWisdom.slice(0, 8).map(w => ({ text: w, type: 'ambient' }));
-  const allNotes = [...userNotes, ...wisdom].sort(() => Math.random() - 0.5);
+  const wisdom = ambientWisdom.slice(0, 6).map(w => ({ text: w, type: 'ambient' }));
+  const selectedNotes = [...userNotes, ...wisdom].sort(() => Math.random() - 0.5).slice(0, 8);
 
-  // Create overlay
-  const overlay = document.createElement('div');
-  overlay.id = 'sitting-room-overlay';
-  overlay.innerHTML = `
-    <div class="sitting-room-container">
-      <h2>The Sitting Room</h2>
-      <p class="sitting-subtitle">Collective Resonance from the Sanctuary</p>
-      <p class="sitting-description">Wisdom from guests and the sanctuary field, floating together in vibrational presence.</p>
-
-      <div class="collective-notes-display">
-        ${allNotes.length > 0
-          ? allNotes.map(n => `
-            <div class="shared-note ${n.type === 'ambient' ? 'ambient-note' : 'user-note'}">
-              ${n.text}
-            </div>
-          `).join('')
-          : '<p class="no-notes">The room awaits the first shared resonance...</p>'
-        }
-      </div>
-
-      <button id="close-sitting-room" type="button">Return to Journey</button>
+  // Create cinematic fullscreen container
+  const cinema = document.createElement('div');
+  cinema.id = 'sitting-room-cinema';
+  cinema.innerHTML = `
+    <div class="cinema-frame">
+      <p class="cinema-label"></p>
+      <div class="cinema-note"></div>
     </div>
   `;
+  document.body.appendChild(cinema);
 
-  document.body.appendChild(overlay);
+  const labelEl = cinema.querySelector('.cinema-label');
+  const noteEl = cinema.querySelector('.cinema-note');
 
-  // Animate in with staggered note reveals
+  // Opening sequence
+  const openingStages = [
+    { label: 'The Sitting Room', note: 'Collective Resonance', isTitle: true },
+    { label: 'From the sanctuary field...', note: '', isTransition: true }
+  ];
+
+  // Combine opening + notes
+  const allStages = [
+    ...openingStages,
+    ...selectedNotes.map(n => ({
+      label: n.type === 'user' ? 'A guest shared...' : 'The sanctuary whispers...',
+      note: n.text,
+      type: n.type
+    })),
+    { label: 'This is the vibrational pond', note: 'Where presence meets presence', isClosing: true }
+  ];
+
+  // Fade in container
   await wait(100);
-  overlay.classList.add('visible');
+  cinema.classList.add('visible');
 
-  // Stagger the note reveals for cinematic effect
-  const notes = overlay.querySelectorAll('.shared-note');
-  notes.forEach((note, index) => {
-    note.style.opacity = '0';
-    note.style.transform = 'translateY(20px)';
-    setTimeout(() => {
-      note.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-      note.style.opacity = '1';
-      note.style.transform = 'translateY(0)';
-    }, 200 + (index * 80));
-  });
+  for (let i = 0; i < allStages.length; i++) {
+    const stage = allStages[i];
 
-  // Close button
-  document.getElementById('close-sitting-room')?.addEventListener('click', async () => {
-    overlay.classList.remove('visible');
+    // Fade out previous
+    labelEl.classList.remove('visible');
+    noteEl.classList.remove('visible', 'ambient-style', 'user-style');
     await wait(400);
-    overlay.remove();
-  });
 
-  // Click outside to close
-  overlay.addEventListener('click', async (e) => {
-    if (e.target === overlay) {
-      overlay.classList.remove('visible');
-      await wait(400);
-      overlay.remove();
+    // Update content
+    labelEl.textContent = stage.label;
+    noteEl.textContent = stage.note;
+
+    // Add type-specific styling
+    if (stage.type === 'ambient') {
+      noteEl.classList.add('ambient-style');
+    } else if (stage.type === 'user') {
+      noteEl.classList.add('user-style');
     }
-  });
+
+    // Staggered fade in
+    await wait(200);
+    labelEl.classList.add('visible');
+    await wait(stage.isTitle ? 1200 : 600);
+    noteEl.classList.add('visible');
+
+    // Hold time varies by stage type
+    const holdTime = stage.isTitle ? 2500 : stage.isClosing ? 3000 : stage.isTransition ? 1500 : 3500;
+    await wait(holdTime);
+  }
+
+  // Final fade out
+  await wait(1500);
+  cinema.classList.remove('visible');
+  await wait(600);
+  cinema.remove();
 }
 
 // 9. VERBRATION MODAL

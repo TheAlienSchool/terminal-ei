@@ -1157,6 +1157,111 @@ footer a:focus-visible {
 }
 
 /* ============================================
+   SITTING ROOM CINEMA (Cinematic Fullscreen)
+   ============================================ */
+
+#sitting-room-cinema {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 10, 8, 0.98);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+#sitting-room-cinema.visible {
+  opacity: 1;
+}
+
+.cinema-frame {
+  text-align: center;
+  max-width: 700px;
+  padding: 3rem 2rem;
+}
+
+.cinema-label {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinema-label.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cinema-label.title {
+  font-size: 1.8rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+.cinema-label.transition {
+  font-style: italic;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.cinema-label.closing {
+  font-size: 1.1rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+}
+
+.cinema-note {
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin: 1.5rem 0;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinema-note.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cinema-note.user-style {
+  font-style: italic;
+  font-size: 1.5rem;
+  color: rgba(212, 197, 160, 0.95);
+}
+
+.cinema-note.ambient-style {
+  font-style: normal;
+  font-size: 1.3rem;
+  color: rgba(212, 197, 160, 0.7);
+  font-weight: 400;
+}
+
+.cinema-note.subtitle {
+  font-size: 1.2rem;
+  color: var(--muted);
+  font-style: italic;
+  letter-spacing: 0.08em;
+}
+
+.cinema-note.closing-message {
+  font-size: 1.1rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 
