@@ -121,6 +121,118 @@
       background: var(--accent-glow);
       color: var(--accent);
     }
+
+    /* Journey Comparison Styles */
+    .session-checkbox-item {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      background: rgba(6, 20, 18, 0.4);
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .session-checkbox-item:hover {
+      border-color: var(--border-subtle);
+    }
+
+    .session-checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-right: 1rem;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    .session-checkbox-label {
+      flex: 1;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .comparison-column {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+
+    .comparison-column h4 {
+      font-size: 0.95rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin: 0 0 0.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .comparison-question {
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: rgba(6, 20, 18, 0.3);
+      border-radius: var(--radius-sm);
+    }
+
+    .comparison-question-label {
+      font-size: 0.75rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .comparison-response {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--fg);
+    }
+
+    .comparison-response.no-response {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .evolution-indicator {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      margin-left: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .evolution-indicator.changed {
+      background: rgba(212, 197, 160, 0.2);
+      color: var(--accent);
+    }
+
+    .evolution-indicator.same {
+      background: rgba(148, 163, 165, 0.1);
+      color: var(--muted);
+    }
+
+    #compare-btn:hover {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+
+    #compare-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 
@@ -259,6 +371,25 @@
         Browse anonymized participant responses
       </p>
       <div id="responses-container"></div>
+    </section>
+
+    <!-- JOURNEY HISTORY COMPARISON -->
+    <section id="journey-comparison">
+      <h2>Journey History Comparison</h2>
+      <p style="font-style: italic; color: var(--muted); margin-bottom: 2rem;">
+        Compare multiple sessions to see how your experience has evolved over time
+      </p>
+
+      <div id="comparison-selector" class="dashboard-card" style="margin-bottom: 2rem;">
+        <h3>Select Sessions to Compare</h3>
+        <p style="margin-bottom: 1rem; font-size: 0.85rem;">Choose at least two sessions to see side-by-side comparison</p>
+        <div id="session-checkboxes"></div>
+        <button id="compare-btn" type="button" style="margin-top: 1.5rem; padding: 0.7rem 1.5rem; border-radius: 999px; border: 1px solid var(--border-subtle); background: var(--card-bg); color: var(--fg); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;">
+          Compare Selected Sessions
+        </button>
+      </div>
+
+      <div id="comparison-view"></div>
     </section>
 
   </main>

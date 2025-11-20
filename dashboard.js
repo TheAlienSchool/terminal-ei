@@ -320,6 +320,163 @@ document.getElementById('export-csv-btn')?.addEventListener('click', exportSumma
 document.getElementById('clear-data-btn')?.addEventListener('click', clearAllData);
 
 // ============================================
+// JOURNEY HISTORY COMPARISON
+// ============================================
+
+function populateComparisonSelector() {
+  const checkboxContainer = document.getElementById('session-checkboxes');
+  const compareBtn = document.getElementById('compare-btn');
+
+  if (!checkboxContainer || !compareBtn) return;
+
+  if (sessions.length < 2) {
+    checkboxContainer.innerHTML = '<p style="color: var(--muted); font-style: italic;">You need at least 2 sessions to use comparison view. Complete more research sessions to unlock this feature.</p>';
+    compareBtn.disabled = true;
+    return;
+  }
+
+  let html = '';
+  sessions.forEach((session, index) => {
+    const date = new Date(session.timestamp);
+    const dateStr = `${date.toLocaleDateString()} at ${date.toLocaleTimeString()}`;
+    const modeStr = session.mode === 'facilitated' && session.researcher
+      ? `Facilitated by ${session.researcher}`
+      : 'Self-guided';
+
+    html += `
+      <div class="session-checkbox-item">
+        <input type="checkbox" id="session-${index}" value="${index}">
+        <label for="session-${index}" class="session-checkbox-label">
+          <strong>Session ${index + 1}</strong> • ${dateStr} • ${modeStr}
+        </label>
+      </div>
+    `;
+  });
+
+  checkboxContainer.innerHTML = html;
+
+  // Handle checkbox changes
+  const checkboxes = checkboxContainer.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+      const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+      compareBtn.disabled = checkedCount < 2;
+    });
+  });
+
+  // Initially disable button
+  compareBtn.disabled = true;
+}
+
+function compareSelectedSessions() {
+  const checkboxes = document.querySelectorAll('#session-checkboxes input[type="checkbox"]:checked');
+  const selectedIndices = Array.from(checkboxes).map(cb => parseInt(cb.value));
+
+  if (selectedIndices.length < 2) {
+    alert('Please select at least 2 sessions to compare.');
+    return;
+  }
+
+  const comparisonView = document.getElementById('comparison-view');
+  if (!comparisonView) return;
+
+  const selectedSessions = selectedIndices.map(i => sessions[i]);
+
+  // Question labels for comparison
+  const questionMap = {
+    attention_quality: 'Attention Quality',
+    connection_felt: 'Connection Felt',
+    surprise_element: 'Surprise Element',
+    resonance_artifact: 'Resonance Artifact',
+    future_sanctuary: 'Future Sanctuary Interest',
+    stage_of_change: 'Stage of Change',
+    became_visible: 'What Became Visible',
+    wants_nurturing: 'What Wants Nurturing',
+    question_holding: 'Question Holding',
+    cultural_integration: 'Cultural Integration'
+  };
+
+  // Build comparison grid
+  let html = '<div class="comparison-grid">';
+
+  selectedSessions.forEach((session, sessionIndex) => {
+    const date = new Date(session.timestamp);
+    const dateStr = `${date.toLocaleDateString()}`;
+    const sessionNum = selectedIndices[sessionIndex] + 1;
+
+    html += `
+      <div class="comparison-column">
+        <h4>Session ${sessionNum}<br><span style="font-size: 0.75rem; font-weight: normal; opacity: 0.7;">${dateStr}</span></h4>
+    `;
+
+    // Display each question
+    for (const [key, label] of Object.entries(questionMap)) {
+      const response = session.responses[key];
+
+      // Check if response changed from previous session
+      let evolutionIndicator = '';
+      if (sessionIndex > 0) {
+        const prevResponse = selectedSessions[sessionIndex - 1].responses[key];
+        const currentStr = formatResponseForComparison(response);
+        const prevStr = formatResponseForComparison(prevResponse);
+
+        if (currentStr !== prevStr) {
+          evolutionIndicator = '<span class="evolution-indicator changed">Changed</span>';
+        } else if (currentStr && prevStr) {
+          evolutionIndicator = '<span class="evolution-indicator same">Same</span>';
+        }
+      }
+
+      html += `
+        <div class="comparison-question">
+          <span class="comparison-question-label">${label}${evolutionIndicator}</span>
+          <div class="comparison-response ${!response ? 'no-response' : ''}">
+            ${formatResponseDisplay(response)}
+          </div>
+        </div>
+      `;
+    }
+
+    html += '</div>';
+  });
+
+  html += '</div>';
+
+  comparisonView.innerHTML = html;
+
+  // Scroll to comparison view
+  comparisonView.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function formatResponseForComparison(response) {
+  if (!response) return '';
+  if (typeof response === 'object') {
+    if (response.selection) {
+      return response.followUp
+        ? `${response.selection}: ${response.followUp}`
+        : response.selection;
+    }
+  }
+  return String(response);
+}
+
+function formatResponseDisplay(response) {
+  if (!response) return '<em>No response</em>';
+
+  if (typeof response === 'object') {
+    if (response.selection) {
+      let display = response.selection;
+      if (response.followUp) {
+        display += `<br><span style="margin-top: 0.5rem; display: block; padding-left: 1rem; border-left: 2px solid rgba(212, 197, 160, 0.3); font-style: italic;">${response.followUp}</span>`;
+      }
+      return display;
+    }
+  }
+
+  return response;
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 
@@ -327,4 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
   populateOverviewStats();
   populateSynthesisCanvas();
   populateIndividualResponses();
+  populateComparisonSelector();
 });
+
+document.getElementById('compare-btn')?.addEventListener('click', compareSelectedSessions);
