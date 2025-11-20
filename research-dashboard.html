@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research Dashboard :: Sanctuary Research</title>
+  <meta name="description" content="Synthesis canvas and aggregated patterns from sanctuary research sessions.">
+  <meta name="theme-color" content="#050d0c">
+  <link rel="stylesheet" href="ei.css">
+  <style>
+    /* Dashboard-specific styles */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .dashboard-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+
+    .dashboard-card h3 {
+      font-size: 1rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin: 0 0 1rem;
+    }
+
+    .dashboard-card p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0.5rem 0;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      color: var(--accent);
+      font-weight: 300;
+      display: block;
+      margin: 1rem 0;
+    }
+
+    .response-item {
+      padding: 1rem;
+      background: rgba(6, 20, 18, 0.5);
+      border-left: 2px solid var(--accent);
+      border-radius: var(--radius-sm);
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .response-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    .synthesis-section {
+      margin: 3rem 0;
+      padding: 2rem;
+      background: rgba(6, 20, 18, 0.3);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .synthesis-section h3 {
+      font-size: 1.1rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin: 0 0 1.5rem;
+    }
+
+    .quote-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .quote-list li {
+      padding: 0.8rem 1rem;
+      background: rgba(3, 10, 9, 0.6);
+      border-left: 3px solid rgba(212, 197, 160, 0.4);
+      margin-bottom: 0.8rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .export-controls {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+
+    .export-controls button {
+      padding: 0.7rem 1.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: var(--card-bg);
+      color: var(--fg);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .export-controls button:hover {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+
+    /* Journey Comparison Styles */
+    .session-checkbox-item {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      background: rgba(6, 20, 18, 0.4);
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .session-checkbox-item:hover {
+      border-color: var(--border-subtle);
+    }
+
+    .session-checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-right: 1rem;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    .session-checkbox-label {
+      flex: 1;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .comparison-column {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+
+    .comparison-column h4 {
+      font-size: 0.95rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin: 0 0 0.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .comparison-question {
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: rgba(6, 20, 18, 0.3);
+      border-radius: var(--radius-sm);
+    }
+
+    .comparison-question-label {
+      font-size: 0.75rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .comparison-response {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--fg);
+    }
+
+    .comparison-response.no-response {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .evolution-indicator {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      margin-left: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .evolution-indicator.changed {
+      background: rgba(212, 197, 160, 0.2);
+      color: var(--accent);
+    }
+
+    .evolution-indicator.same {
+      background: rgba(148, 163, 165, 0.1);
+      color: var(--muted);
+    }
+
+    #compare-btn:hover {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+
+    #compare-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================ -->
+  <!-- HEADER -->
+  <!-- ============================================ -->
+
+  <header id="top">
+    <div id="ei-mark" aria-label="E.I. International mark"></div>
+
+    <div>
+      <h1>Research Dashboard</h1>
+      <p>Synthesis Canvas :: Collective Sensemaking</p>
+    </div>
+
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Return to Sanctuary</a></li>
+        <li><a href="research.html">Contribute Research</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ============================================ -->
+  <!-- MAIN CONTENT -->
+  <!-- ============================================ -->
+
+  <main>
+
+    <!-- OVERVIEW STATS -->
+    <section id="overview" class="arriving">
+      <h2>Research Overview</h2>
+
+      <div class="dashboard-grid">
+        <div class="dashboard-card">
+          <h3>Total Sessions</h3>
+          <span class="stat-number" id="total-sessions">0</span>
+          <p>Participants have contributed reflections</p>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>Research Modes</h3>
+          <p>Self-guided: <strong id="self-count">0</strong></p>
+          <p>Facilitated: <strong id="facilitated-count">0</strong></p>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>Completion Rate</h3>
+          <span class="stat-number" id="completion-rate">0%</span>
+          <p>Average questions answered per session</p>
+        </div>
+
+        <div class="dashboard-card">
+          <h3>Latest Session</h3>
+          <p id="latest-session">No sessions yet</p>
+        </div>
+      </div>
+
+      <div class="export-controls">
+        <button id="export-all-btn">Export All Data (JSON)</button>
+        <button id="export-csv-btn">Export Summary (CSV)</button>
+        <button id="clear-data-btn" style="background: rgba(139, 0, 0, 0.2); border-color: rgba(255, 0, 0, 0.3);">Clear All Data</button>
+      </div>
+    </section>
+
+    <!-- SYNTHESIS CANVAS -->
+    <section id="synthesis-canvas">
+      <h2>Synthesis Canvas</h2>
+      <p style="font-style: italic; color: var(--muted); margin-bottom: 2rem;">
+        Eight categories from the research framework, populated with participant reflections
+      </p>
+
+      <!-- 1. ATTENTION & EMBODIMENT -->
+      <div class="synthesis-section">
+        <h3>1. Attention & Embodiment</h3>
+        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">How did sound shift awareness, presence, or sensing?</p>
+        <div id="synthesis-attention"></div>
+      </div>
+
+      <!-- 2. CONNECTION -->
+      <div class="synthesis-section">
+        <h3>2. Connection (Self / Others / Place / Future)</h3>
+        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">Where did resonance happen?</p>
+        <div id="synthesis-connection"></div>
+      </div>
+
+      <!-- 3. CULTURAL INTEGRATION -->
+      <div class="synthesis-section">
+        <h3>3. Cultural Integration (Balinese Cosmology, Gamelatron)</h3>
+        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">How was it received? Reverenced? Confused? Adapted?</p>
+        <div id="synthesis-cultural"></div>
+      </div>
+
+      <!-- 4. FUTURES SENSEMAKING -->
+      <div class="synthesis-section">
+        <h3>4. Futures Sensemaking (Solarpunk, Backcasting, Visions)</h3>
+        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">What futures became real or tangible?</p>
+        <div id="synthesis-futures"></div>
+      </div>
+
+      <!-- 5. DESIRE FOR SONIC SANCTUARIES -->
+      <div class="synthesis-section">
+        <h3>5. Desire for Sonic Sanctuaries</h3>
+        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">Would people use them? What barriers/longings?</p>
+        <div id="synthesis-desire"></div>
+      </div>
+
+      <!-- 6. CROSS-MODAL PERCEPTION -->
+      <div class="synthesis-section">
+        <h3>6. Cross-Modal Perception ("Invisible → Perceivable")</h3>
+        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">What language emerged for synesthesia, attunement?</p>
+        <div id="synthesis-perception"></div>
+      </div>
+
+      <!-- 7. EMERGENCE & RESONANCE -->
+      <div class="synthesis-section">
+        <h3>7. Social Field & Emergence</h3>
+        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">New collaborations? Shared questions? Field coherence?</p>
+        <div id="synthesis-emergence"></div>
+      </div>
+
+      <!-- 8. QUESTIONS HELD BY THE FIELD -->
+      <div class="synthesis-section">
+        <h3>8. Questions Held by the Field</h3>
+        <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">What remained unanswered? What wants further inquiry?</p>
+        <div id="synthesis-questions"></div>
+      </div>
+    </section>
+
+    <!-- INDIVIDUAL RESPONSES -->
+    <section id="individual-responses">
+      <h2>Individual Sessions</h2>
+      <p style="font-style: italic; color: var(--muted); margin-bottom: 2rem;">
+        Browse anonymized participant responses
+      </p>
+      <div id="responses-container"></div>
+    </section>
+
+    <!-- JOURNEY HISTORY COMPARISON -->
+    <section id="journey-comparison">
+      <h2>Journey History Comparison</h2>
+      <p style="font-style: italic; color: var(--muted); margin-bottom: 2rem;">
+        Compare multiple sessions to see how your experience has evolved over time
+      </p>
+
+      <div id="comparison-selector" class="dashboard-card" style="margin-bottom: 2rem;">
+        <h3>Select Sessions to Compare</h3>
+        <p style="margin-bottom: 1rem; font-size: 0.85rem;">Choose at least two sessions to see side-by-side comparison</p>
+        <div id="session-checkboxes"></div>
+        <button id="compare-btn" type="button" style="margin-top: 1.5rem; padding: 0.7rem 1.5rem; border-radius: 999px; border: 1px solid var(--border-subtle); background: var(--card-bg); color: var(--fg); font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;">
+          Compare Selected Sessions
+        </button>
+      </div>
+
+      <div id="comparison-view"></div>
+    </section>
+
+  </main>
+
+  <!-- ============================================ -->
+  <!-- FOOTER -->
+  <!-- ============================================ -->
+
+  <footer>
+    <p><strong>Research Framework:</strong> Prepared by Jero Wiku for regenerative sanctuary research.</p>
+    <p><strong>Data Storage:</strong> All research data is stored locally in browser storage. No server, no cloud, no third parties.</p>
+    <p>
+      <a href="index.html">Return to Sanctuary</a> ::
+      <a href="research.html">Contribute Research</a>
+    </p>
+  </footer>
+
+  <script src="dashboard.js"></script>
+
+</body>
+</html>
