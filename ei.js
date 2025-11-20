@@ -560,6 +560,8 @@ verbButtons.forEach((btn) => {
 // BREATH GUIDE with Timer
 let breathInterval = null;
 let breathActive = false;
+let breathPaused = false;
+let cycleCount = 0;
 
 function stopBreathGuide() {
   if (breathInterval) {
@@ -567,6 +569,8 @@ function stopBreathGuide() {
     breathInterval = null;
   }
   breathActive = false;
+  breathPaused = false;
+  cycleCount = 0;
 }
 
 function startBreathGuide() {
@@ -574,7 +578,11 @@ function startBreathGuide() {
   const breathOrb = breathGuide?.querySelector('.breath-orb');
   const breathInstruction = breathGuide?.querySelector('.breath-instruction');
   const breathTimer = breathGuide?.querySelector('.breath-timer');
+  const cycleCounter = document.querySelector('.breath-cycle-count');
+  const cycleNumber = document.getElementById('cycle-number');
   const startBtn = document.getElementById('start-breath');
+  const pauseBtn = document.getElementById('pause-breath');
+  const stopBtn = document.getElementById('stop-breath');
 
   if (!breathGuide || !breathOrb || !breathInstruction || !breathTimer || !startBtn) return;
 
@@ -588,9 +596,13 @@ function startBreathGuide() {
   startBtn.addEventListener('click', async () => {
     if (breathActive) return;
     breathActive = true;
+    cycleCount = 0;
 
-    // Hide start button
-    startBtn.classList.add('hidden');
+    // Hide start button, show controls
+    startBtn.style.display = 'none';
+    if (pauseBtn) pauseBtn.style.display = 'inline-block';
+    if (stopBtn) stopBtn.style.display = 'inline-block';
+    if (cycleCounter) cycleCounter.style.display = 'block';
 
     // Countdown: 3, 2, 1
     breathInstruction.textContent = 'Beginning in...';
@@ -601,11 +613,50 @@ function startBreathGuide() {
     }
 
     // Start breathing cycle
-    beginBreathCycle(breathOrb, breathInstruction, breathTimer);
+    beginBreathCycle(breathOrb, breathInstruction, breathTimer, cycleNumber, pauseBtn, stopBtn);
   }, { once: true });
+
+  // Handle pause/resume
+  if (pauseBtn) {
+    pauseBtn.addEventListener('click', () => {
+      breathPaused = !breathPaused;
+      pauseBtn.textContent = breathPaused ? 'Resume' : 'Pause';
+
+      if (breathPaused) {
+        if (breathInterval) {
+          clearInterval(breathInterval);
+          breathInterval = null;
+        }
+        breathInstruction.textContent = 'Paused...';
+        breathOrb.setAttribute('data-phase', 'pause');
+      } else {
+        // Resume - need to restart the interval
+        // This will be handled by checking breathPaused in updateBreath
+      }
+    });
+  }
+
+  // Handle stop
+  if (stopBtn) {
+    stopBtn.addEventListener('click', () => {
+      stopBreathGuide();
+
+      // Reset UI
+      startBtn.style.display = 'inline-block';
+      if (pauseBtn) pauseBtn.style.display = 'none';
+      if (stopBtn) stopBtn.style.display = 'none';
+      if (cycleCounter) cycleCounter.style.display = 'none';
+      if (pauseBtn) pauseBtn.textContent = 'Pause';
+
+      breathInstruction.textContent = 'Prepare to breathe with the frequencies...';
+      breathTimer.textContent = '';
+      if (cycleNumber) cycleNumber.textContent = '0';
+      breathOrb.setAttribute('data-phase', 'pause');
+    });
+  }
 }
 
-function beginBreathCycle(breathOrb, breathInstruction, breathTimer) {
+function beginBreathCycle(breathOrb, breathInstruction, breathTimer, cycleNumber, pauseBtn, stopBtn) {
   // Box Breath: 4 seconds in, 4 seconds hold, 4 seconds out, 4 seconds hold = 16 seconds total
   const breathCycle = [
     { duration: 4, instruction: 'Breathe in through your nose...', phase: 'inhale' },
@@ -616,8 +667,17 @@ function beginBreathCycle(breathOrb, breathInstruction, breathTimer) {
 
   let cycleIndex = 0;
   let secondsRemaining = breathCycle[0].duration;
+  let savedCycleIndex = 0;
+  let savedSecondsRemaining = 0;
 
   function updateBreath() {
+    // Skip update if paused, but save state
+    if (breathPaused) {
+      savedCycleIndex = cycleIndex;
+      savedSecondsRemaining = secondsRemaining;
+      return;
+    }
+
     const currentPhase = breathCycle[cycleIndex];
     breathInstruction.textContent = currentPhase.instruction;
     breathTimer.textContent = `${secondsRemaining}`;
@@ -627,6 +687,13 @@ function beginBreathCycle(breathOrb, breathInstruction, breathTimer) {
 
     if (secondsRemaining < 0) {
       cycleIndex = (cycleIndex + 1) % breathCycle.length;
+
+      // Increment cycle count when completing full cycle (back to beginning)
+      if (cycleIndex === 0) {
+        cycleCount++;
+        if (cycleNumber) cycleNumber.textContent = cycleCount;
+      }
+
       secondsRemaining = breathCycle[cycleIndex].duration - 1;
     }
   }
@@ -639,6 +706,22 @@ function beginBreathCycle(breathOrb, breathInstruction, breathTimer) {
 
   // Update every second
   breathInterval = setInterval(updateBreath, 1000);
+
+  // Watch for resume from pause
+  const resumeWatcher = setInterval(() => {
+    // If not paused, active, and interval was cleared (during pause), restart it
+    if (!breathPaused && breathActive && !breathInterval) {
+      cycleIndex = savedCycleIndex;
+      secondsRemaining = savedSecondsRemaining;
+      breathInterval = setInterval(updateBreath, 1000);
+      updateBreath(); // Update immediately to resume display
+    }
+
+    // Clean up watcher if breath guide stopped
+    if (!breathActive) {
+      clearInterval(resumeWatcher);
+    }
+  }, 100);
 }
 
 // 4. BOARDING (Board Now button)
