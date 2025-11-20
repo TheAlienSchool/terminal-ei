@@ -301,6 +301,13 @@ async function enterReflectionMode() {
     landing: eiLoad('ei_landing_ping', '—')
   };
 
+  // Lock scroll and scroll to top
+  const scrollY = window.scrollY;
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollY}px`;
+  document.body.style.width = '100%';
+
   const reflection = document.createElement('div');
   reflection.id = 'reflection-mode';
   reflection.innerHTML = `
@@ -349,6 +356,13 @@ async function enterReflectionMode() {
   reflection.classList.remove('visible');
   await wait(600);
   reflection.remove();
+
+  // Restore scroll
+  document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, scrollY);
 }
 
 // ============================================
@@ -686,6 +700,13 @@ async function enterSittingRoom() {
   const wisdom = ambientWisdom.slice(0, 6).map(w => ({ text: w, type: 'ambient' }));
   const selectedNotes = [...userNotes, ...wisdom].sort(() => Math.random() - 0.5).slice(0, 8);
 
+  // Lock scroll and scroll to top
+  const scrollY = window.scrollY;
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollY}px`;
+  document.body.style.width = '100%';
+
   // Create cinematic fullscreen container
   const cinema = document.createElement('div');
   cinema.id = 'sitting-room-cinema';
@@ -756,10 +777,24 @@ async function enterSittingRoom() {
   cinema.classList.remove('visible');
   await wait(600);
   cinema.remove();
+
+  // Restore scroll
+  document.body.style.overflow = '';
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, scrollY);
 }
 
 // 9. VERBRATION MODAL
 function openVerbrationModal() {
+  // Lock scroll
+  const scrollY = window.scrollY;
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollY}px`;
+  document.body.style.width = '100%';
+
   const modal = document.createElement('div');
   modal.id = 'verbration-modal';
   modal.innerHTML = `
@@ -795,17 +830,24 @@ function openVerbrationModal() {
 
   setTimeout(() => modal.classList.add('visible'), 50);
 
-  document.getElementById('close-verbration-modal')?.addEventListener('click', async () => {
+  const closeModal = async () => {
     modal.classList.remove('visible');
     await wait(400);
     modal.remove();
-  });
+
+    // Restore scroll
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, scrollY);
+  };
+
+  document.getElementById('close-verbration-modal')?.addEventListener('click', closeModal);
 
   modal.addEventListener('click', async (e) => {
     if (e.target === modal) {
-      modal.classList.remove('visible');
-      await wait(400);
-      modal.remove();
+      await closeModal();
     }
   });
 }
