@@ -428,17 +428,45 @@ verbButtons.forEach((btn) => {
 
 // BREATH GUIDE with Timer
 let breathInterval = null;
+let breathActive = false;
 
 function startBreathGuide() {
   const breathGuide = document.getElementById('breath-guide');
   const breathOrb = breathGuide?.querySelector('.breath-orb');
   const breathInstruction = breathGuide?.querySelector('.breath-instruction');
   const breathTimer = breathGuide?.querySelector('.breath-timer');
+  const startBtn = document.getElementById('start-breath');
 
-  if (!breathGuide || !breathOrb || !breathInstruction || !breathTimer) return;
+  if (!breathGuide || !breathOrb || !breathInstruction || !breathTimer || !startBtn) return;
 
+  // Show breath guide in ready state
   breathGuide.style.display = 'block';
+  breathInstruction.textContent = 'Prepare to breathe with the frequencies...';
+  breathTimer.textContent = '';
+  breathOrb.setAttribute('data-phase', 'pause');
 
+  // Handle tap to start
+  startBtn.addEventListener('click', async () => {
+    if (breathActive) return;
+    breathActive = true;
+
+    // Hide start button
+    startBtn.classList.add('hidden');
+
+    // Countdown: 3, 2, 1
+    breathInstruction.textContent = 'Beginning in...';
+    for (let i = 3; i > 0; i--) {
+      breathTimer.textContent = `${i}`;
+      breathOrb.setAttribute('data-phase', 'hold');
+      await wait(1000);
+    }
+
+    // Start breathing cycle
+    beginBreathCycle(breathOrb, breathInstruction, breathTimer);
+  }, { once: true });
+}
+
+function beginBreathCycle(breathOrb, breathInstruction, breathTimer) {
   // Box Breath: 4 seconds in, 4 seconds hold, 4 seconds out, 4 seconds hold = 16 seconds total
   const breathCycle = [
     { duration: 4, instruction: 'Breathe in through your nose...', phase: 'inhale' },

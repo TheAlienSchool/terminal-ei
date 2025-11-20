@@ -637,6 +637,31 @@ button:focus-visible {
   font-variant-numeric: tabular-nums;
 }
 
+.breath-start-btn {
+  margin-top: 1.5rem;
+  padding: 0.8rem 2rem;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--accent-glow);
+  color: var(--accent);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.breath-start-btn:hover,
+.breath-start-btn:focus-visible {
+  background: rgba(212, 197, 160, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(212, 197, 160, 0.15);
+}
+
+.breath-start-btn.hidden {
+  display: none;
+}
+
 /* ============================================
    BAGGAGE CLAIM
    ============================================ */
