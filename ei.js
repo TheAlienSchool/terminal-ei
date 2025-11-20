@@ -157,7 +157,13 @@ async function advanceJourney(nextSectionId, stageIndex) {
   
   // Update progress
   updateProgressIndicator(stageIndex);
-  
+
+  // Save journey position for resume capability
+  eiSave('ei_journey_position', {
+    sectionId: nextSectionId,
+    stageIndex: stageIndex
+  });
+
   // Remove arriving class after animation
   setTimeout(() => {
     nextSection.classList.remove('arriving');
@@ -165,24 +171,101 @@ async function advanceJourney(nextSectionId, stageIndex) {
 }
 
 function initializeVisibility() {
-  // Hide all sections except curbside
-  document.querySelectorAll('main section').forEach(section => {
-    if (section.id !== 'curbside') {
+  // Check for saved journey position
+  const savedPosition = eiLoad('ei_journey_position', null);
+
+  if (savedPosition && savedPosition.sectionId) {
+    // Resume journey from saved position
+    restoreJourneyPosition(savedPosition);
+  } else {
+    // Start fresh journey
+    // Hide all sections except curbside
+    document.querySelectorAll('main section').forEach(section => {
+      if (section.id !== 'curbside') {
+        section.style.display = 'none';
+      }
+    });
+
+    // Hide footer initially
+    const footer = document.querySelector('footer');
+    if (footer) {
+      footer.style.display = 'none';
+    }
+
+    // Mark curbside as active
+    document.querySelector('#curbside')?.classList.add('active');
+
+    // Initialize progress indicator
+    updateProgressIndicator(0);
+  }
+}
+
+function restoreJourneyPosition(savedPosition) {
+  const { sectionId, stageIndex } = savedPosition;
+
+  // Section mapping
+  const sectionOrder = [
+    '#curbside',
+    '#check-in',
+    '#gate-deck',
+    '#boarding',
+    '#in-flight',
+    '#landing',
+    '#baggage-claim'
+  ];
+
+  const targetIndex = sectionOrder.indexOf(sectionId);
+  if (targetIndex === -1) return;
+
+  // Show and mark all sections before target as completed
+  for (let i = 0; i < targetIndex; i++) {
+    const section = document.querySelector(sectionOrder[i]);
+    if (section) {
+      section.style.display = 'block';
+      section.classList.add('completed');
+    }
+  }
+
+  // Show and mark target section as active
+  const targetSection = document.querySelector(sectionId);
+  if (targetSection) {
+    targetSection.style.display = 'block';
+    targetSection.classList.add('active');
+  }
+
+  // Hide sections after target
+  for (let i = targetIndex + 1; i < sectionOrder.length; i++) {
+    const section = document.querySelector(sectionOrder[i]);
+    if (section) {
       section.style.display = 'none';
     }
-  });
-  
-  // Hide footer initially
-  const footer = document.querySelector('footer');
-  if (footer) {
-    footer.style.display = 'none';
   }
-  
-  // Mark curbside as active
-  document.querySelector('#curbside')?.classList.add('active');
-  
-  // Initialize progress indicator
-  updateProgressIndicator(0);
+
+  // Update progress indicator
+  updateProgressIndicator(stageIndex);
+
+  // Restore verb atmosphere if one was selected
+  const savedVerb = eiLoad('ei_selected_verb', null);
+  if (savedVerb) {
+    setVerbAtmosphere(savedVerb);
+
+    // Mark selected verb visually
+    const verbButtons = document.querySelectorAll('.verb-card');
+    verbButtons.forEach((btn) => {
+      if (btn.dataset.verb === savedVerb) {
+        btn.classList.add('selected-verb');
+        btn.setAttribute('aria-pressed', 'true');
+      }
+    });
+  }
+
+  // Show footer if at baggage claim
+  if (sectionId === '#baggage-claim') {
+    const footer = document.querySelector('footer');
+    if (footer) {
+      footer.style.display = 'block';
+    }
+  }
 }
 
 // ============================================
@@ -1082,6 +1165,7 @@ window.eiReset = function() {
     localStorage.removeItem('ei_cabin_note');
     localStorage.removeItem('ei_landing_ping');
     localStorage.removeItem('ei_baggage_decisions');
+    localStorage.removeItem('ei_journey_position');
     // Note: This does NOT clear journey_history or collective_notes
     location.reload();
   }
