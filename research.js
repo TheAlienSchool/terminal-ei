@@ -371,6 +371,7 @@ async function startResearchCinema() {
       <div class="question-help-text" style="font-size: 0.85rem; color: var(--muted); font-style: italic; margin-bottom: 1.5rem;"></div>
       <div class="question-input-container"></div>
       <div class="question-actions">
+        <button class="prev-btn" type="button">Previous</button>
         <button class="skip-btn" type="button">Skip Question</button>
         <button class="next-btn" type="button">Next</button>
       </div>
@@ -404,6 +405,7 @@ async function showQuestion(index) {
   const textEl = cinema.querySelector('.question-text');
   const helpEl = cinema.querySelector('.question-help-text');
   const containerEl = cinema.querySelector('.question-input-container');
+  const prevBtn = cinema.querySelector('.prev-btn');
   const skipBtn = cinema.querySelector('.skip-btn');
   const nextBtn = cinema.querySelector('.next-btn');
 
@@ -415,6 +417,9 @@ async function showQuestion(index) {
   // Build input based on type
   containerEl.innerHTML = buildQuestionInput(question);
 
+  // Pre-fill saved answer if exists
+  prefillAnswer(question, responses[question.id]);
+
   // Wire up scale slider if this is a scale question
   if (question.type === 'scale') {
     const scaleInput = document.getElementById('scale-input');
@@ -425,6 +430,21 @@ async function showQuestion(index) {
       });
     }
   }
+
+  // Show/hide Previous button
+  if (index === 0) {
+    prevBtn.style.display = 'none';
+  } else {
+    prevBtn.style.display = 'inline-block';
+  }
+
+  // Wire up previous button
+  prevBtn.onclick = () => {
+    // Save current response before going back
+    const response = captureResponse(question);
+    responses[question.id] = response;
+    showQuestion(index - 1);
+  };
 
   // Wire up skip button
   skipBtn.onclick = () => {
@@ -525,6 +545,55 @@ function captureResponse(question) {
 
     default:
       return null;
+  }
+}
+
+function prefillAnswer(question, savedResponse) {
+  if (!savedResponse) return;
+
+  switch (question.type) {
+    case 'scale':
+      const scaleInput = document.getElementById('scale-input');
+      const scaleValue = document.getElementById('scale-value');
+      if (scaleInput && savedResponse) {
+        scaleInput.value = savedResponse;
+        if (scaleValue) scaleValue.textContent = savedResponse;
+      }
+      break;
+
+    case 'radio':
+      if (savedResponse.selection) {
+        const radioInputs = document.querySelectorAll('input[name="radio-response"]');
+        radioInputs.forEach(input => {
+          if (input.value === savedResponse.selection) {
+            input.checked = true;
+            // Trigger follow-up display if needed
+            const followUpContainer = document.getElementById('follow-up-container');
+            if (followUpContainer && question.followUp && savedResponse.selection === question.followUp.condition) {
+              followUpContainer.style.display = 'block';
+              const followUpInput = document.getElementById('follow-up-input');
+              if (followUpInput && savedResponse.followUp) {
+                followUpInput.value = savedResponse.followUp;
+              }
+            }
+          }
+        });
+      }
+      break;
+
+    case 'text':
+      const textInput = document.getElementById('text-input');
+      if (textInput && savedResponse) {
+        textInput.value = savedResponse;
+      }
+      break;
+
+    case 'textarea':
+      const textareaInput = document.getElementById('textarea-input');
+      if (textareaInput && savedResponse) {
+        textareaInput.value = savedResponse;
+      }
+      break;
   }
 }
 
