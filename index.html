@@ -205,7 +205,12 @@
         <div class="breath-orb"></div>
         <p class="breath-instruction">Breathe with the frequencies...</p>
         <p class="breath-timer" aria-live="polite"></p>
-        <button id="start-breath" type="button" class="breath-start-btn">Tap to Begin Breath Pacing</button>
+        <p class="breath-cycle-count" style="display: none;">Cycle <span id="cycle-number">0</span></p>
+        <div class="breath-controls">
+          <button id="start-breath" type="button" class="breath-start-btn">Tap to Begin Breath Pacing</button>
+          <button id="pause-breath" type="button" class="breath-control-btn" style="display: none;">Pause</button>
+          <button id="stop-breath" type="button" class="breath-control-btn" style="display: none;">Stop</button>
+        </div>
       </div>
 
       <div id="in-flight-prompt">
