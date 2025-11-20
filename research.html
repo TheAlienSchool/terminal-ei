@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanctuary Research :: 1000 Ways to Arrive</title>
+  <meta name="description" content="Contribute to regenerative research on sonic sanctuaries and embodied futures practice.">
+  <meta name="theme-color" content="#050d0c">
+  <link rel="stylesheet" href="ei.css">
+</head>
+
+<body>
+
+  <!-- ============================================ -->
+  <!-- HEADER -->
+  <!-- ============================================ -->
+
+  <header id="top">
+    <div id="ei-mark" aria-label="E.I. International mark"></div>
+
+    <div>
+      <h1>Sanctuary Research</h1>
+      <p>Contribute to the Field :: Weaving Collective Memory</p>
+    </div>
+
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Return to Sanctuary</a></li>
+        <li><a href="research-dashboard.html">Research Dashboard</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ============================================ -->
+  <!-- MAIN CONTENT -->
+  <!-- ============================================ -->
+
+  <main>
+
+    <!-- MODE SELECTION (Initial screen) -->
+    <section id="research-intro" class="arriving">
+      <h2>Contribute to Sanctuary Research</h2>
+
+      <p>You're not "providing data"—you're weaving collective memory that honors what happened and feeds what wants to emerge.</p>
+
+      <p>The research is itself a practice of attunement: listening deeply, reflecting back, inviting continued co-creation.</p>
+
+      <p style="margin-top: 2.5rem; font-style: italic; color: var(--muted);">This research framework was prepared by Jero Wiku for regenerative sanctuary research.</p>
+
+      <div style="margin-top: 3rem; display: flex; flex-direction: column; gap: 1.5rem; max-width: 500px;">
+        <button id="start-self-guided" type="button" class="mode-select-btn">
+          <span class="mode-title">Self-Guided Reflection</span>
+          <span class="mode-subtitle">Complete the research questions at your own pace</span>
+        </button>
+
+        <button id="start-facilitated" type="button" class="mode-select-btn">
+          <span class="mode-title">Facilitated Interview</span>
+          <span class="mode-subtitle">A volunteer researcher will guide you through the questions</span>
+        </button>
+      </div>
+
+      <p style="margin-top: 3rem; font-size: 0.85rem; color: var(--muted);">
+        All responses are stored locally. You can skip any question.
+        <a href="#" class="definition-link" data-term="research-ethics">Learn about research ethics</a>
+      </p>
+    </section>
+
+    <!-- RESEARCHER IDENTIFICATION (Facilitated mode only) -->
+    <section id="researcher-identification" style="display: none;">
+      <h2>Researcher Identification</h2>
+
+      <p>For source delineation and documentation purposes, please provide your name as the facilitating researcher.</p>
+
+      <div style="margin-top: 2rem; max-width: 420px;">
+        <label for="researcher-name">Researcher Name</label>
+        <input type="text" id="researcher-name" placeholder="Your full name" required>
+
+        <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--muted); font-style: italic;">
+          Your name will be attributed to the research session for documentation purposes and will be stored with the participant's responses.
+        </p>
+
+        <button id="begin-facilitated" type="button" style="margin-top: 1.5rem;">Begin Research Session</button>
+      </div>
+    </section>
+
+    <!-- CONTEXT DEFINITIONS -->
+    <section id="context-guide" style="display: none;">
+      <h2>Research Context</h2>
+
+      <p>Before we begin, familiarize yourself with these key concepts that frame the sanctuary experience:</p>
+
+      <div style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; max-width: 600px;">
+        <button class="context-card" data-term="sound-infused-air">
+          <span class="context-title">Sound Infused Air</span>
+          <span class="context-preview">The intelligent, responsive atmosphere...</span>
+        </button>
+
+        <button class="context-card" data-term="balinese-cosmology">
+          <span class="context-title">Balinese Cosmology</span>
+          <span class="context-preview">Cultural lineage and Gamelatron origins...</span>
+        </button>
+
+        <button class="context-card" data-term="ping">
+          <span class="context-title">PING (Arrival Vibration)</span>
+          <span class="context-preview">Your state of being when entering...</span>
+        </button>
+
+        <button class="context-card" data-term="verbration">
+          <span class="context-title">Verbration</span>
+          <span class="context-preview">Action-state portmanteau of verb + vibration...</span>
+        </button>
+      </div>
+
+      <button id="start-questions" type="button" style="margin-top: 2.5rem;">Begin Research Questions</button>
+    </section>
+
+  </main>
+
+  <!-- ============================================ -->
+  <!-- FOOTER -->
+  <!-- ============================================ -->
+
+  <footer>
+    <p><strong>Research Framework:</strong> Prepared by Jero Wiku for regenerative sanctuary research.</p>
+    <p><strong>Sanctuary Experience:</strong> 1000 Ways to Arrive, a cognitive companion to Gamelatron Sonic Sanctuary at Heron Arts, San Francisco.</p>
+    <p>
+      <a href="index.html">Return to Sanctuary</a> ::
+      <a href="research-dashboard.html">Research Dashboard</a>
+    </p>
+  </footer>
+
+  <script src="research.js" defer></script>
+
+</body>
+</html>
