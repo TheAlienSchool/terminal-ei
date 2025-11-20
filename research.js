@@ -308,8 +308,7 @@ function openDefinitionModal(term) {
   document.body.style.width = '100%';
 
   const modal = document.createElement('div');
-  modal.id = 'definition-modal';
-  modal.className = 'verbration-modal'; // Reuse existing modal styles
+  modal.id = 'verbration-modal'; // Use correct ID to match CSS
   modal.innerHTML = `
     <div class="modal-container">
       <h2>${def.title}</h2>
@@ -317,7 +316,7 @@ function openDefinitionModal(term) {
       <div class="modal-content">
         ${def.content}
       </div>
-      <button id="close-definition-modal" type="button">Close</button>
+      <button id="close-verbration-modal" type="button">Close</button>
     </div>
   `;
 
@@ -338,7 +337,7 @@ function openDefinitionModal(term) {
     window.scrollTo(0, scrollY);
   };
 
-  document.getElementById('close-definition-modal')?.addEventListener('click', closeModal);
+  document.getElementById('close-verbration-modal')?.addEventListener('click', closeModal);
 
   modal.addEventListener('click', async (e) => {
     if (e.target === modal) {
