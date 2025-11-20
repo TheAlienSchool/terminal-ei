@@ -229,61 +229,68 @@ const researchQuestions = [
 // MODE SELECTION
 // ============================================
 
-document.getElementById('start-self-guided')?.addEventListener('click', () => {
-  researchMode = 'self';
-  showContextGuide();
-});
-
-document.getElementById('start-facilitated')?.addEventListener('click', () => {
-  researchMode = 'facilitated';
-  document.getElementById('research-intro').style.display = 'none';
-  document.getElementById('researcher-identification').style.display = 'block';
-});
-
-document.getElementById('begin-facilitated')?.addEventListener('click', () => {
-  const nameInput = document.getElementById('researcher-name');
-  const name = nameInput.value.trim();
-
-  if (!name) {
-    alert('Please enter your name as the facilitating researcher.');
-    return;
-  }
-
-  researcherName = name;
-  showContextGuide();
-});
-
-// ============================================
-// CONTEXT GUIDE
-// ============================================
-
 function showContextGuide() {
   document.getElementById('research-intro').style.display = 'none';
   document.getElementById('researcher-identification').style.display = 'none';
   document.getElementById('context-guide').style.display = 'block';
 }
 
-// Context card clicks
-document.querySelectorAll('.context-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const term = card.getAttribute('data-term');
-    openDefinitionModal(term);
+// ============================================
+// INITIALIZATION
+// ============================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Mode selection buttons
+  document.getElementById('start-self-guided')?.addEventListener('click', () => {
+    researchMode = 'self';
+    showContextGuide();
+  });
+
+  document.getElementById('start-facilitated')?.addEventListener('click', () => {
+    researchMode = 'facilitated';
+    document.getElementById('research-intro').style.display = 'none';
+    document.getElementById('researcher-identification').style.display = 'block';
+  });
+
+  document.getElementById('begin-facilitated')?.addEventListener('click', () => {
+    const nameInput = document.getElementById('researcher-name');
+    const name = nameInput.value.trim();
+
+    if (!name) {
+      alert('Please enter your name as the facilitating researcher.');
+      return;
+    }
+
+    researcherName = name;
+    showContextGuide();
+  });
+
+  // Context card clicks
+  document.querySelectorAll('.context-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const term = card.getAttribute('data-term');
+      openDefinitionModal(term);
+    });
+  });
+
+  // Definition link clicks
+  document.querySelectorAll('.definition-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const term = link.getAttribute('data-term');
+      openDefinitionModal(term);
+    });
+  });
+
+  // Start questions button
+  document.getElementById('start-questions')?.addEventListener('click', () => {
+    startResearchCinema();
   });
 });
 
-// Definition link clicks
-document.querySelectorAll('.definition-link').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const term = link.getAttribute('data-term');
-    openDefinitionModal(term);
-  });
-});
-
-// Start questions button
-document.getElementById('start-questions')?.addEventListener('click', () => {
-  startResearchCinema();
-});
+// ============================================
+// CONTEXT GUIDE
+// ============================================
 
 // ============================================
 // DEFINITION MODALS
