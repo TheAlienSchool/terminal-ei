@@ -1114,6 +1114,25 @@ footer a:focus-visible {
   }
 }
 
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+.input-error {
+  animation: shake 0.4s ease;
+  border-color: rgba(255, 100, 100, 0.6) !important;
+}
+
+.error-message {
+  color: rgba(255, 120, 120, 0.9);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+  animation: slideUp 0.3s ease;
+}
+
 .sitting-room-container h2 {
   font-size: 1.5rem;
   color: var(--accent);

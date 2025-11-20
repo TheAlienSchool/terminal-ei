@@ -135,6 +135,12 @@ async function advanceJourney(nextSectionId, stageIndex) {
   if (currentSection) {
     currentSection.classList.remove('active');
     currentSection.classList.add('completed');
+
+    // Clean up breath guide if leaving in-flight section
+    if (currentSection.id === 'in-flight') {
+      stopBreathGuide();
+    }
+
     await wait(400);
   }
   
@@ -301,12 +307,10 @@ async function enterReflectionMode() {
     landing: eiLoad('ei_landing_ping', '—')
   };
 
-  // Lock scroll and scroll to top
-  const scrollY = window.scrollY;
+  // Lock scroll with smooth technique (no layout shift)
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
   document.body.style.overflow = 'hidden';
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollY}px`;
-  document.body.style.width = '100%';
+  document.body.style.paddingRight = `${scrollbarWidth}px`;
 
   const reflection = document.createElement('div');
   reflection.id = 'reflection-mode';
@@ -359,10 +363,7 @@ async function enterReflectionMode() {
 
   // Restore scroll
   document.body.style.overflow = '';
-  document.body.style.position = '';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  window.scrollTo(0, scrollY);
+  document.body.style.paddingRight = '';
 }
 
 // ============================================
@@ -388,18 +389,32 @@ const pingConfirm = document.getElementById('ping-confirm');
 pingForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const ping = boardingPingInput.value.trim();
-  if (!ping) return;
-  
+
+  if (!ping) {
+    // Show validation feedback
+    boardingPingInput.classList.add('input-error');
+    pingConfirm.textContent = 'Please enter your arrival vibration';
+    pingConfirm.className = 'error-message';
+
+    setTimeout(() => {
+      boardingPingInput.classList.remove('input-error');
+      pingConfirm.textContent = '';
+      pingConfirm.className = '';
+    }, 2000);
+    return;
+  }
+
   eiSave('ei_boarding_ping', ping);
   journeyState.hasBoardingPing = true;
 
   pingConfirm.textContent = `Arrival Vibration :: "${ping}" sensed and saved.`;
+  pingConfirm.className = '';
   boardingPingInput.value = '';
 
   setTimeout(() => {
     pingConfirm.textContent = '';
   }, 2600);
-  
+
   await advanceJourney('#gate-deck', 2);
 });
 
@@ -429,6 +444,14 @@ verbButtons.forEach((btn) => {
 // BREATH GUIDE with Timer
 let breathInterval = null;
 let breathActive = false;
+
+function stopBreathGuide() {
+  if (breathInterval) {
+    clearInterval(breathInterval);
+    breathInterval = null;
+  }
+  breathActive = false;
+}
 
 function startBreathGuide() {
   const breathGuide = document.getElementById('breath-guide');
@@ -565,11 +588,25 @@ const saveNoteBtn = document.getElementById('save-note');
 
 saveNoteBtn?.addEventListener('click', async () => {
   const note = cabinNoteInput.value.trim();
-  if (!note) return;
-  
+
+  if (!note) {
+    // Show validation feedback
+    cabinNoteInput.classList.add('input-error');
+    const original = saveNoteBtn.textContent;
+    saveNoteBtn.textContent = 'Please enter your sonic note';
+    saveNoteBtn.style.color = 'rgba(255, 120, 120, 0.9)';
+
+    setTimeout(() => {
+      cabinNoteInput.classList.remove('input-error');
+      saveNoteBtn.textContent = original;
+      saveNoteBtn.style.color = '';
+    }, 2000);
+    return;
+  }
+
   eiSave('ei_cabin_note', note);
   journeyState.hasCabinNote = true;
-  
+
   cabinNoteInput.value = '';
   const original = saveNoteBtn.textContent;
   saveNoteBtn.textContent = 'Sonic Note saved :: resonance captured.';
@@ -577,7 +614,7 @@ saveNoteBtn?.addEventListener('click', async () => {
   setTimeout(() => {
     saveNoteBtn.textContent = original;
   }, 2200);
-  
+
   await advanceJourney('#landing', 5);
 });
 
@@ -587,11 +624,25 @@ const saveLandingBtn = document.getElementById('save-landing');
 
 saveLandingBtn?.addEventListener('click', async () => {
   const landing = landingInput.value.trim();
-  if (!landing) return;
-  
+
+  if (!landing) {
+    // Show validation feedback
+    landingInput.classList.add('input-error');
+    const original = saveLandingBtn.textContent;
+    saveLandingBtn.textContent = 'Please name your departure resonance';
+    saveLandingBtn.style.color = 'rgba(255, 120, 120, 0.9)';
+
+    setTimeout(() => {
+      landingInput.classList.remove('input-error');
+      saveLandingBtn.textContent = original;
+      saveLandingBtn.style.color = '';
+    }, 2000);
+    return;
+  }
+
   eiSave('ei_landing_ping', landing);
   journeyState.hasLandingPing = true;
-  
+
   landingInput.value = '';
   const original = saveLandingBtn.textContent;
   saveLandingBtn.textContent = 'Departure Resonance saved :: frequency noted.';
@@ -599,7 +650,7 @@ saveLandingBtn?.addEventListener('click', async () => {
   setTimeout(() => {
     saveLandingBtn.textContent = original;
   }, 2200);
-  
+
   await advanceJourney('#baggage-claim', 6);
   populateBaggage();
 });
@@ -728,12 +779,10 @@ async function enterSittingRoom() {
   const wisdom = ambientWisdom.slice(0, 6).map(w => ({ text: w, type: 'ambient' }));
   const selectedNotes = [...userNotes, ...wisdom].sort(() => Math.random() - 0.5).slice(0, 8);
 
-  // Lock scroll and scroll to top
-  const scrollY = window.scrollY;
+  // Lock scroll with smooth technique (no layout shift)
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
   document.body.style.overflow = 'hidden';
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollY}px`;
-  document.body.style.width = '100%';
+  document.body.style.paddingRight = `${scrollbarWidth}px`;
 
   // Create cinematic fullscreen container
   const cinema = document.createElement('div');
@@ -808,20 +857,15 @@ async function enterSittingRoom() {
 
   // Restore scroll
   document.body.style.overflow = '';
-  document.body.style.position = '';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  window.scrollTo(0, scrollY);
+  document.body.style.paddingRight = '';
 }
 
 // 9. VERBRATION MODAL
 function openVerbrationModal() {
-  // Lock scroll
-  const scrollY = window.scrollY;
+  // Lock scroll with smooth technique (no layout shift)
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
   document.body.style.overflow = 'hidden';
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollY}px`;
-  document.body.style.width = '100%';
+  document.body.style.paddingRight = `${scrollbarWidth}px`;
 
   const modal = document.createElement('div');
   modal.id = 'verbration-modal';
@@ -856,7 +900,12 @@ function openVerbrationModal() {
 
   document.body.appendChild(modal);
 
-  setTimeout(() => modal.classList.add('visible'), 50);
+  // Make visible immediately using requestAnimationFrame for smooth transition
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      modal.classList.add('visible');
+    });
+  });
 
   const closeModal = async () => {
     modal.classList.remove('visible');
@@ -865,10 +914,7 @@ function openVerbrationModal() {
 
     // Restore scroll
     document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    window.scrollTo(0, scrollY);
+    document.body.style.paddingRight = '';
   };
 
   document.getElementById('close-verbration-modal')?.addEventListener('click', closeModal);
@@ -896,22 +942,27 @@ document.querySelector('.verbration-link')?.addEventListener('keypress', (e) => 
 document.addEventListener('DOMContentLoaded', () => {
   // Set time-of-day atmosphere
   setTimeOfDayAtmosphere();
-  
+
   // Check for returning traveler
   checkReturningTraveler();
-  
+
   // Initialize section visibility
   initializeVisibility();
-  
+
   // Start terminal notes (first one appears after 40-90 seconds)
   setTimeout(() => {
     dropTerminalNote();
-    
+
     // Then continue at intervals
     setInterval(() => {
       dropTerminalNote();
     }, 40000 + Math.random() * 50000);
   }, 40000 + Math.random() * 50000);
+});
+
+// Clean up breath guide on page unload
+window.addEventListener('beforeunload', () => {
+  stopBreathGuide();
 });
 
 // ============================================
