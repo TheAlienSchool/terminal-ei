@@ -415,6 +415,17 @@ async function showQuestion(index) {
   // Build input based on type
   containerEl.innerHTML = buildQuestionInput(question);
 
+  // Wire up scale slider if this is a scale question
+  if (question.type === 'scale') {
+    const scaleInput = document.getElementById('scale-input');
+    const scaleValue = document.getElementById('scale-value');
+    if (scaleInput && scaleValue) {
+      scaleInput.addEventListener('input', (e) => {
+        scaleValue.textContent = e.target.value;
+      });
+    }
+  }
+
   // Wire up skip button
   skipBtn.onclick = () => {
     responses[question.id] = null; // Explicitly mark as skipped
@@ -443,11 +454,6 @@ function buildQuestionInput(question) {
             <span id="scale-value">5</span> / 10
           </p>
         </div>
-        <script>
-          document.getElementById('scale-input').addEventListener('input', (e) => {
-            document.getElementById('scale-value').textContent = e.target.value;
-          });
-        </script>
       `;
 
     case 'radio':
