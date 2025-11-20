@@ -300,12 +300,12 @@ function openDefinitionModal(term) {
   const def = definitions[term];
   if (!def) return;
 
-  // Lock scroll
+  // Lock scroll with smooth technique (no layout shift)
   const scrollY = window.scrollY;
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
   document.body.style.overflow = 'hidden';
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollY}px`;
-  document.body.style.width = '100%';
+  document.body.style.paddingRight = `${scrollbarWidth}px`;
 
   const modal = document.createElement('div');
   modal.id = 'verbration-modal'; // Use correct ID to match CSS
@@ -322,7 +322,12 @@ function openDefinitionModal(term) {
 
   document.body.appendChild(modal);
 
-  setTimeout(() => modal.classList.add('visible'), 50);
+  // Make visible immediately using requestAnimationFrame for smooth transition
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      modal.classList.add('visible');
+    });
+  });
 
   const closeModal = async () => {
     modal.classList.remove('visible');
@@ -331,10 +336,7 @@ function openDefinitionModal(term) {
 
     // Restore scroll
     document.body.style.overflow = '';
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    window.scrollTo(0, scrollY);
+    document.body.style.paddingRight = '';
   };
 
   document.getElementById('close-verbration-modal')?.addEventListener('click', closeModal);
@@ -354,12 +356,10 @@ async function startResearchCinema() {
   // Hide context guide
   document.getElementById('context-guide').style.display = 'none';
 
-  // Lock scroll
-  const scrollY = window.scrollY;
+  // Lock scroll with smooth technique (no layout shift)
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
   document.body.style.overflow = 'hidden';
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollY}px`;
-  document.body.style.width = '100%';
+  document.body.style.paddingRight = `${scrollbarWidth}px`;
 
   // Create cinema container
   const cinema = document.createElement('div');
@@ -379,8 +379,12 @@ async function startResearchCinema() {
 
   document.body.appendChild(cinema);
 
-  await wait(100);
-  cinema.classList.add('visible');
+  // Make visible immediately using requestAnimationFrame for smooth transition
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      cinema.classList.add('visible');
+    });
+  });
 
   // Show first question
   await showQuestion(0);
@@ -569,9 +573,7 @@ async function completeResearch() {
 
   // Restore scroll after a delay
   document.body.style.overflow = '';
-  document.body.style.position = '';
-  document.body.style.top = '';
-  document.body.style.width = '';
+  document.body.style.paddingRight = '';
 }
 
 function exportResearchData(data) {
