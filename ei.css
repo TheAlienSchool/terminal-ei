@@ -401,9 +401,21 @@ section.arriving {
 
 /* Completed Section Styling */
 section.completed {
-  opacity: 0.5;
-  pointer-events: none;
+  opacity: 0.85;
   position: relative;
+}
+
+section.completed button,
+section.completed input,
+section.completed textarea {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+section.completed h2,
+section.completed p,
+section.completed label {
+  opacity: 1;
 }
 
 section.completed::after {
