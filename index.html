@@ -4,7 +4,905 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Echolocative Intelligence International :: Terminal E.I.</title>
-  <link rel="stylesheet" href="ei.css">
+  <style>
+/* ============================================
+   Terminal E.I. Complete Stylesheet
+   HÅRMONIOUS70 Integration
+   ============================================ */
+
+/* ============================================
+   ROOT TOKENS
+   ============================================ */
+
+:root {
+  /* Base Colors - HÅRMONIOUS70 Palette */
+  --bg: #050d0c;
+  --bg-soft: #071311;
+  --fg: #f5f7f3;
+  --muted: #9ba6a5;
+  --accent: #d4c5a0;  /* Champagne cream */
+  --accent-glow: rgba(212, 197, 160, 0.15);
+  --border-subtle: rgba(148, 163, 165, 0.4);
+
+  /* Card Backgrounds */
+  --card-bg: rgba(6, 20, 18, 0.95);
+  --card-bg-soft: rgba(6, 20, 18, 0.85);
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Inter", "Segoe UI", sans-serif;
+
+  /* Spatial */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --shadow-soft: 0 14px 40px rgba(0, 0, 0, 0.42);
+  --max-width: 960px;
+  --gutter: 1.5rem;
+}
+
+/* ============================================
+   TIME-OF-DAY MODES
+   ============================================ */
+
+body[data-time="morning"] {
+  --bg: #0a1f19;
+  --accent: #e8d5b7; /* Warmer cream */
+}
+
+body[data-time="afternoon"] {
+  /* Default palette */
+}
+
+body[data-time="evening"] {
+  --bg: #06110e;
+  --accent: #c5b899; /* Slightly muted */
+}
+
+body[data-time="night"] {
+  --bg: #020a08;
+  --accent: #7a9b8f; /* Muted sage */
+  --fg: rgba(245, 247, 243, 0.85);
+}
+
+/* ============================================
+   VERB-SPECIFIC ATMOSPHERES
+   ============================================ */
+
+body[data-active-verb="sense"] {
+  animation: gentlePulse 8s ease-in-out infinite;
+}
+
+@keyframes gentlePulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.05); }
+}
+
+body[data-active-verb="catch"] {
+  --accent: #5be0b3; /* Sharper green */
+  --bg: #041410;
+}
+
+body[data-active-verb="move"] {
+  transform-origin: center;
+}
+
+body[data-active-verb="tune"] {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 10px,
+    rgba(212, 197, 160, 0.02) 10px,
+    rgba(212, 197, 160, 0.02) 11px
+  );
+}
+
+body[data-active-verb="open"] {
+  letter-spacing: 0.01em;
+}
+
+body[data-active-verb="shift"] {
+  filter: hue-rotate(5deg);
+}
+
+/* ============================================
+   GLOBAL RESET
+   ============================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: radial-gradient(circle at top, #091c19 0, var(--bg) 52%);
+  color: var(--fg);
+  line-height: 1.6;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ============================================
+   RIPPLE BACKGROUND
+   ============================================ */
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  background:
+    radial-gradient(circle, transparent 40%, rgba(212, 197, 160, 0.03) 41%, transparent 42%),
+    radial-gradient(circle, transparent 50%, rgba(212, 197, 160, 0.02) 51%, transparent 52%),
+    radial-gradient(circle, transparent 60%, rgba(212, 197, 160, 0.01) 61%, transparent 62%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0.4;
+  z-index: -1;
+  animation: ripplePulse 12s ease-in-out infinite;
+}
+
+@keyframes ripplePulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.5; }
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+
+body > header,
+main,
+footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+main {
+  padding-block: 2.5rem 3.5rem;
+}
+
+/* ============================================
+   HEADER / NAV
+   ============================================ */
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  padding-block: 1.75rem 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* EI Mark (Orb Logo) */
+#ei-mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(212, 197, 160, 0.4), transparent 70%),
+              radial-gradient(circle, var(--bg-soft), var(--bg));
+  border: 1px solid rgba(212, 197, 160, 0.3);
+  box-shadow:
+    inset 0 2px 8px rgba(212, 197, 160, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+  position: relative;
+  flex-shrink: 0;
+}
+
+#ei-mark::after {
+  content: "";
+  position: absolute;
+  top: 12%;
+  left: 25%;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  filter: blur(4px);
+}
+
+header h1 {
+  font-size: 1.35rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin: 0 0 0.15rem;
+  font-weight: 600;
+}
+
+header p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+header nav {
+  margin-left: auto;
+}
+
+header nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+header nav a {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  color: var(--muted);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+header nav a:hover,
+header nav a:focus-visible {
+  border-color: var(--border-subtle);
+  color: var(--fg);
+}
+
+/* Needle Drop Button */
+#needle-drop {
+  margin-top: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#needle-drop:hover,
+#needle-drop:focus-visible {
+  background: var(--accent-glow);
+  box-shadow: 0 0 0 1px rgba(212, 197, 160, 0.3);
+}
+
+/* ============================================
+   PROGRESS INDICATOR
+   ============================================ */
+
+#journey-progress {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  z-index: 10;
+}
+
+.progress-stage {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(212, 197, 160, 0.2);
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  cursor: default;
+  position: relative;
+}
+
+.progress-stage.active {
+  background: rgba(212, 197, 160, 0.6);
+  border-color: rgba(212, 197, 160, 0.8);
+  width: 12px;
+  height: 12px;
+  box-shadow: 0 0 8px rgba(212, 197, 160, 0.4);
+}
+
+.progress-stage.completed {
+  background: var(--accent);
+  box-shadow: 0 0 4px rgba(212, 197, 160, 0.3);
+}
+
+.progress-stage[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(7, 19, 17, 0.95);
+  color: var(--accent);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  border: 1px solid rgba(212, 197, 160, 0.3);
+  pointer-events: none;
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+
+section {
+  padding-block: 2.5rem;
+  border-bottom: 1px solid rgba(148, 163, 165, 0.22);
+  position: relative;
+}
+
+section:last-of-type {
+  border-bottom: none;
+}
+
+section > h2 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+section > p {
+  margin-block: 0.35rem;
+  max-width: 55ch;
+}
+
+section > h3 {
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin: 1.5rem 0 0.5rem;
+  font-weight: 600;
+}
+
+/* Section Divider */
+section::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  margin: 3rem auto 0;
+  opacity: 0.3;
+}
+
+section:last-of-type::after {
+  display: none;
+}
+
+/* Section Arrival Animation */
+@keyframes sectionArrive {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+section.arriving {
+  animation: sectionArrive 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Completed Section Styling */
+section.completed {
+  opacity: 0.5;
+  pointer-events: none;
+  position: relative;
+}
+
+section.completed::after {
+  content: "✓";
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(212, 197, 160, 0.15);
+  border: 1px solid rgba(212, 197, 160, 0.3);
+  color: var(--accent);
+  font-size: 1.1rem;
+  margin: 0;
+  opacity: 1;
+}
+
+/* ============================================
+   FORMS / INPUTS
+   ============================================ */
+
+label {
+  display: inline-block;
+  margin-bottom: 0.25rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  max-width: 420px;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: rgba(3, 10, 9, 0.9);
+  color: var(--fg);
+  font: inherit;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus-visible,
+textarea:focus-visible {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 1px rgba(212, 197, 160, 0.3),
+    0 4px 16px rgba(212, 197, 160, 0.1),
+    inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  background: rgba(212, 197, 160, 0.03);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Primary Buttons */
+button[type="submit"],
+button#save-note,
+button#save-landing,
+button#board-now,
+button#export-journey,
+button#reflection-btn {
+  margin-top: 0.6rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(7, 24, 21, 0.9);
+  color: var(--fg);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+button:hover,
+button:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  color: var(--accent);
+}
+
+/* ============================================
+   VERB GRID
+   ============================================ */
+
+.verb-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+.verb-card {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: radial-gradient(circle at top, rgba(212, 197, 160, 0.04), var(--card-bg));
+  padding: 0.7rem 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--muted);
+  min-width: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.verb-card:hover,
+.verb-card:focus-visible {
+  border-color: var(--accent);
+  background: radial-gradient(circle at top, rgba(212, 197, 160, 0.12), var(--card-bg-soft));
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.verb-card.selected-verb {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: radial-gradient(circle at top, rgba(212, 197, 160, 0.18), var(--card-bg));
+  box-shadow:
+    inset 0 1px 0 rgba(212, 197, 160, 0.2),
+    0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.verb-icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.verb-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+/* ============================================
+   BREATH GUIDE (In-Flight)
+   ============================================ */
+
+#breath-guide {
+  margin: 2rem auto;
+  text-align: center;
+  max-width: 200px;
+}
+
+.breath-orb {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 197, 160, 0.4), transparent);
+  border: 2px solid rgba(212, 197, 160, 0.6);
+  animation: breathCycle 14s ease-in-out infinite;
+}
+
+@keyframes breathCycle {
+  0% { transform: scale(1); opacity: 0.6; }
+  28.5% { transform: scale(1.4); opacity: 1; } /* Inhale 4s */
+  42.8% { transform: scale(1.4); opacity: 1; } /* Hold 2s */
+  71.4% { transform: scale(1); opacity: 0.6; } /* Exhale 6s */
+  85.7% { transform: scale(1); opacity: 0.6; } /* Hold 2s */
+  100% { transform: scale(1); opacity: 0.6; }
+}
+
+.breath-instruction {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ============================================
+   BAGGAGE CLAIM
+   ============================================ */
+
+#baggage-list {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+  max-width: 640px;
+}
+
+#baggage-list li {
+  padding: 0.7rem 0.8rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--card-bg-soft);
+  margin-bottom: 0.55rem;
+  transition: all 0.3s ease;
+}
+
+#baggage-list li strong {
+  font-size: 0.85rem;
+}
+
+.baggage-options {
+  margin-top: 0.45rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.baggage-options button {
+  padding: 0.18rem 0.6rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+
+.baggage-options button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(212, 197, 160, 0.08);
+}
+
+/* ============================================
+   VINYL LOUNGE
+   ============================================ */
+
+#vinyl-lounge {
+  position: relative;
+}
+
+#shared-notes {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--border-subtle);
+  background: rgba(5, 16, 15, 0.85);
+}
+
+/* ============================================
+   MANIFESTO / GROUND CREW
+   ============================================ */
+
+#manifesto p {
+  max-width: 60ch;
+}
+
+#ground-crew {
+  margin-top: 1.6rem;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(148, 163, 165, 0.35);
+  background: rgba(4, 14, 12, 0.95);
+}
+
+#ground-crew h3 {
+  margin-top: 0;
+  font-size: 0.92rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+#ground-crew ol {
+  margin: 0.6rem 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+}
+
+#ground-crew ol li {
+  margin-bottom: 0.3rem;
+}
+
+/* ============================================
+   ABOUT
+   ============================================ */
+
+#about-placard {
+  margin-top: 1.5rem;
+  padding: 1.2rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--card-bg-soft);
+  box-shadow: var(--shadow-soft);
+}
+
+#about-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 0.75rem;
+  background: radial-gradient(circle at 30% 30%, rgba(212, 197, 160, 0.3), transparent);
+}
+
+#about-placard p {
+  margin-block: 0.35rem;
+}
+
+#about-placard strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+footer {
+  border-top: 1px solid var(--border-subtle);
+  padding-block: 1.4rem 2.2rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+footer p {
+  margin: 0.5rem 0;
+}
+
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+footer a:hover,
+footer a:focus-visible {
+  text-decoration: underline;
+}
+
+/* ============================================
+   TERMINAL NOTES (Ambient Chatter)
+   ============================================ */
+
+.terminal-note {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  max-width: 280px;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, rgba(7, 29, 23, 0.97), rgba(5, 20, 18, 0.95));
+  border: 1px solid rgba(212, 197, 160, 0.25);
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  font-size: 0.88rem;
+  font-style: italic;
+  color: rgba(245, 247, 243, 0.9);
+  animation: noteSlide 0.4s ease;
+  z-index: 1000;
+}
+
+@keyframes noteSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   REFLECTION MODE
+   ============================================ */
+
+#reflection-mode {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 10, 8, 0.98);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.reflection-frame {
+  text-align: center;
+  max-width: 600px;
+  padding: 3rem 2rem;
+  animation: reflectionPulse 1s ease-in-out;
+}
+
+@keyframes reflectionPulse {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.reflection-stage {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.reflection-ping {
+  font-size: 3rem;
+  color: var(--accent);
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 800px) {
+  header {
+    align-items: flex-start;
+  }
+
+  header nav {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0.75rem;
+  }
+
+  header nav ul {
+    justify-content: flex-start;
+  }
+
+  .verb-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  #journey-progress {
+    right: 1rem;
+  }
+
+  .terminal-note {
+    right: 1rem;
+    max-width: 240px;
+  }
+}
+
+@media (max-width: 520px) {
+  body > header,
+  main,
+  footer {
+    padding-inline: 1.1rem;
+  }
+
+  .verb-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #needle-drop {
+    width: 100%;
+    text-align: center;
+  }
+
+  #journey-progress {
+    display: none; /* Hide on very small screens */
+  }
+
+  .reflection-ping {
+    font-size: 2rem;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  body::before,
+  #journey-progress,
+  .terminal-note,
+  header nav,
+  #needle-drop {
+    display: none;
+  }
+
+  section {
+    page-break-inside: avoid;
+  }
+}
+  </style>
 </head>
 
 <body>
@@ -12,16 +910,16 @@
   <!-- ============================================ -->
   <!-- HEADER / GLOBAL NAV -->
   <!-- ============================================ -->
-  
+
   <header id="top">
     <!-- EI Mark (orb logo) -->
     <div id="ei-mark" aria-label="E.I. International mark"></div>
-    
+
     <div>
       <h1>Echolocative Intelligence International</h1>
       <p>Wayfinding :: The route to your genius :: Terminal E.I.</p>
     </div>
-    
+
     <nav aria-label="Main navigation">
       <ul>
         <li><a href="#check-in">Check-In</a></li>
@@ -31,7 +929,7 @@
         <li><a href="#about">About</a></li>
       </ul>
     </nav>
-    
+
     <!-- Needle Drop button -->
     <button id="needle-drop" type="button">Drop the needle on Side A</button>
   </header>
@@ -39,7 +937,7 @@
   <!-- ============================================ -->
   <!-- PROGRESS INDICATOR -->
   <!-- ============================================ -->
-  
+
   <div id="journey-progress" aria-label="Journey progress">
     <div class="progress-stage" data-stage="arrival" title="Arrival"></div>
     <div class="progress-stage" data-stage="check-in" title="Check-In"></div>
@@ -53,7 +951,7 @@
   <!-- ============================================ -->
   <!-- MAIN CONTENT -->
   <!-- ============================================ -->
-  
+
   <main>
 
     <!-- 00. CURBSIDE ARRIVAL -->
@@ -69,13 +967,13 @@
     <section id="check-in" aria-labelledby="heading-checkin">
       <h2 id="heading-checkin">Check-In :: Boarding PING</h2>
       <p>Enter one word for how you are arriving right now.</p>
-      
+
       <form id="ping-form">
         <label for="boarding-ping">Boarding PING</label>
         <input id="boarding-ping" name="boarding-ping" type="text" autocomplete="off" placeholder="e.g. scattered">
         <button type="submit">Save PING</button>
       </form>
-      
+
       <p id="ping-confirm" aria-live="polite"></p>
     </section>
 
@@ -83,9 +981,9 @@
     <section id="gate-deck" aria-labelledby="heading-gatedeck">
       <h2 id="heading-gatedeck">Gate :: Choose Your Seat (Verb)</h2>
       <p>Pick the verb that feels most alive for you right now.</p>
-      
+
       <div class="verb-grid" aria-label="Verb selection">
-        
+
         <!-- SENSE -->
         <button class="verb-card" data-verb="sense" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
@@ -95,7 +993,7 @@
           </svg>
           <span class="verb-label">SENSE</span>
         </button>
-        
+
         <!-- CATCH -->
         <button class="verb-card" data-verb="catch" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
@@ -104,7 +1002,7 @@
           </svg>
           <span class="verb-label">CATCH</span>
         </button>
-        
+
         <!-- NAME -->
         <button class="verb-card" data-verb="name" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
@@ -115,7 +1013,7 @@
           </svg>
           <span class="verb-label">NAME</span>
         </button>
-        
+
         <!-- MOVE -->
         <button class="verb-card" data-verb="move" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
@@ -124,7 +1022,7 @@
           </svg>
           <span class="verb-label">MOVE</span>
         </button>
-        
+
         <!-- TUNE -->
         <button class="verb-card" data-verb="tune" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
@@ -134,7 +1032,7 @@
           </svg>
           <span class="verb-label">TUNE</span>
         </button>
-        
+
         <!-- OPEN -->
         <button class="verb-card" data-verb="open" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
@@ -145,7 +1043,7 @@
           </svg>
           <span class="verb-label">OPEN</span>
         </button>
-        
+
         <!-- SHIFT -->
         <button class="verb-card" data-verb="shift" type="button">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
@@ -155,7 +1053,7 @@
           </svg>
           <span class="verb-label">SHIFT</span>
         </button>
-        
+
       </div>
     </section>
 
@@ -169,17 +1067,17 @@
     <!-- 04. IN-FLIGHT -->
     <section id="in-flight" aria-labelledby="heading-inflight">
       <h2 id="heading-inflight">In-Flight Cabin :: Cruising Altitude</h2>
-      
+
       <div id="in-flight-prompt">
         <p>Your in-flight prompt will appear here after you board.</p>
       </div>
-      
+
       <!-- Breath Guide -->
       <div id="breath-guide" aria-label="Optional breath pacer">
         <div class="breath-orb"></div>
         <p class="breath-instruction">Breathe...</p>
       </div>
-      
+
       <h3>Cabin Note</h3>
       <p>Capture anything that feels clear, helpful, or important in this moment.</p>
       <textarea id="cabin-note" rows="4" maxlength="280" placeholder="What are you noticing?"></textarea>
@@ -190,7 +1088,7 @@
     <section id="landing" aria-labelledby="heading-landing">
       <h2 id="heading-landing">Landing :: Name the Shift</h2>
       <p>Enter one word for where you are now.</p>
-      
+
       <label for="landing-ping">Landing PING</label>
       <input id="landing-ping" type="text" autocomplete="off" maxlength="16" placeholder="e.g. clearer">
       <button id="save-landing" type="button">Save Landing PING</button>
@@ -200,7 +1098,7 @@
     <section id="baggage-claim" aria-labelledby="heading-baggage">
       <h2 id="heading-baggage">Baggage Claim :: What Traveled With You</h2>
       <p>Tag each item :: Keep • Store • Discard • Share</p>
-      
+
       <ul id="baggage-list" aria-label="Journey items">
         <!-- Items will be injected here by JS -->
       </ul>
@@ -210,7 +1108,7 @@
     <section id="vinyl-lounge" aria-labelledby="heading-vinyl">
       <h2 id="heading-vinyl">Vinyl Lounge :: Third Space Listening Room</h2>
       <p>This is a calm room for shared notes and quiet resonance.</p>
-      
+
       <div id="shared-notes">
         <p>Shared cabin notes from travelers appear here when they choose to contribute to the collective field.</p>
         <p>As you continue your practice, this space will fill with wisdom from the community.</p>
@@ -220,17 +1118,17 @@
     <!-- 08. MANIFESTO -->
     <section id="manifesto" aria-labelledby="heading-manifesto">
       <h2 id="heading-manifesto">Manifesto :: Echolocative Intelligence</h2>
-      
+
       <p>Echolocative Intelligence treats your awareness as a sensing instrument :: Ping :: Echo :: Direction.</p>
-      
+
       <p>You act or attend :: that is your Ping. The world responds :: that is your Echo. You choose your Direction based on what you notice.</p>
-      
+
       <p>This is the same basic principle that guides many living systems :: bats reading airspace :: humans reading emotional space :: teams reading cultural space.</p>
-      
+
       <p>E.I. treats everyday experience as data for navigation :: not for self-judgment.</p>
-      
+
       <p>You are not trying to solve yourself. You are learning how to move with more accuracy, ease, and coherence.</p>
-      
+
       <!-- Ground Crew Handbook -->
       <div id="ground-crew">
         <h3>Ground Crew Handbook</h3>
@@ -257,22 +1155,22 @@
     <!-- 09. ABOUT -->
     <section id="about" aria-labelledby="heading-about">
       <h2 id="heading-about">About the Creator</h2>
-      
+
       <div id="about-placard">
         <div id="about-mark" aria-hidden="true"></div>
-        
+
         <p><strong>Name</strong><br>
         Kamau Zuberi Akabueze<br>
         People call me KzA.</p>
-        
+
         <p><strong>Work</strong><br>
         I guide people in finding clarity, direction, and confidence in their creative lives.
         I have supported creative individuals and teams for more than 18 years.</p>
-        
+
         <p><strong>Purpose of E.I. International</strong><br>
         I built this terminal as a place where anyone can pause, check in with themselves,
         and move forward with a clearer sense of direction.</p>
-        
+
         <p><strong>How E.I. Works</strong><br>
         You arrived here with a vibe.<br>
         That vibe creates a choice.<br>
@@ -280,16 +1178,16 @@
         You notice what changes.<br>
         You sort what matters.<br>
         You leave with a clearer signal.</p>
-        
+
         <p><strong>Why I Built This</strong><br>
         People move fast. This terminal gives you enough space to hear yourself again.</p>
-        
+
         <p><strong>Connection to The Alien Scool for Creative Thinking (tÅs)</strong><br>
         tÅs is the larger learning environment I created.
         It supports people who want to think more creatively,
         understand their potential,
         and bring meaningful ideas into the world.</p>
-        
+
         <p><strong>Direction</strong><br>
         Continue at your own pace. You already know where you are heading.</p>
       </div>
@@ -300,7 +1198,7 @@
   <!-- ============================================ -->
   <!-- FOOTER -->
   <!-- ============================================ -->
-  
+
   <footer>
     <p>If this flight moved you, there is a room in San Francisco where bronze sings at 8Hz.</p>
     <p><strong>1000 Ways to Sit</strong> :: The acoustic continuation of this journey.<br>
@@ -311,8 +1209,634 @@
   <!-- ============================================ -->
   <!-- JAVASCRIPT -->
   <!-- ============================================ -->
-  
-  <script src="ei.js"></script>
+
+  <script>
+/**
+ * Terminal E.I. Complete JavaScript
+ * Echolocative Intelligence International
+ *
+ * Features:
+ * - Progressive disclosure (sections appear as you complete them)
+ * - HÅRMONIOUS70 atmospheric responsiveness
+ * - Collective cabin notes pool
+ * - Returning traveler recognition
+ * - Journey export and history
+ * - Reflection mode
+ * - Time-of-day awareness
+ * - Verb-specific atmospheres
+ */
+
+"use strict";
+
+// ============================================
+// STATE MANAGEMENT
+// ============================================
+
+const journeyState = {
+  hasDroppedNeedle: false,
+  hasBoardingPing: false,
+  hasSelectedVerb: false,
+  hasBoarded: false,
+  hasCabinNote: false,
+  hasLandingPing: false,
+  hasSortedBaggage: false
+};
+
+const progressStages = [
+  'arrival',
+  'check-in',
+  'gate',
+  'boarding',
+  'in-flight',
+  'landing',
+  'baggage'
+];
+
+let currentStageIndex = 0;
+
+// ============================================
+// UTILITIES
+// ============================================
+
+function eiSave(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    console.warn('LocalStorage unavailable:', e);
+  }
+}
+
+function eiLoad(key, fallback = null) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// ============================================
+// TIME-OF-DAY AWARENESS
+// ============================================
+
+function setTimeOfDayAtmosphere() {
+  const hour = new Date().getHours();
+  const body = document.body;
+
+  if (hour >= 5 && hour < 11) {
+    body.setAttribute('data-time', 'morning');
+  } else if (hour >= 11 && hour < 17) {
+    body.setAttribute('data-time', 'afternoon');
+  } else if (hour >= 17 && hour < 22) {
+    body.setAttribute('data-time', 'evening');
+  } else {
+    body.setAttribute('data-time', 'night');
+  }
+}
+
+// ============================================
+// RETURNING TRAVELER RECOGNITION
+// ============================================
+
+function checkReturningTraveler() {
+  const journeyHistory = eiLoad('ei_journey_history', []);
+  const isReturning = journeyHistory.length > 0;
+
+  if (isReturning) {
+    const lastJourney = journeyHistory[journeyHistory.length - 1];
+    const welcomeHeading = document.querySelector('#curbside h2');
+    const firstPara = document.querySelector('#curbside p:first-of-type');
+
+    if (welcomeHeading && firstPara) {
+      welcomeHeading.textContent = 'Welcome back';
+      firstPara.textContent = `Last time: ${lastJourney.boarding_ping || '—'} → ${lastJourney.landing_ping || '—'}. How do you arrive today?`;
+    }
+  }
+}
+
+// ============================================
+// PROGRESS INDICATOR
+// ============================================
+
+function updateProgressIndicator(stageIndex) {
+  const dots = document.querySelectorAll('.progress-stage');
+
+  dots.forEach((dot, index) => {
+    dot.classList.remove('active', 'completed');
+
+    if (index < stageIndex) {
+      dot.classList.add('completed');
+    } else if (index === stageIndex) {
+      dot.classList.add('active');
+    }
+  });
+
+  currentStageIndex = stageIndex;
+}
+
+// ============================================
+// SECTION VISIBILITY MANAGEMENT
+// ============================================
+
+async function advanceJourney(nextSectionId, stageIndex) {
+  // Mark current section as completed
+  const currentSection = document.querySelector('section.active');
+  if (currentSection) {
+    currentSection.classList.remove('active');
+    currentSection.classList.add('completed');
+    await wait(400);
+  }
+
+  // Show and scroll to next section
+  const nextSection = document.querySelector(nextSectionId);
+  if (!nextSection) return;
+
+  nextSection.style.display = 'block';
+  nextSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  await wait(600);
+
+  // Animate arrival
+  nextSection.classList.add('arriving', 'active');
+
+  // Update progress
+  updateProgressIndicator(stageIndex);
+
+  // Remove arriving class after animation
+  setTimeout(() => {
+    nextSection.classList.remove('arriving');
+  }, 800);
+}
+
+function initializeVisibility() {
+  // Hide all sections except curbside
+  document.querySelectorAll('main section').forEach(section => {
+    if (section.id !== 'curbside') {
+      section.style.display = 'none';
+    }
+  });
+
+  // Hide footer initially
+  const footer = document.querySelector('footer');
+  if (footer) {
+    footer.style.display = 'none';
+  }
+
+  // Mark curbside as active
+  document.querySelector('#curbside')?.classList.add('active');
+
+  // Initialize progress indicator
+  updateProgressIndicator(0);
+}
+
+// ============================================
+// VERB ATMOSPHERE INTEGRATION
+// ============================================
+
+function setVerbAtmosphere(verb) {
+  document.body.setAttribute('data-active-verb', verb);
+}
+
+// ============================================
+// COLLECTIVE CABIN NOTES
+// ============================================
+
+function addToCollectivePool(noteText) {
+  const collectiveNotes = eiLoad('ei_collective_notes', []);
+  collectiveNotes.push({
+    text: noteText,
+    timestamp: Date.now()
+  });
+  eiSave('ei_collective_notes', collectiveNotes);
+}
+
+function getTerminalNote() {
+  const staticNotes = [
+    "If you want to know where the mind is, check the log-in.",
+    "Your first word carries more information than it seems.",
+    "Every arrival has a reason, even if you do not see it yet.",
+    "Attention rearranges everything it focuses on.",
+    "Small clarity :: big movement.",
+    "Every traveler leaves a groove.",
+    "Check your signal :: then choose your route.",
+    "You can always board again with a new PING."
+  ];
+
+  const collectiveNotes = eiLoad('ei_collective_notes', []);
+  const allNotes = [...staticNotes, ...collectiveNotes.map(n => n.text)];
+
+  return allNotes[Math.floor(Math.random() * allNotes.length)];
+}
+
+function dropTerminalNote() {
+  const zone = document.createElement('div');
+  zone.className = 'terminal-note';
+  zone.textContent = getTerminalNote();
+  document.body.appendChild(zone);
+
+  setTimeout(() => zone.remove(), 6000);
+}
+
+// ============================================
+// JOURNEY EXPORT
+// ============================================
+
+function exportJourney() {
+  const journey = {
+    boarding_ping: eiLoad('ei_boarding_ping', ''),
+    verb: eiLoad('ei_selected_verb', ''),
+    cabin_note: eiLoad('ei_cabin_note', ''),
+    landing_ping: eiLoad('ei_landing_ping', ''),
+    baggage_decisions: eiLoad('ei_baggage_decisions', {}),
+    timestamp: new Date().toISOString()
+  };
+
+  const dataStr = JSON.stringify(journey, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `ei-journey-${journey.landing_ping || 'in-flight'}.json`;
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function saveJourneyToHistory() {
+  const journey = {
+    boarding_ping: eiLoad('ei_boarding_ping', ''),
+    verb: eiLoad('ei_selected_verb', ''),
+    cabin_note: eiLoad('ei_cabin_note', ''),
+    landing_ping: eiLoad('ei_landing_ping', ''),
+    timestamp: new Date().toISOString()
+  };
+
+  const history = eiLoad('ei_journey_history', []);
+  history.push(journey);
+  eiSave('ei_journey_history', history);
+}
+
+// ============================================
+// REFLECTION MODE
+// ============================================
+
+async function enterReflectionMode() {
+  const journey = {
+    boarding: eiLoad('ei_boarding_ping', '—'),
+    verb: eiLoad('ei_selected_verb', '—'),
+    note: eiLoad('ei_cabin_note', '—'),
+    landing: eiLoad('ei_landing_ping', '—')
+  };
+
+  const reflection = document.createElement('div');
+  reflection.id = 'reflection-mode';
+  document.body.appendChild(reflection);
+
+  const stages = [
+    { label: 'You arrived with...', content: journey.boarding },
+    { label: 'You chose to...', content: journey.verb.toUpperCase() },
+    { label: 'You discovered...', content: `"${journey.note}"` },
+    { label: 'You landed at...', content: journey.landing },
+    { label: `${journey.boarding} → ${journey.landing}`, content: 'This is your arc.<br>This is your frequency.' }
+  ];
+
+  for (let i = 0; i < stages.length; i++) {
+    reflection.innerHTML = `
+      <div class="reflection-frame">
+        <p class="reflection-stage">${stages[i].label}</p>
+        <h2 class="reflection-ping">${stages[i].content}</h2>
+      </div>
+    `;
+    await wait(4000);
+  }
+
+  await wait(2000);
+  reflection.remove();
+}
+
+// ============================================
+// EVENT HANDLERS
+// ============================================
+
+// 1. NEEDLE DROP
+const needleDrop = document.getElementById('needle-drop');
+needleDrop?.addEventListener('click', async () => {
+  journeyState.hasDroppedNeedle = true;
+  needleDrop.textContent = 'Side A :: playing';
+  needleDrop.style.opacity = '0.5';
+  needleDrop.style.pointerEvents = 'none';
+
+  await advanceJourney('#check-in', 1);
+});
+
+// 2. BOARDING PING
+const pingForm = document.getElementById('ping-form');
+const boardingPingInput = document.getElementById('boarding-ping');
+const pingConfirm = document.getElementById('ping-confirm');
+
+pingForm?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const ping = boardingPingInput.value.trim();
+  if (!ping) return;
+
+  eiSave('ei_boarding_ping', ping);
+  journeyState.hasBoardingPing = true;
+
+  pingConfirm.textContent = `Boarding PING :: "${ping}" saved.`;
+  boardingPingInput.value = '';
+
+  setTimeout(() => {
+    pingConfirm.textContent = '';
+  }, 2600);
+
+  await advanceJourney('#gate-deck', 2);
+});
+
+// 3. VERB SELECTION
+const verbButtons = document.querySelectorAll('.verb-card');
+
+verbButtons.forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    const verb = btn.dataset.verb;
+    if (!verb) return;
+
+    eiSave('ei_selected_verb', verb);
+    journeyState.hasSelectedVerb = true;
+
+    // Visual selection
+    verbButtons.forEach((b) => b.classList.remove('selected-verb'));
+    btn.classList.add('selected-verb');
+
+    // Set atmosphere
+    setVerbAtmosphere(verb);
+
+    await wait(800); // Let atmosphere settle
+    await advanceJourney('#boarding', 3);
+  });
+});
+
+// 4. BOARDING (Board Now button)
+const boardBtn = document.getElementById('board-now');
+const inFlightPrompt = document.getElementById('in-flight-prompt');
+
+const verbPrompts = {
+  sense: "Let your awareness rest on breath, sound, or sensation. Notice without explaining. What is present when you no longer try to solve it?",
+  catch: "Something keeps returning. A thought, an image, a feeling. Let yourself actually see it this time.",
+  name: "There is a pattern here. It might be old. It might be simple. Say what it actually is, in plain words.",
+  move: "Where in your body or day wants to shift? What small adjustment would create more space? Make that move.",
+  tune: "You feel slightly off-frequency. A small adjustment can change that. What minor change brings you closer to resonance?",
+  open: "You have been holding something with extra tension. Where do you feel that? Let that space expand just a little.",
+  shift: "You are between two states :: the previous one is fading and the next one is forming. Let yourself rest in that in-between for a moment."
+};
+
+boardBtn?.addEventListener('click', async () => {
+  const ping = eiLoad('ei_boarding_ping', '');
+  const verb = eiLoad('ei_selected_verb', '');
+
+  journeyState.hasBoarded = true;
+
+  const greeting = ping || verb
+    ? `You boarded with :: ${ping || 'no word given'} :: and you travel with :: ${verb || 'no verb selected'}.`
+    : 'You are in the cabin now. You can still choose a verb and add a PING any time.';
+
+  const prompt = verbPrompts[verb] ||
+    'Take this moment to notice what is present in your awareness. You can adjust your route at any time.';
+
+  if (inFlightPrompt) {
+    inFlightPrompt.innerHTML = `
+      <p>${greeting}</p>
+      <p style="margin-top:1.5rem;">${prompt}</p>
+    `;
+  }
+
+  await advanceJourney('#in-flight', 4);
+});
+
+// 5. CABIN NOTE
+const cabinNoteInput = document.getElementById('cabin-note');
+const saveNoteBtn = document.getElementById('save-note');
+
+saveNoteBtn?.addEventListener('click', async () => {
+  const note = cabinNoteInput.value.trim();
+  if (!note) return;
+
+  eiSave('ei_cabin_note', note);
+  journeyState.hasCabinNote = true;
+
+  cabinNoteInput.value = '';
+  const original = saveNoteBtn.textContent;
+  saveNoteBtn.textContent = 'Note saved :: placed in your seat pocket.';
+
+  setTimeout(() => {
+    saveNoteBtn.textContent = original;
+  }, 2200);
+
+  await advanceJourney('#landing', 5);
+});
+
+// 6. LANDING PING
+const landingInput = document.getElementById('landing-ping');
+const saveLandingBtn = document.getElementById('save-landing');
+
+saveLandingBtn?.addEventListener('click', async () => {
+  const landing = landingInput.value.trim();
+  if (!landing) return;
+
+  eiSave('ei_landing_ping', landing);
+  journeyState.hasLandingPing = true;
+
+  landingInput.value = '';
+  const original = saveLandingBtn.textContent;
+  saveLandingBtn.textContent = 'Landing PING saved :: arrival noted.';
+
+  setTimeout(() => {
+    saveLandingBtn.textContent = original;
+  }, 2200);
+
+  await advanceJourney('#baggage-claim', 6);
+  populateBaggage();
+});
+
+// 7. BAGGAGE CLAIM
+const baggageList = document.getElementById('baggage-list');
+
+function populateBaggage() {
+  if (!baggageList) return;
+
+  const items = [
+    { label: 'Boarding PING', value: eiLoad('ei_boarding_ping', '') },
+    { label: 'Verb', value: eiLoad('ei_selected_verb', '') },
+    { label: 'Cabin Note', value: eiLoad('ei_cabin_note', '') },
+    { label: 'Landing PING', value: eiLoad('ei_landing_ping', '') }
+  ];
+
+  baggageList.innerHTML = '';
+
+  items.forEach((item) => {
+    if (!item.value) return;
+
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <strong>${item.label} ::</strong> ${item.value}
+      <div class="baggage-options">
+        <button type="button" data-act="keep" data-item="${item.label}">Keep</button>
+        <button type="button" data-act="store" data-item="${item.label}">Store</button>
+        <button type="button" data-act="discard" data-item="${item.label}">Discard</button>
+        <button type="button" data-act="share" data-item="${item.label}">Share</button>
+      </div>
+    `;
+    baggageList.appendChild(li);
+  });
+}
+
+// Baggage decision handling
+baggageList?.addEventListener('click', (e) => {
+  const target = e.target;
+  if (!(target instanceof HTMLElement)) return;
+
+  const action = target.dataset.act;
+  const itemLabel = target.dataset.item;
+  if (!action || !itemLabel) return;
+
+  const item = target.closest('li');
+  if (!item) return;
+
+  // Visual feedback
+  item.style.opacity = '0.6';
+  target.textContent = action.toUpperCase();
+
+  // Store decision
+  const decisions = eiLoad('ei_baggage_decisions', {});
+  decisions[itemLabel] = action;
+  eiSave('ei_baggage_decisions', decisions);
+
+  // If sharing cabin note, add to collective
+  if (action === 'share' && itemLabel === 'Cabin Note') {
+    const note = eiLoad('ei_cabin_note', '');
+    if (note) {
+      addToCollectivePool(note);
+      item.style.borderColor = 'var(--accent)';
+    }
+  }
+
+  // Check if all items have been sorted
+  checkJourneyComplete();
+});
+
+function checkJourneyComplete() {
+  const decisions = eiLoad('ei_baggage_decisions', {});
+  const decisionCount = Object.keys(decisions).length;
+
+  // If at least 3 items have been sorted, mark journey complete
+  if (decisionCount >= 3 && !journeyState.hasSortedBaggage) {
+    journeyState.hasSortedBaggage = true;
+    saveJourneyToHistory();
+    showCompletionOptions();
+  }
+}
+
+function showCompletionOptions() {
+  // Show Vinyl Lounge and Manifesto
+  const vinylLounge = document.querySelector('#vinyl-lounge');
+  const manifesto = document.querySelector('#manifesto');
+  const about = document.querySelector('#about');
+  const footer = document.querySelector('footer');
+
+  if (vinylLounge) {
+    vinylLounge.style.display = 'block';
+    vinylLounge.classList.add('arriving');
+  }
+
+  if (manifesto) {
+    manifesto.style.display = 'block';
+  }
+
+  if (about) {
+    about.style.display = 'block';
+  }
+
+  if (footer) {
+    footer.style.display = 'block';
+  }
+
+  // Add completion buttons
+  const baggageSection = document.querySelector('#baggage-claim');
+  if (baggageSection && !document.querySelector('#reflection-btn')) {
+    const completionDiv = document.createElement('div');
+    completionDiv.style.marginTop = '2rem';
+    completionDiv.innerHTML = `
+      <button id="reflection-btn" type="button" style="margin-right: 1rem;">Reflect on This Journey</button>
+      <button id="export-btn" type="button">Export Your Journey</button>
+    `;
+    baggageSection.appendChild(completionDiv);
+
+    document.getElementById('reflection-btn')?.addEventListener('click', enterReflectionMode);
+    document.getElementById('export-btn')?.addEventListener('click', exportJourney);
+  }
+}
+
+// ============================================
+// INITIALIZATION
+// ============================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Set time-of-day atmosphere
+  setTimeOfDayAtmosphere();
+
+  // Check for returning traveler
+  checkReturningTraveler();
+
+  // Initialize section visibility
+  initializeVisibility();
+
+  // Start terminal notes (first one appears after 40-90 seconds)
+  setTimeout(() => {
+    dropTerminalNote();
+
+    // Then continue at intervals
+    setInterval(() => {
+      dropTerminalNote();
+    }, 40000 + Math.random() * 50000);
+  }, 40000 + Math.random() * 50000);
+});
+
+// ============================================
+// OPTIONAL: Clear Journey (for testing)
+// ============================================
+
+// Uncomment this to add a "Start Over" function
+// You can call this from browser console: window.eiReset()
+
+window.eiReset = function() {
+  const confirmReset = confirm('This will clear your current journey. Are you sure?');
+  if (confirmReset) {
+    localStorage.removeItem('ei_boarding_ping');
+    localStorage.removeItem('ei_selected_verb');
+    localStorage.removeItem('ei_cabin_note');
+    localStorage.removeItem('ei_landing_ping');
+    localStorage.removeItem('ei_baggage_decisions');
+    // Note: This does NOT clear journey_history or collective_notes
+    location.reload();
+  }
+};
+
+// ============================================
+// DEBUG MODE
+// ============================================
+
+// Uncomment to enable debug logging
+// const DEBUG = true;
+
+// function debug(...args) {
+//   if (DEBUG) {
+//     console.log('[E.I. Terminal]', ...args);
+//   }
+// }
+  </script>
 
 </body>
 </html>
