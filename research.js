@@ -173,7 +173,7 @@ const researchQuestions = [
   },
   {
     id: 'resonance_artifact',
-    text: 'One image or feeling you're taking with you:',
+    text: 'One image or feeling you\'re taking with you:',
     type: 'textarea',
     placeholder: 'Poetic reflections welcome...',
     helpText: 'This is your departure resonance'
@@ -189,8 +189,8 @@ const researchQuestions = [
     text: 'Where are you in your practice?',
     type: 'radio',
     options: [
-      'Investigating :: I'm just curious',
-      'Preparing :: I'm reflecting on how this applies to my life',
+      'Investigating :: I\'m just curious',
+      'Preparing :: I\'m reflecting on how this applies to my life',
       'Acting :: I have an action I want to take',
       'Maintaining :: I already do work like this'
     ]
@@ -211,9 +211,9 @@ const researchQuestions = [
   },
   {
     id: 'question_holding',
-    text: 'One question you're holding:',
+    text: 'One question you\'re holding:',
     type: 'textarea',
-    placeholder: 'The question doesn't need an answer yet...',
+    placeholder: 'The question doesn\'t need an answer yet...',
     helpText: 'From the Community Insight Board prompt'
   },
   {
