@@ -94,7 +94,8 @@
 
       <form id="ping-form">
         <label for="boarding-ping">Arrival Vibration</label>
-        <input id="boarding-ping" name="boarding-ping" type="text" autocomplete="off" placeholder="e.g. scattered, open, curious">
+        <input id="boarding-ping" name="boarding-ping" type="text" autocomplete="off" maxlength="16" placeholder="e.g. scattered, open, curious">
+        <p class="char-counter" id="boarding-ping-counter">0 / 16</p>
         <button type="submit">Name My Vibration</button>
       </form>
 
@@ -214,6 +215,7 @@
       <h3>Sonic Note Pad :: Thoughts Moving With Me</h3>
       <p>Capture the sensations, insights, or vibrations moving through you. What are you noticing as sound moves through your awareness?</p>
       <textarea id="cabin-note" rows="4" maxlength="280" placeholder="What frequencies are you sensing?"></textarea>
+      <p class="char-counter" id="cabin-note-counter">0 / 280</p>
       <button id="save-note" type="button">Save Sonic Note</button>
     </section>
 
@@ -224,6 +226,7 @@
 
       <label for="landing-ping">Departure Resonance</label>
       <input id="landing-ping" type="text" autocomplete="off" maxlength="16" placeholder="e.g. clearer, grounded, vibrating">
+      <p class="char-counter" id="landing-ping-counter">0 / 16</p>
       <button id="save-landing" type="button">Name My Resonance</button>
     </section>
 

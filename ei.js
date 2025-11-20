@@ -994,6 +994,43 @@ document.querySelector('.verbration-link')?.addEventListener('keypress', (e) => 
 });
 
 // ============================================
+// CHARACTER COUNTERS
+// ============================================
+
+function initializeCharCounters() {
+  const counters = [
+    { input: 'boarding-ping', counter: 'boarding-ping-counter', max: 16 },
+    { input: 'cabin-note', counter: 'cabin-note-counter', max: 280 },
+    { input: 'landing-ping', counter: 'landing-ping-counter', max: 16 }
+  ];
+
+  counters.forEach(({ input, counter, max }) => {
+    const inputEl = document.getElementById(input);
+    const counterEl = document.getElementById(counter);
+
+    if (!inputEl || !counterEl) return;
+
+    const updateCounter = () => {
+      const length = inputEl.value.length;
+      counterEl.textContent = `${length} / ${max}`;
+
+      // Highlight when approaching limit (80% or more)
+      if (length >= max * 0.8) {
+        counterEl.classList.add('near-limit');
+      } else {
+        counterEl.classList.remove('near-limit');
+      }
+    };
+
+    // Update on input
+    inputEl.addEventListener('input', updateCounter);
+
+    // Initialize counter if field has pre-filled value
+    if (inputEl.value) updateCounter();
+  });
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 
@@ -1006,6 +1043,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize section visibility
   initializeVisibility();
+
+  // Initialize character counters
+  initializeCharCounters();
 
   // Start terminal notes (first one appears after 40-90 seconds)
   setTimeout(() => {
