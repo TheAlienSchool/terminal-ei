@@ -63,13 +63,13 @@
   <!-- ============================================ -->
   
   <div id="journey-progress" aria-label="Journey progress">
-    <div class="progress-stage" data-stage="arrival" title="Arrival"></div>
-    <div class="progress-stage" data-stage="sensing" title="Sensing"></div>
-    <div class="progress-stage" data-stage="verbration" title="Verbration"></div>
-    <div class="progress-stage" data-stage="explore" title="Explore"></div>
-    <div class="progress-stage" data-stage="sanctuary" title="Sanctuary"></div>
-    <div class="progress-stage" data-stage="departure" title="Departure"></div>
-    <div class="progress-stage" data-stage="artifacts" title="Artifacts"></div>
+    <div class="progress-stage" data-stage="arrival" aria-label="Arrival" role="status"></div>
+    <div class="progress-stage" data-stage="sensing" aria-label="Sensing" role="status"></div>
+    <div class="progress-stage" data-stage="verbration" aria-label="Verbration" role="status"></div>
+    <div class="progress-stage" data-stage="explore" aria-label="Explore" role="status"></div>
+    <div class="progress-stage" data-stage="sanctuary" aria-label="Sanctuary" role="status"></div>
+    <div class="progress-stage" data-stage="departure" aria-label="Departure" role="status"></div>
+    <div class="progress-stage" data-stage="artifacts" aria-label="Artifacts" role="status"></div>
   </div>
 
   <!-- ============================================ -->
@@ -110,7 +110,7 @@
       <div class="verb-grid" aria-label="Verb selection">
         
         <!-- SENSE -->
-        <button class="verb-card" data-verb="sense" type="button">
+        <button class="verb-card" data-verb="sense" type="button" aria-pressed="false" aria-label="Sense: Attune to subtle frequencies">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
             <circle cx="20" cy="20" r="6" fill="none" stroke="currentColor" stroke-width="1.6" />
             <circle cx="20" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="1 1.5" />
@@ -121,7 +121,7 @@
         </button>
         
         <!-- SEE -->
-        <button class="verb-card" data-verb="see" type="button">
+        <button class="verb-card" data-verb="see" type="button" aria-pressed="false" aria-label="See: Witness inner landscapes">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
             <ellipse cx="20" cy="20" rx="14" ry="9" fill="none" stroke="currentColor" stroke-width="1.6" />
             <circle cx="20" cy="20" r="4" fill="currentColor" />
@@ -132,7 +132,7 @@
         </button>
         
         <!-- HEAR -->
-        <button class="verb-card" data-verb="hear" type="button">
+        <button class="verb-card" data-verb="hear" type="button" aria-pressed="false" aria-label="Hear: Listen to silence between tones">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
             <path d="M8 20 Q8 20, 14 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
             <path d="M18 16 Q18 12, 22 12 Q26 12, 26 16 L26 24 Q26 28, 22 28 Q18 28, 18 24 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -143,7 +143,7 @@
         </button>
         
         <!-- MOVE -->
-        <button class="verb-card" data-verb="move" type="button">
+        <button class="verb-card" data-verb="move" type="button" aria-pressed="false" aria-label="Move: Let vibration guide motion">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
             <path d="M10 28 L26 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
             <path d="M21 12 L26 12 L26 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
@@ -153,7 +153,7 @@
         </button>
         
         <!-- TUNE -->
-        <button class="verb-card" data-verb="tune" type="button">
+        <button class="verb-card" data-verb="tune" type="button" aria-pressed="false" aria-label="Tune: Calibrate to resonance">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
             <circle cx="8" cy="20" r="2" fill="currentColor" />
             <circle cx="32" cy="20" r="2" fill="currentColor" />
@@ -164,7 +164,7 @@
         </button>
         
         <!-- OPEN -->
-        <button class="verb-card" data-verb="open" type="button">
+        <button class="verb-card" data-verb="open" type="button" aria-pressed="false" aria-label="Open: Expand into spaciousness">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
             <path d="M14 12 L14 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
             <path d="M26 12 L26 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
@@ -176,7 +176,7 @@
         </button>
         
         <!-- SHIFT -->
-        <button class="verb-card" data-verb="shift" type="button">
+        <button class="verb-card" data-verb="shift" type="button" aria-pressed="false" aria-label="Shift: Allow transformation">
           <svg class="verb-icon" viewBox="0 0 40 40" aria-hidden="true">
             <circle cx="16" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="1.4" />
             <circle cx="24" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="1.4" />

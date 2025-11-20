@@ -458,9 +458,13 @@ verbButtons.forEach((btn) => {
     eiSave('ei_selected_verb', verb);
     journeyState.hasSelectedVerb = true;
     
-    // Visual selection
-    verbButtons.forEach((b) => b.classList.remove('selected-verb'));
+    // Visual selection and ARIA state
+    verbButtons.forEach((b) => {
+      b.classList.remove('selected-verb');
+      b.setAttribute('aria-pressed', 'false');
+    });
     btn.classList.add('selected-verb');
+    btn.setAttribute('aria-pressed', 'true');
     
     // Set atmosphere
     setVerbAtmosphere(verb);
