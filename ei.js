@@ -318,12 +318,14 @@ async function enterReflectionMode() {
     <div class="reflection-frame">
       <p class="reflection-stage"></p>
       <h2 class="reflection-ping"></h2>
+      <button class="skip-cinema-btn" type="button">Skip (ESC)</button>
     </div>
   `;
   document.body.appendChild(reflection);
 
   const stageEl = reflection.querySelector('.reflection-stage');
   const pingEl = reflection.querySelector('.reflection-ping');
+  const skipBtn = reflection.querySelector('.skip-cinema-btn');
 
   const stages = [
     { label: 'You arrived...', content: journey.boarding, delay: 800 },
@@ -333,15 +335,36 @@ async function enterReflectionMode() {
     { label: `${journey.boarding} → ${journey.landing}`, content: 'This is your resonance.<br>This is your frequency.', delay: 1200 }
   ];
 
+  let skipRequested = false;
+
+  const exitReflection = async () => {
+    skipRequested = true;
+    reflection.classList.remove('visible');
+    await wait(400);
+    reflection.remove();
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    document.removeEventListener('keydown', escHandler);
+  };
+
+  const escHandler = (e) => {
+    if (e.key === 'Escape') exitReflection();
+  };
+
+  // Wire up skip handlers
+  skipBtn.addEventListener('click', exitReflection);
+  document.addEventListener('keydown', escHandler);
+
   // Fade in container
   await wait(100);
   reflection.classList.add('visible');
 
-  for (let i = 0; i < stages.length; i++) {
+  for (let i = 0; i < stages.length && !skipRequested; i++) {
     // Fade out previous
     stageEl.classList.remove('visible');
     pingEl.classList.remove('visible');
     await wait(400);
+    if (skipRequested) break;
 
     // Update content
     stageEl.textContent = stages[i].label;
@@ -349,21 +372,27 @@ async function enterReflectionMode() {
 
     // Staggered fade in
     await wait(200);
+    if (skipRequested) break;
     stageEl.classList.add('visible');
     await wait(stages[i].delay);
+    if (skipRequested) break;
     pingEl.classList.add('visible');
     await wait(3000);
+    if (skipRequested) break;
   }
 
-  // Final hold and fade out
-  await wait(2000);
-  reflection.classList.remove('visible');
-  await wait(600);
-  reflection.remove();
+  if (!skipRequested) {
+    // Final hold and fade out
+    await wait(2000);
+    reflection.classList.remove('visible');
+    await wait(600);
+    reflection.remove();
 
-  // Restore scroll
-  document.body.style.overflow = '';
-  document.body.style.paddingRight = '';
+    // Restore scroll
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    document.removeEventListener('keydown', escHandler);
+  }
 }
 
 // ============================================
@@ -791,12 +820,14 @@ async function enterSittingRoom() {
     <div class="cinema-frame">
       <p class="cinema-label"></p>
       <div class="cinema-note"></div>
+      <button class="skip-cinema-btn" type="button">Skip (ESC)</button>
     </div>
   `;
   document.body.appendChild(cinema);
 
   const labelEl = cinema.querySelector('.cinema-label');
   const noteEl = cinema.querySelector('.cinema-note');
+  const skipBtn = cinema.querySelector('.skip-cinema-btn');
 
   // Opening sequence
   const openingStages = [
@@ -815,17 +846,38 @@ async function enterSittingRoom() {
     { label: 'This is the vibrational pond', note: 'Where presence meets presence', isClosing: true }
   ];
 
+  let skipRequested = false;
+
+  const exitCinema = async () => {
+    skipRequested = true;
+    cinema.classList.remove('visible');
+    await wait(400);
+    cinema.remove();
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    document.removeEventListener('keydown', escHandler);
+  };
+
+  const escHandler = (e) => {
+    if (e.key === 'Escape') exitCinema();
+  };
+
+  // Wire up skip handlers
+  skipBtn.addEventListener('click', exitCinema);
+  document.addEventListener('keydown', escHandler);
+
   // Fade in container
   await wait(100);
   cinema.classList.add('visible');
 
-  for (let i = 0; i < allStages.length; i++) {
+  for (let i = 0; i < allStages.length && !skipRequested; i++) {
     const stage = allStages[i];
 
     // Fade out previous
     labelEl.classList.remove('visible');
     noteEl.classList.remove('visible', 'ambient-style', 'user-style');
     await wait(400);
+    if (skipRequested) break;
 
     // Update content
     labelEl.textContent = stage.label;
@@ -840,24 +892,30 @@ async function enterSittingRoom() {
 
     // Staggered fade in
     await wait(200);
+    if (skipRequested) break;
     labelEl.classList.add('visible');
     await wait(stage.isTitle ? 1200 : 600);
+    if (skipRequested) break;
     noteEl.classList.add('visible');
 
     // Hold time varies by stage type
     const holdTime = stage.isTitle ? 2500 : stage.isClosing ? 3000 : stage.isTransition ? 1500 : 3500;
     await wait(holdTime);
+    if (skipRequested) break;
   }
 
-  // Final fade out
-  await wait(1500);
-  cinema.classList.remove('visible');
-  await wait(600);
-  cinema.remove();
+  if (!skipRequested) {
+    // Final fade out
+    await wait(1500);
+    cinema.classList.remove('visible');
+    await wait(600);
+    cinema.remove();
 
-  // Restore scroll
-  document.body.style.overflow = '';
-  document.body.style.paddingRight = '';
+    // Restore scroll
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    document.removeEventListener('keydown', escHandler);
+  }
 }
 
 // 9. VERBRATION MODAL
