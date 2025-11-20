@@ -1712,6 +1712,13 @@ footer a:focus-visible {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  /* Show verb whispers on mobile (no hover on touch) */
+  .verb-whisper {
+    opacity: 1;
+    max-height: 3rem;
+    margin-top: 0.2rem;
+  }
+
   #needle-drop {
     width: 100%;
     text-align: center;
