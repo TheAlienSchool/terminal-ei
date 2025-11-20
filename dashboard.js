@@ -26,8 +26,12 @@ function populateOverviewStats() {
   const selfGuidedCount = sessions.filter(s => s.mode === 'self').length;
   const facilitatedCount = sessions.filter(s => s.mode === 'facilitated').length;
 
-  // Calculate completion rate
-  const totalQuestions = 10;
+  // Calculate completion rate dynamically
+  // Get total question count from first session's response keys (most reliable source)
+  const totalQuestions = sessions.length > 0
+    ? Object.keys(sessions[0].responses).length
+    : 10; // Fallback if no sessions yet
+
   let totalAnswered = 0;
   sessions.forEach(session => {
     const responses = session.responses;
